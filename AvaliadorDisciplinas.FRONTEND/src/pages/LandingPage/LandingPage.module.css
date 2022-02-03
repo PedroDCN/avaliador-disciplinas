@@ -1,0 +1,65 @@
+.container {
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../../assets/icons/grupo_de_pessoas.svg'), url('../../assets/icons/wave_background.svg');
+    background-size: auto 60%, auto 100%;
+    background-repeat: no-repeat;
+    background-position: 98% 85%, right;
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 2rem;
+}
+
+.logo h1 {
+    font-weight: 500;
+    font-size: 2.4rem;
+    margin-left: 0.5rem;
+}
+
+.login {
+    display: flex;
+    gap: 6rem;
+}
+
+.content {
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.content h1 {
+    font-size: 4rem;
+    width: 64vw;
+}
+
+.content p {
+    font-weight: 300;
+    font-size: 1.5rem;
+    width: 54vw;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 2rem;
+    gap: 4rem;
+}
