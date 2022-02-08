@@ -1,5 +1,7 @@
 package com.engSoft.entities;
 
+import com.engSoft.DTO.StudentDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,13 +20,12 @@ public class Student {
 
     public Student(){}
 
-    public Student(String name, String email) {
-        this.name = name;
-        this.email = email;
-        this.isBanned = false;
-        this.deletedComments = 0;
-
-        this.nick = email.substring(0, email.indexOf('@'));
+    public Student(StudentDTO studentDTO) {
+        this.name = studentDTO.getName();
+        this.email = studentDTO.getEmail();
+        this.isBanned = studentDTO.getBanned();
+        this.deletedComments = studentDTO.getDeletedComments();
+        this.nick = studentDTO.getNick();
     }
 
     public Long getId() {
