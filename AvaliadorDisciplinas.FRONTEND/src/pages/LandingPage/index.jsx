@@ -3,7 +3,7 @@ import styles from './LandingPage.module.css';
 import colors from '../../styles/colorsConfig.json';
 
 import CadeiraIcon from '../../assets/icons/chair_icon.svg';
-import SearchIcon from '../../assets/icons/search_icon.svg';
+import ExploreIcon from '../../assets/icons/compass_icon.svg';
 import LoginIcon from '../../assets/icons/login_icon.svg';
 import Button from '../../components/Button';
 import ButtonWithIcon from '../../components/ButtonWithIcon';
@@ -43,8 +43,9 @@ function LandingPage() {
             <footer>
                 <ButtonWithIcon 
                     title="EXPLORAR" 
-                    icon={SearchIcon} 
-                    style={{textDecoration: 'underline'}} />
+                    icon={ExploreIcon} 
+                    color={colors.theme.primary}
+                    backgroundcolor={colors.theme.background} />
             </footer>
         </div>
     );

@@ -4,7 +4,7 @@ function ButtonWithIcon(props) {
     return (
         <div 
             className={styles.container}
-            style={{backgroundColor: props.backgroundcolor}}
+            style={{backgroundColor: props.backgroundcolor, color: props.color,}}
             {...props}
         >
             <p>{props.title}</p>

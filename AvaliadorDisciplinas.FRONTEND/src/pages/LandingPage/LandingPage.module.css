@@ -4,7 +4,7 @@
     background-image: url('../../assets/icons/grupo_de_pessoas.svg'), url('../../assets/icons/wave_background.svg');
     background-size: auto 60%, auto 100%;
     background-repeat: no-repeat;
-    background-position: 98% 85%, right;
+    background-position: 98% 70%, right;
     padding: 1rem;
 
     display: flex;
@@ -46,14 +46,14 @@
 }
 
 .content h1 {
-    font-size: 4rem;
-    width: 64vw;
+    font-size: 3.9rem;
+    width: 70%;
 }
 
 .content p {
     font-weight: 300;
     font-size: 1.5rem;
-    width: 54vw;
+    width: 54%;
 }
 
 .buttons {
@@ -62,4 +62,10 @@
     justify-content: flex-start;
     margin-top: 2rem;
     gap: 4rem;
+}
+
+.container footer {
+    justify-self: flex-end;
+    align-self: flex-end;
+    width: fit-content;
 }
