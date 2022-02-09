@@ -23,28 +23,38 @@ public class StudentController {
     public ResponseEntity<?> createStudent(@RequestBody StudentDTO studentDTO){
 
         Student newStudent = new Student(studentDTO);
-        this.studentService.saveStudent(newStudent);
-        return new ResponseEntity<String>("Student succesfully created! \n" + newStudent.toString(), HttpStatus.CREATED);
+        Optional<Student> possibleStudent = studentService.getStudentByEmail(newStudent.getEmail());
+        if (possibleStudent.isPresent()) {
+            this.studentService.saveStudent(newStudent);
+            return new ResponseEntity<String>("Student succesfully created! \n" + newStudent.toString(), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("Student already exists \n", HttpStatus.CONFLICT);
     }
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ResponseEntity<?> getAllStudents(){
-        List<Student> Students = this.studentService.listStudents();
-        return new ResponseEntity<String>("Ok! \n" + Students, HttpStatus.OK);
+        List<Student> students = this.studentService.listStudents();
+        return new ResponseEntity<String>("Ok! \n" + students, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/students/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getStudent(@PathVariable ("id") Long id){
 
-        Optional<Student> Student = this.studentService.getStudentById(id);
-        return new ResponseEntity<String>("Student found! \n" + Student.toString(), HttpStatus.ACCEPTED);
+        Optional<Student> student = this.studentService.getStudentById(id);
+        if (student.isPresent()) {
+            return new ResponseEntity<String>("Student found! \n" + student.toString(), HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>("Student does not exist \n", HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "studentDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeStudent(@PathVariable ("id") Long id){
 
         Optional<Student> toBeDeletedStudent = this.studentService.getStudentById(id);
-        this.studentService.removeStudent(toBeDeletedStudent.get());
-        return new ResponseEntity<String>("Student succesfully deleted \n" + toBeDeletedStudent.toString(),HttpStatus.OK);
+        if (toBeDeletedStudent.isPresent()) {
+            this.studentService.removeStudent(toBeDeletedStudent.get());
+            return new ResponseEntity<String>("Student succesfully deleted \n" + toBeDeletedStudent.toString(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Student does not exist \n", HttpStatus.NO_CONTENT);
     }
 }

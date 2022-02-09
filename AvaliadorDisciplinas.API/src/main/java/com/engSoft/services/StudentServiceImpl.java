@@ -26,15 +26,6 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Optional<Student> updateStudent(Long id, Student student) {
-        Optional<Student> possibleStudent = getStudentById(id);
-        if (possibleStudent.isPresent()) {
-            saveStudent(student);
-        }
-        return possibleStudent;
-    }
-
-    @Override
     public List<Student> listStudents() {
         return studentRepository.findAll();
     }
@@ -42,5 +33,10 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Optional<Student> getStudentById(Long id) {
         return studentRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Student> getStudentByEmail(String email) {
+        return studentRepository.getStudentByEmail(email);
     }
 }

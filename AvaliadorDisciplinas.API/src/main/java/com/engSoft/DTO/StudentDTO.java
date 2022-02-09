@@ -1,5 +1,7 @@
 package com.engSoft.DTO;
 
+import com.engSoft.entities.Student;
+
 public class StudentDTO {
 
     private String name;
@@ -15,6 +17,14 @@ public class StudentDTO {
         this.deletedComments = 0;
 
         this.nick = email.substring(0, email.indexOf('@'));
+    }
+
+    public StudentDTO(Student student) {
+        this.name = student.getName();
+        this.email = student.getEmail();
+        this.isBanned = student.getBanned();
+        this.deletedComments = student.getDeletedComments();
+        this.nick = student.getNick();
     }
 
     public String getNick() {
