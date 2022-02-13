@@ -4,11 +4,11 @@ public class CourseDTO {
 
     private String name;
     private String code;
-    private Long nameTeacher;
+    private String nameTeacher;
     private String initialTime;
     private String finalTime;
 
-    public CourseDTO(String name, String code, Long nameTeacher, String initialTime, String finalTime) {
+    public CourseDTO(String name, String code, String nameTeacher, String initialTime, String finalTime) {
         this.name = name;
         this.code = code;
         this.nameTeacher = nameTeacher;
@@ -24,7 +24,7 @@ public class CourseDTO {
         return code;
     }
 
-    public Long getNameTeacher() {
+    public String getNameTeacher() {
         return nameTeacher;
     }
 
