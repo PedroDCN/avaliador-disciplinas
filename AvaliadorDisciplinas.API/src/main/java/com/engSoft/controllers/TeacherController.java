@@ -22,7 +22,12 @@ public class TeacherController {
     @RequestMapping(value = "/teacher", method = RequestMethod.POST)
     public ResponseEntity<?> createTeacher(@RequestBody TeacherDTO teacherDTO){
 
+//        TeacherDTO teacherDTO = new TeacherDTO(name);
         Teacher newTeacher = new Teacher(teacherDTO);
+        Optional<Teacher> auxTeacher = teacherService.getTeacherByName(newTeacher.getName());
+        if(auxTeacher.isPresent()){
+            return new ResponseEntity<>("Teacher already exists! \n",HttpStatus.CONFLICT);
+        }
         this.teacherService.saveTeacher(newTeacher);
         return new ResponseEntity<String>("Teacher succesfully created! \n" + newTeacher.toString(), HttpStatus.CREATED);
     }
@@ -35,6 +40,11 @@ public class TeacherController {
     public ResponseEntity<?> getAllTeachers(){
         List<Teacher> teachers = this.teacherService.listTeachers();
         return new ResponseEntity<String>("Ok! \n" + teachers, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/techers{name}", method = RequestMethod.GET)
+    public ResponseEntity<?> getTeacherByName(@PathVariable ("name") String name){
+        Optional<Teacher> teacher = this.teacherService.getTeacherByName(name);
+        return new ResponseEntity<String>("Teacher found! \n" + teacher.toString(), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/teachers/{id}", method = RequestMethod.GET)
