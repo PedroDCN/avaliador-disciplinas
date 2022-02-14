@@ -20,6 +20,10 @@ public class Teacher {
         this.name = teacherDTO.getName();
     }
 
+    public Teacher(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -35,8 +39,6 @@ public class Teacher {
     @Override
     public String toString() {
         return "Teacher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+                "id=" + id + ", name= " + name + " }";
     }
 }
