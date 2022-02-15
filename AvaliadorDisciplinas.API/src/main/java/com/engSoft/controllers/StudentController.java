@@ -25,10 +25,10 @@ public class StudentController {
         Student newStudent = new Student(studentDTO);
         Optional<Student> possibleStudent = studentService.getStudentByEmail(newStudent.getEmail());
         if (possibleStudent.isPresent()) {
-            this.studentService.saveStudent(newStudent);
-            return new ResponseEntity<String>("Student succesfully created! \n" + newStudent.toString(), HttpStatus.CREATED);
+            return new ResponseEntity<>("Student already exists \n", HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("Student already exists \n", HttpStatus.CONFLICT);
+        this.studentService.saveStudent(newStudent);
+        return new ResponseEntity<String>("Student succesfully created! \n" + newStudent.toString(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
