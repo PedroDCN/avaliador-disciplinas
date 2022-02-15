@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
-    Optional<Teacher> updateTeacher (Long id, String name);
+    Optional<Teacher> getTeacherByName (String name);
 }

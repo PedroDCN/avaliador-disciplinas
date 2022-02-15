@@ -37,4 +37,7 @@ public class TeacherServiceImpl implements TeacherService{
     public Optional<Teacher> getTeacherById(Long id) {
         return this.teacherRepository.findById(id);
     }
+
+    @Override
+    public Optional<Teacher> getTeacherByName(String name){return this.teacherRepository.getTeacherByName(name);}
 }

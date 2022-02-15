@@ -1,5 +1,7 @@
 package com.engSoft.entities;
 
+import com.engSoft.DTO.TeacherDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +16,11 @@ public class Teacher {
 
     public Teacher() {
     }
-    public Teacher(String name){
+    public Teacher(TeacherDTO teacherDTO){
+        this.name = teacherDTO.getName();
+    }
+
+    public Teacher(String name) {
         this.name = name;
     }
 
@@ -33,8 +39,6 @@ public class Teacher {
     @Override
     public String toString() {
         return "Teacher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+                "id=" + id + ", name= " + name + " }";
     }
 }

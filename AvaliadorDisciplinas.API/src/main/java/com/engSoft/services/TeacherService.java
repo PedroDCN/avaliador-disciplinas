@@ -12,4 +12,5 @@ public interface TeacherService {
     public Optional<Teacher> updateTeacher (Long id, Teacher teacher);
     public List<Teacher> listTeachers();
     public Optional<Teacher> getTeacherById(Long id);
+    public Optional<Teacher> getTeacherByName(String name);
 }
