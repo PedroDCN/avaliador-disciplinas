@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CourseService {
-
     public void saveCourse(Course course);
     public List<Course> listCourses();
     public List<Course> listCoursesTeacher(Long idTeacher);

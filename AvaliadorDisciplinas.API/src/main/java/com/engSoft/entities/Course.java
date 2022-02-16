@@ -2,9 +2,11 @@ package com.engSoft.entities;
 
 import com.engSoft.DTO.CourseDTO;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@Entity
 public class Course {
 
     @Id
@@ -19,6 +21,14 @@ public class Course {
     public Course() {}
 
     public Course(CourseDTO courseDTO, Long idTeacher) {
+        this.name = courseDTO.getName();
+        this.code = courseDTO.getCode();
+        this.idTeacher = idTeacher;
+        this.initialTime = courseDTO.getInitialTime();
+        this.finalTime = courseDTO.getFinalTime();
+    }
+
+    public void update(CourseDTO courseDTO, Long idTeacher) {
         this.name = courseDTO.getName();
         this.code = courseDTO.getCode();
         this.idTeacher = idTeacher;
