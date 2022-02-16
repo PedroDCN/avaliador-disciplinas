@@ -1,4 +1,4 @@
-package com.engSoft;
+package com.engSoft.AvaliadorDisciplinas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
