@@ -6,9 +6,9 @@ function Button(props) {
             backgroundColor: props.backgroundcolor,
             color: props.color,
             width: props.width
-        }}>
+        }} {...props}>
             <p>
-                {props.title}
+                {props.buttontitle}
             </p>
         </div>
     );
