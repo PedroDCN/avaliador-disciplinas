@@ -1,0 +1,95 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.container .navMenu {
+  height: 100%;
+  width: 20%;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+}
+
+.container .userBox {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background: var(--primary);
+}
+
+.container .userBox img {
+  border-radius: 50%;
+  border: 0.25rem solid var(--white);
+}
+
+.container .userBox span {
+  color: var(--white);
+  font-weight: 400;
+  font-size: 1.15rem;
+}
+
+.container .menuItems {
+  flex-grow: 6;
+  background: var(--secondary);
+  padding: 1.25rem;
+}
+
+.container .content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .content .header {
+  width: 60%;
+  height: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #189ab4;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  padding: 2rem;
+  gap: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+}
+
+.container .content .header span {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.container .content .indexContent {
+  width: 60%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+  padding: 2rem;
+  gap: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+}
+
+.container .content .indexContent span {
+  width: 26rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 300;
+  user-select: none;
+}
