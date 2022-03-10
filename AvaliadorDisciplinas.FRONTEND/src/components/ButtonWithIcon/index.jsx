@@ -7,8 +7,13 @@ function ButtonWithIcon(props) {
             style={{backgroundColor: props.backgroundcolor, color: props.color,}}
             {...props}
         >
-            <p>{props.title}</p>
-            <img src={props.icon} alt="" height={24} width={24}/>
+            <p>{props.buttontitle}</p>
+            <img 
+                src={props.icon} 
+                alt={`${props.title} icon`} 
+                height={24} 
+                width={24}
+            />
         </div>
     );
 }
