@@ -1,10 +1,20 @@
 import { disciplinasEstaticas } from "./DadosEstaticos";
 
-export async function getAll() {
-  const fun = await new Promise((resolve, reject) => {
+export async function getAll(atributo, text) {
+  return await new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(disciplinasEstaticas());
-    }, 2000);
+      if (atributo && text) {
+        resolve(
+          disciplinasEstaticas().filter((disciplina) =>
+            disciplina[atributo]
+              .toString()
+              .toLowerCase()
+              .includes(text.toLowerCase())
+          )
+        );
+      } else {
+        resolve(disciplinasEstaticas());
+      }
+    }, 500);
   });
-  return fun;
 }

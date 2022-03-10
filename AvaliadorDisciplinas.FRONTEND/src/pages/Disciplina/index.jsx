@@ -15,14 +15,18 @@ function DisciplinaIndex() {
   const [disc, setDisc] = useState([]);
   const [loading, setLoading] = useState(false);
   const [atributo, setAtributo] = useState();
+  const [text, setText] = useState("");
 
   useEffect(() => {
-    setLoading(true);
-    getAll().then((data) => {
+    async function fetchData() {
+      setLoading(true);
+      const data = await getAll(atributo, text);
       setDisc(data);
       setLoading(false);
-    });
-  }, []);
+    }
+
+    fetchData();
+  }, [atributo, text]);
 
   function renderItem(item) {
     return (
@@ -69,6 +73,9 @@ function DisciplinaIndex() {
             type="text"
             id="nome"
             placeholder="Procure por uma disciplina"
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
           />
           <div className={styles.dropdown}>
             <Dropdown
