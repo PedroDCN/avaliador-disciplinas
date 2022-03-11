@@ -67,7 +67,6 @@ function NavMenu() {
               className={selectedItem === item ? styles.selected : ""}
               onClick={() => {
                 setSelectedItem(item);
-                // teste
                 if (item === "logout") {
                   logout();
                 } else if (item === "disciplinas") {
