@@ -30,6 +30,10 @@ function NavMenu() {
     const { user, logout } = useAuth();
 
     useEffect(() => {
+        console.log('mudou');
+    },[selectedItem]);
+
+    useEffect(() => {
         function settingMenuItems() {
             if (user === undefined) {
                 setListItems(["disciplinas","simular","professores","login"]);

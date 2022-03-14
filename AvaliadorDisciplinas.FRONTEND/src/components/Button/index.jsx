@@ -5,7 +5,8 @@ function Button(props) {
         <div className={styles.container} style={{
             backgroundColor: props.backgroundcolor,
             color: props.color,
-            width: props.width
+            width: props.width,
+            borderRadius: props.borderRadius,
         }} {...props}>
             <p>
                 {props.buttontitle}
