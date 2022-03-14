@@ -50,7 +50,7 @@ public class FeedbackController {
             return new ResponseEntity<String>("Feedback succesfully created! \n" + newFeedback, HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<CustomErrorType>(
-                     new CustomErrorType("Error, feedback can´t be created"), HttpStatus.NOT_FOUND);
+                     new CustomErrorType("Error, feedback can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -82,7 +82,7 @@ public class FeedbackController {
         return new ResponseEntity<String>("Feedback found! \n" + optionalFeedback, HttpStatus.FOUND);
     }
 
-    @RequestMapping(value = "Feedback/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/Feedback/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeFeedback(@PathVariable ("id") Long id){
         Optional<Feedback> optionalFeedback = feedbackService.findFeedbackById(id);
 
@@ -94,7 +94,7 @@ public class FeedbackController {
             return new ResponseEntity<String>("Feedback succesfully deleted \n" + optionalFeedback, HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<CustomErrorType>(
-                    new CustomErrorType("Error, feedback can´t be deleted"), HttpStatus.NOT_FOUND);
+                    new CustomErrorType("Error, feedback can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 
     }

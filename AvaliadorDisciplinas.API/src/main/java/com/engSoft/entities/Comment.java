@@ -1,5 +1,7 @@
 package com.engSoft.entities;
 
+import com.engSoft.DTO.CommentDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,10 +17,10 @@ public class Comment {
     private Integer up;
     private Integer down;
 
-    public Comment(Long idCourse, Long idStudent, String description) {
-        this.idCourse = idCourse;
-        this.idStudent = idStudent;
-        this.description = description;
+    public Comment(CommentDTO commentDTO) {
+        this.idCourse = commentDTO.getIdCourse();
+        this.idStudent = commentDTO.getIdStudent();
+        this.description = commentDTO.getDescription();
     }
 
     public Comment() {
