@@ -89,8 +89,13 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
-                ", idTeacher='" + idTeacher + '\''+
-                ", grade='" + grade + '\'' +
+                ", idTeacher=" + idTeacher +
+                ", courseware=" + courseware +
+                ", evaluationSystem=" + evaluationSystem +
+                ", methodology=" + methodology +
+                ", planning=" + planning +
+                ", workload=" + workload +
+                ", grade=" + grade +
                 ", semester='" + semester + '\'' +
                 '}';
     }
