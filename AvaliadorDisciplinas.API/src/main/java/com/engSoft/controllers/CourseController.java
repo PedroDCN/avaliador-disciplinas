@@ -6,6 +6,7 @@ import com.engSoft.entities.Teacher;
 import com.engSoft.services.CourseService;
 import com.engSoft.services.TeacherService;
 import com.engSoft.util.ErroCourse;
+import com.engSoft.util.ErroTeacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class CourseController {
 
             return new ResponseEntity<String>("Course succesfully created! \n" + newCourse, HttpStatus.CREATED);
         } else
-            return new ResponseEntity<String>("Teacher does not exist \n", HttpStatus.NOT_FOUND);
+            return ErroTeacher.erroTeacherNotFound();
     }
 
     @RequestMapping(value = "/CourseUpdate/{id}", method = RequestMethod.PATCH)
@@ -43,7 +44,7 @@ public class CourseController {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
 
         if(!optionalTeacher.isPresent())
-            return new ResponseEntity<String>("Teacher does not exist \n", HttpStatus.NOT_FOUND);
+            return ErroTeacher.erroTeacherNotFound();
 
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
@@ -62,6 +63,24 @@ public class CourseController {
         return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/Courses/name", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCoursesSortName(){
+        List<String> courses = this.courseService.listCoursesSortName();
+        return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/Courses/semester", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCoursesSortSemester(){
+        List<String> courses = this.courseService.listCoursesSortSemester();
+        return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/Courses/grade", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCoursesSortGrade(){
+        List<String> courses = this.courseService.listCoursesSortGrade();
+        return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/CoursesTeacher/{nameTeacher}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesfromTeacher(@PathVariable("nameTeacher") String nameTeacher){
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(nameTeacher);
@@ -70,7 +89,7 @@ public class CourseController {
             List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get().getId());
             return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
         } else
-            return new ResponseEntity<String>("Teacher does not exist\n", HttpStatus.NOT_FOUND);
+            return ErroTeacher.erroTeacherNotFound();
     }
 
     @RequestMapping(value = "/Courses/{id}", method = RequestMethod.GET)

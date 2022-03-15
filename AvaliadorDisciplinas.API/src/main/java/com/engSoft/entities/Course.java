@@ -1,7 +1,6 @@
 package com.engSoft.entities;
 
 import com.engSoft.DTO.CourseDTO;
-import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,9 @@ public class Course {
     private String name;
     private String code;
     private Long idTeacher;
+    private Integer courseware, evaluationSystem, methodology, planning, workload;
     private Integer grade;
+    private Integer countFeedback;
     private String semester;
 
     public Course() {}
@@ -26,7 +27,13 @@ public class Course {
         this.name = courseDTO.getName();
         this.code = courseDTO.getCode();
         this.idTeacher = idTeacher;
-        calculateGrade();
+        courseware = 0;
+        evaluationSystem = 0;
+        methodology = 0;
+        planning = 0;
+        workload = 0;
+        grade = 0;
+        countFeedback = 0;
         this.semester = courseDTO.getSemester();
     }
 
@@ -37,22 +44,15 @@ public class Course {
         this.semester = courseDTO.getSemester();
     }
 
-    @Query(value = "SELECT * from Feedback where idCourse == {idCourse}", nativeQuery = true)
-    private List<Feedback> searchFeedbacks();
+    public void updateGrade(Feedback feedback) {
+        courseware = (courseware * countFeedback + feedback.getCourseware())/(countFeedback + 1);
+        evaluationSystem = (evaluationSystem * countFeedback + feedback.getEvaluationSystem())/(countFeedback + 1);
+        methodology = (methodology * countFeedback + feedback.getMethodology())/(countFeedback + 1);
+        planning = (planning * countFeedback + feedback.getPlanning())/(countFeedback + 1);
+        workload = (workload * countFeedback + feedback.getWorkload())/(countFeedback + 1);
 
-    public void calculateGrade() {
-        List<Feedback> feedbackList = searchFeedbacks();
-        int sum = 0;
-        int count = 0;
-        for(Feedback feedback : feedbackList) {
-            sum += feedback.getCourseware() + feedback.getEvaluationSystem() + feedback.getMethodology() + feedback.getPlanning() + feedback.getWorkload();
-            count += 1;
-        }
-        if(count == 0) {
-            grade = 0;
-        } else {
-            grade = sum / count;
-        }
+        grade = (courseware + evaluationSystem + methodology + planning + workload) / 5;
+        countFeedback++;
     }
 
     public Long getId() {
@@ -75,7 +75,7 @@ public class Course {
 
     public String getSemester() { return semester;}
 
-    public String simpleToString() {
+    public String toSimpleString() {
         return "Course{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
