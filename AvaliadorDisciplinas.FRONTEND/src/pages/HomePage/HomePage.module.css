@@ -71,3 +71,96 @@
     font-weight: 300;
     user-select: none;
 }
+
+.container .a {
+    position: absolute;
+    width: 53rem;
+    left: 30rem;
+    top: 8rem; 
+}
+
+.container .a{
+    display: flex;
+    flex-direction: row;
+    gap: 10rem;
+    border-radius: 1rem 1rem 0rem 0rem;
+    list-style: none;
+    flex-flow: column;
+    max-height: 82.5%;
+    height: 100vh;
+    border: 0.1rem solid rgb(111, 114, 114);
+    
+}
+
+.container .a .b .userBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    /* gap: 10rem; */
+    padding: 1rem 1.5rem;
+    border-radius: 1rem 1rem 0rem 0rem;
+    list-style: none;
+    background-color: var(--secondary);
+    
+}
+.container .a .b .userBox li{
+    color: #FAFAFA;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1rem;
+}
+.container .a .b .informs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.container .a .b .informs .buttons{
+    margin-top: 2rem;
+    
+}
+
+.container .a .b .inputs{
+    display: flex;
+    flex-direction: column;
+    border-radius: 100rem;
+
+}
+
+.container .a .b .inputs input{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;  
+    border-radius: .5rem;
+    margin-top: 1.5rem;
+    padding: 1.5rem 1.5rem;
+    width: 44.625rem;
+    height: 4.5rem;
+    background-color: #E5E5E5;
+    border: solid #E5E5E5;;
+    align-self: center;
+    
+}
+.container .a .b .inputs input[type="email"]::placeholder,
+.container .a .b .inputs input[type="nickName"]::placeholder,
+.container .a .b .inputs input[type="userName"]::placeholder{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 30px;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    color: #9E9E9E;
+    padding: 0;
+}
+
+.container .a .b .userPhot{
+    margin-top: 2rem;
+    
+
+}
