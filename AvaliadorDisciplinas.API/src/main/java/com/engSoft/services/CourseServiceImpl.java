@@ -5,6 +5,7 @@ import com.engSoft.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +21,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> listCourses() {
-        return courseRepository.findAll();
+    public List<String> listCourses() {
+        List<Course> list = courseRepository.findAll();
+        List<String> stringList = new ArrayList<>();
+        for(Course course : list) {
+            stringList.add(course.simpleToString());
+        }
+        return stringList;
     }
 
     @Override
