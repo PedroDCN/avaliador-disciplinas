@@ -114,11 +114,26 @@ function HomePage() {
                     <hr className={styles.MYDivisor}/>
 
                     <div className={styles.MYCommentContent}> {/* Comment Content */}
-                        <p>Deixe seu comentário sobre essa disciplina</p>
+                        <textarea 
+                            maxlength="280"
+                            type="text"
+                            id="comment"
+                            placeholder="Deixe seu comentário sobre essa disciplina"
+                        />
+                        
+                        <Button 
+                            buttontitle="enviar"
+                            backgroundcolor={colors.theme.secondary} 
+                            width="6rem"
+                            color={colors.theme.white}
+                            borderRadius="0rem 0rem 1rem 1rem"
+                            className={styles.MYSubmmit}
+                            /* onClick={handleLoginButton} */
+                        />
                     </div>
 
                     <div className={styles.MYCommentList}> {/* Comment list */}
-                    a
+                            a
                     </div>
 
                 </div>
