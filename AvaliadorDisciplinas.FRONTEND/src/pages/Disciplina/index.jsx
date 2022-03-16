@@ -5,10 +5,9 @@ import NavMenu from "../../components/NavMenu";
 import { useAuth } from "../../contexts/AuthContext";
 import DataList from "../../components/DataList";
 import { getAll } from "../../services/disciplinaService";
-import ButtonWithIcon from "../../components/ButtonWithIcon";
-import External from "../../assets/icons/external.svg";
 import Dropdown from "../../components/Dropdown";
 import { atributosDisciplina } from "../../services/DadosEstaticos";
+import { renderItem } from "./itemListagem";
 
 function DisciplinaIndex() {
   const { user } = useAuth();
@@ -27,25 +26,6 @@ function DisciplinaIndex() {
 
     fetchData();
   }, [atributo, text]);
-
-  function renderItem(item) {
-    return (
-      <div className={styles.itemContainer}>
-        <div className={styles.itemNota}>{item.nota}/5</div>
-        <div className={styles.itemConteudo}>
-          <span>{item.nome}</span>
-          <span>Periodo: {item.periodo}</span>
-        </div>
-        <div className={styles.itemButton}>
-          <ButtonWithIcon
-            icon={External}
-            onClick={() => console.log(item.nome)}
-            transparent
-          />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className={styles.container}>

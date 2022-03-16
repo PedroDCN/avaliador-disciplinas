@@ -56,7 +56,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #189ab4;
+  background: var(--secondary);
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
   padding: 2rem;
@@ -65,7 +65,7 @@
 }
 
 .container .content .header span {
-  color: #ffffff;
+  color: var(--white);
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -85,7 +85,7 @@
 .container .content .filter input {
   width: 60%;
   height: 80%;
-  border-radius: 1em;
+  border-radius: 0.5em;
   font-size: 1.5rem;
   text-align: center;
   font-weight: 300;
@@ -121,45 +121,4 @@
   gap: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.15);
   box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
-}
-
-.container .content .indexContent span {
-  width: 26rem;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 300;
-  user-select: none;
-}
-
-.container .content .indexContent .itemConteudo span {
-  text-align: left;
-  width: 100%;
-}
-
-.itemContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f3f3f3;
-  border-radius: 2rem;
-  padding: 1rem;
-  gap: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
-}
-
-.itemContainer .itemNota {
-  width: 15%;
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-}
-
-.itemContainer .itemConteudo {
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-}
-
-.itemContainer .itemButton {
-  width: 10%;
 }

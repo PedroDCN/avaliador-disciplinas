@@ -6,6 +6,7 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  cursor: pointer;
 }
 
 .transparent {
@@ -13,7 +14,6 @@
 }
 
 .colored {
-  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
   transition: transform 0.2s;
 }
