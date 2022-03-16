@@ -75,8 +75,8 @@
 .container .a {
     position: absolute;
     width: 53rem;
-    left: 30rem;
-    top: 8rem; 
+    left: 24rem;
+    top: 7.2rem; 
 }
 
 .container .a{
@@ -138,7 +138,7 @@
     margin-top: 1.5rem;
     padding: 1.5rem 1.5rem;
     width: 44.625rem;
-    height: 4.5rem;
+    height: 3.5rem;
     background-color: #E5E5E5;
     border: solid #E5E5E5;;
     align-self: center;
