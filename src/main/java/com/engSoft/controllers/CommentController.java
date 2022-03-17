@@ -47,7 +47,7 @@ public class CommentController {
         Comment newComment = new Comment(commentDTO);
         try {
             commentService.saveComment(newComment);
-            return new ResponseEntity<String>("Comment succesfully created! \n" + newComment, HttpStatus.CREATED);
+            return new ResponseEntity<>(newComment, HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<CustomErrorType>(
                     new CustomErrorType("Error, comment can´t be created"), HttpStatus.BAD_REQUEST);
@@ -56,7 +56,7 @@ public class CommentController {
     @RequestMapping(value = "/Comment", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComment(){
         List<Comment> comments = this.commentService.listComments();
-        return new ResponseEntity<String>("Comments found! \n" + comments, HttpStatus.OK);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
     @RequestMapping(value = "/Comment/listByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCommentsfromCourse(@PathVariable("idCourse") Long idCourse){
@@ -66,7 +66,7 @@ public class CommentController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Comment> comments = commentService.listCommentByCourse(idCourse);
-        return new ResponseEntity<String>("Comments Found! \n" + comments, HttpStatus.FOUND);
+        return new ResponseEntity<>(comments, HttpStatus.FOUND);
 
     }
 
@@ -77,7 +77,7 @@ public class CommentController {
         if(!optionalComment.isPresent())
             return ErroComment.erroCommentNotFound();
 
-        return new ResponseEntity<String>("Comment found! \n" + optionalComment, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalComment, HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/Comment/{id}", method = RequestMethod.DELETE)
@@ -89,7 +89,7 @@ public class CommentController {
 
         try{
             commentService.removeComment(id);
-            return new ResponseEntity<String>("Comment succesfully deleted \n" + optionalComment, HttpStatus.OK);
+            return new ResponseEntity<>(optionalComment, HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<CustomErrorType>(
                     new CustomErrorType("Error, comment can´t be deleted"), HttpStatus.BAD_REQUEST);

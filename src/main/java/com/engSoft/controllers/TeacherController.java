@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.engSoft.util.ErroTeacher.erroTeacherAlreadyExist;
+import static com.engSoft.util.ErroTeacher.erroTeacherNotFound;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
@@ -26,39 +29,51 @@ public class TeacherController {
         Teacher newTeacher = new Teacher(teacherDTO);
         Optional<Teacher> auxTeacher = teacherService.getTeacherByName(newTeacher.getName());
         if(auxTeacher.isPresent()){
-            return new ResponseEntity<>("Teacher already exists! \n",HttpStatus.CONFLICT);
+            return erroTeacherAlreadyExist();
         }
         this.teacherService.saveTeacher(newTeacher);
-        return new ResponseEntity<String>("Teacher succesfully created! \n" + newTeacher.toString(), HttpStatus.CREATED);
+        return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/teacher{id}" , method = RequestMethod.PUT)
     public ResponseEntity<?> updateTeacher(@PathVariable ("id") String name){
-        return new ResponseEntity<String>("Teacher succesfully updated! \n", HttpStatus.OK);
+        return new ResponseEntity<>("Teacher succesfully updated! \n", HttpStatus.OK);
     }
+
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public ResponseEntity<?> getAllTeachers(){
         List<Teacher> teachers = this.teacherService.listTeachers();
-        return new ResponseEntity<String>("Ok! \n" + teachers, HttpStatus.OK);
+        return new ResponseEntity<>(teachers, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/techers{name}", method = RequestMethod.GET)
     public ResponseEntity<?> getTeacherByName(@PathVariable ("name") String name){
         Optional<Teacher> teacher = this.teacherService.getTeacherByName(name);
-        return new ResponseEntity<String>("Teacher found! \n" + teacher.toString(), HttpStatus.ACCEPTED);
+        if (teacher.isPresent()){
+            return new ResponseEntity<>(teacher, HttpStatus.ACCEPTED);
+        }
+        return erroTeacherNotFound();
     }
 
     @RequestMapping(value = "/teachers/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getTeacher(@PathVariable ("id") Long id){
 
         Optional<Teacher> teacher = this.teacherService.getTeacherById(id);
-        return new ResponseEntity<String>("Teacher found! \n" + teacher.toString(), HttpStatus.ACCEPTED);
+        if (teacher.isPresent()){
+            return new ResponseEntity<>(teacher, HttpStatus.ACCEPTED);
+        }
+        return erroTeacherNotFound();
     }
 
     @RequestMapping(value = "teacherDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeTeacher(@PathVariable ("id") Long id){
 
         Optional<Teacher> toBeDeletedTeacher = this.teacherService.getTeacherById(id);
-        this.teacherService.removeTeacher(toBeDeletedTeacher.get());
-        return new ResponseEntity<String>("Teacher succesfully deleted \n" + toBeDeletedTeacher.toString(),HttpStatus.OK);
+        if (toBeDeletedTeacher.isPresent())
+        {
+            this.teacherService.removeTeacher(toBeDeletedTeacher.get());
+            return new ResponseEntity<>(toBeDeletedTeacher.get() ,HttpStatus.OK);
+        }
+        return erroTeacherNotFound();
     }
 }
