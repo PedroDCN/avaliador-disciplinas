@@ -23,9 +23,10 @@ public class Student {
     public Student(StudentDTO studentDTO) {
         this.name = studentDTO.getName();
         this.email = studentDTO.getEmail();
-        this.isBanned = studentDTO.getBanned();
-        this.deletedComments = studentDTO.getDeletedComments();
-        this.nick = studentDTO.getNick();
+        this.isBanned = false;
+        this.deletedComments = 0;
+        this.nick = email.substring(0, email.indexOf('@'));
+
     }
 
     public Long getId() {
