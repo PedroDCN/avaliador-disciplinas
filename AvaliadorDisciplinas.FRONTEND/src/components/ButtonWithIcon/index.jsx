@@ -1,9 +1,11 @@
-import styles from './ButtonWithIcon.module.css';
+import styles from "./ButtonWithIcon.module.css";
 
 function ButtonWithIcon(props) {
     return (
         <div 
-            className={styles.container}
+            className={`${styles.container} ${
+              props.transparent ? styles.transparent : styles.colored
+            }`}
             style={{
                 backgroundColor: props.backgroundcolor, 
                 color: props.color,
