@@ -81,3 +81,9 @@
     font-size: 0.75rem;
 }
 
+.googleSignUpButton {
+    color: var(--primary);
+    font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+}

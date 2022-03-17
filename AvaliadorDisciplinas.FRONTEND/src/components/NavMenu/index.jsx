@@ -10,6 +10,8 @@ import LoginIcon from '../../assets/icons/login_menu_icon.svg';
 import DenunciasIcon from '../../assets/icons/complaint_icon.svg';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import LoginModal from '../../components/LoginModal';
 
 const menuItems = {
     "avaliar": {"title": "Avaliar cadeiras", "icon": AvaliarIcon},
@@ -23,11 +25,13 @@ const menuItems = {
     "denuncias": {"title": "Denúncias", "icon": DenunciasIcon},
 } 
 
-function NavMenu() {
+function NavMenu(props) {
+    const {selectedItem, setSelectedItem} = props;
     let [listItems, setListItems] = useState([]);
+    const [show, setShow] = useState(false);
 
-    const [selectedItem, setSelectedItem] = useState("");
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     useEffect(() => {
         function settingMenuItems() {
@@ -42,34 +46,44 @@ function NavMenu() {
         settingMenuItems();
     },[user]);
 
+    function handleItemMenuClick(item) {
+        setSelectedItem(item);   
+        if (item === "login") {
+            setShow(true);
+        } else if (item === "logout") {
+            logout();
+            navigate('/');
+        } else {
+            navigate(`/${item}`);
+        }
+    }
+
     return (
-        <div className={styles.container}>
-            <ul>
-                {listItems.map((item,index) => {
-                    const menuItem = menuItems[item];
-                    return (
-                        <li 
-                            key={index}
-                            className={selectedItem === item ? styles.selected : ""}
-                            onClick={() => {
-                                setSelectedItem(item);   
-                                if (item === "logout") {
-                                    logout();
-                                }   
-                            }}
-                        >
-                            <img 
-                                src={menuItem.icon} 
-                                alt={`${menuItem.title} icon`} 
-                                height={18}
-                                width={18}
-                            />
-                            <span>{menuItem.title}</span>
-                        </li>
-                    );
-                })}
-            </ul>
-        </div>
+        <>
+            <div className={styles.container}>
+                <ul>
+                    {listItems.map((item,index) => {
+                        const menuItem = menuItems[item];
+                        return (
+                            <li 
+                                key={index}
+                                className={selectedItem === item ? styles.selected : ""}
+                                onClick={() => handleItemMenuClick(item)}
+                            >
+                                <img 
+                                    src={menuItem.icon} 
+                                    alt={`${menuItem.title} icon`} 
+                                    height={18}
+                                    width={18}
+                                />
+                                <span>{menuItem.title}</span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            </div>
+            <LoginModal show={show} handleClose={() => setShow(false)} />
+        </>
     );
 }
 

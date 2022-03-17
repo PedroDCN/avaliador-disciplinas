@@ -50,6 +50,7 @@
     justify-content: flex-start;
     gap: 0.1rem;
     align-items: center;
+    cursor: pointer;
 }
 
 .container .menuItems .logo h1 {
