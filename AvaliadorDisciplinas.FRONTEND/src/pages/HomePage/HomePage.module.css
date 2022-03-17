@@ -72,38 +72,39 @@
     user-select: none;
 }
 
-.container .a {
+.container .b{
     position: absolute;
-    width: 53rem;
-    left: 24rem;
+    width: 60%;
+    left: 30%;
     top: 7.2rem; 
-}
-
-.container .a{
     display: flex;
     flex-direction: row;
-    gap: 10rem;
     border-radius: 1rem 1rem 0rem 0rem;
     list-style: none;
     flex-flow: column;
     max-height: 82.5%;
-    height: 100vh;
-    border: 0.1rem solid rgb(111, 114, 114);
+    height: 100%;
     
 }
 
-.container .a .b .userBox{
+.container .b{
+    justify-content: center;
+    align-content: center;
+    border: 0.1rem solid rgb(111, 114, 114);
+    
+}
+.container .b .userBox{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    /* gap: 10rem; */
+    max-height: min-content;
     padding: 1rem 1.5rem;
     border-radius: 1rem 1rem 0rem 0rem;
     list-style: none;
     background-color: var(--secondary);
     
 }
-.container .a .b .userBox li{
+.container .b .userBox li{
     color: #FAFAFA;
     font-family: 'Roboto';
     font-style: normal;
@@ -111,26 +112,27 @@
     font-size: 1.5rem;
     line-height: 1rem;
 }
-.container .a .b .informs{
+.container .b .informs{
     display: flex;
     flex-direction: column;
     align-items: center;
     
 }
 
-.container .a .b .informs .buttons{
+.container .b .informs .buttons{
     margin-top: 2rem;
     
 }
 
-.container .a .b .inputs{
+.container .b .inputs{
     display: flex;
     flex-direction: column;
     border-radius: 100rem;
+    /* min-width: auto; */
 
 }
 
-.container .a .b .inputs input{
+.container .b .inputs input{
     display: flex;
     flex-direction: column;
     margin-top: 5rem;  
@@ -144,9 +146,9 @@
     align-self: center;
     
 }
-.container .a .b .inputs input[type="email"]::placeholder,
-.container .a .b .inputs input[type="nickName"]::placeholder,
-.container .a .b .inputs input[type="userName"]::placeholder{
+.container .b .inputs input[type="email"]::placeholder,
+.container .b .inputs input[type="nickName"]::placeholder,
+.container .b .inputs input[type="userName"]::placeholder{
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
@@ -159,8 +161,8 @@
     padding: 0;
 }
 
-.container .a .b .userPhot{
-    margin-top: 2rem;
+.container .b .userPhot{
+    margin-top: 1.5rem;
     
 
 }

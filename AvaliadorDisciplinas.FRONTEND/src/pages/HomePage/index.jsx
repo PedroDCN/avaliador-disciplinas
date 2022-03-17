@@ -2,8 +2,6 @@ import React from 'react';
 import styles from './HomePage.module.css';
 import colors from '../../styles/colorsConfig.json';
 import Button from '../../components/Button';
-// import DataList from '../../components/DataList';
-
 import UserImage from '../../assets/icons/user_anonimous.svg';
 import WelcomeImage from '../../assets/icons/people_rating.svg';
 import NavMenu from '../../components/NavMenu';
@@ -56,8 +54,8 @@ function HomePage() {
                             </div>
 
                             <div className={styles.inputs}>
-                                <input type="email" placeholder='email@ccc.ufcg.edu.br' />
-                                <input type="userName" placeholder='Name Surname' />
+                                <input type="email" placeholder='email@ccc.ufcg.edu.br' disabled />
+                                <input type="userName" placeholder='Name Surname' disabled />
                                 <input type="nickName" placeholder='nickname' />
                             </div>
                             <div className={styles.buttons}>
