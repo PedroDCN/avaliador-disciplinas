@@ -47,6 +47,16 @@ public class StudentController {
         return new ResponseEntity<>("Student does not exist \n", HttpStatus.NOT_FOUND);
     }
 
+    @RequestMapping(value = "/students/email/{email}", method = RequestMethod.GET)
+    public ResponseEntity<?> getStudentByEmail(@PathVariable ("email") String email){
+
+        Optional<Student> student = this.studentService.getStudentByEmail(email);
+        if (student.isPresent()) {
+            return new ResponseEntity<String>("Student found! \n" + student.toString(), HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>("Student does not exist \n", HttpStatus.NOT_FOUND);
+    }
+
     @RequestMapping(value = "studentDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeStudent(@PathVariable ("id") Long id){
 
