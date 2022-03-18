@@ -108,6 +108,7 @@
     border-radius: 1rem 1rem 0rem 0rem;
     list-style: none;
     background-color: var(--secondary);
+      
 }
 .container .b .userBox li{
     color: #FAFAFA;
@@ -126,13 +127,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* min-height: 80%; */
-    height: 100%;
+    min-height: 80%;
     
 }
 
 .container .b .informs .buttons{
-    margin-top: 1rem;
+    margin-top: 2rem;
     
 }
 
@@ -173,7 +173,7 @@
 }
 
 .container .b .userPhot{
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     
 
 }
@@ -197,6 +197,14 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
   }
 
+.container .b .itens{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 80%;
+    padding: 1rem;
+    
+}
 .container .b .userBoxAv{
     display: flex;
     flex-direction: row;
@@ -216,13 +224,4 @@
     font-weight: 700;
     font-size: 1.5rem;
     line-height: 1rem;
-}
-
-.container .b .userBoxAv a:hover{
-    cursor: pointer;
- 
-}
-.container .b .userBox a:hover{
-    cursor: pointer;
- 
 }

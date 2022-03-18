@@ -1,0 +1,41 @@
+.itemContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--gray-100);
+  border-radius: 2rem;
+  padding: 1rem;
+  margin-right: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+}
+
+.itemContainer .itemNota {
+  width: 15%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.itemContainer .itemConteudo {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+}
+
+.itemContainer .itemConteudo .cadeiraNome{
+    font-weight: 700;
+}
+
+.itemContainer .itemConteudo span {
+  text-align: left;
+  font-size: 1.25rem;
+  font-weight: 300;
+  white-space: nowrap;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.itemContainer .itemButton {
+  margin-left: auto;
+}
