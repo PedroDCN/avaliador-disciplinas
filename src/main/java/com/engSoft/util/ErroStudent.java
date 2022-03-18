@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 public class ErroStudent {
     static final String STUDENT_NOT_FOUND = "Student not found";
-    static final String STUDENT_ALREADY_EXISTS = "Student not found";
+    static final String STUDENT_ALREADY_EXISTS = "Student Already Exists";
 
 
     public static ResponseEntity<CustomErrorType> erroStudentNotFound() {
