@@ -47,7 +47,7 @@ public class FeedbackController {
         Feedback newFeedback = new Feedback(feedbackDTO);
         try {
             feedbackService.saveFeedback(newFeedback);
-            courseService.updateGrade(optionalCourse.get(), newFeedback);
+            courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
             return new ResponseEntity<String>("Feedback succesfully created! \n" + newFeedback, HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<CustomErrorType>(

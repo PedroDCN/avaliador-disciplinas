@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Teacher {
+public class Teacher implements Comparable<Teacher> {
     @Id
     @GeneratedValue
     private Long id;
@@ -40,5 +40,10 @@ public class Teacher {
     public String toString() {
         return "Teacher{" +
                 "id=" + id + ", name= " + name + " }";
+    }
+
+    @Override
+    public int compareTo(Teacher o) {
+        return this.name.compareTo(o.getName());
     }
 }
