@@ -59,9 +59,9 @@ function UserComentarios() {
                             <li><a onClick={() =>
                                 navigate("/user")}>Perfil</a></li>
                         </ul>
-                        <div className={styles.itens}>
+                        {/* <div className={styles.itens}>
 
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>
