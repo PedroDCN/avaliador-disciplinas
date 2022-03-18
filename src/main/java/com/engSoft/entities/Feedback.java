@@ -1,8 +1,7 @@
 package com.engSoft.entities;
 
 import com.engSoft.DTO.FeedbackDTO;
-import com.engSoft.entities.types.ModalityEnum;
-import org.hibernate.type.descriptor.sql.SmallIntTypeDescriptor;
+import com.engSoft.util.Util;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +19,7 @@ public class Feedback {
     private Integer planning;
     private Integer evaluationSystem;
     private Integer courseware;
-    private ModalityEnum modality;
+    private Util.ModalityEnum modality;
 
     public Feedback(FeedbackDTO feedbackDTO) {
         this.idCourse = feedbackDTO.getIdCourse();
@@ -97,11 +96,11 @@ public class Feedback {
         this.courseware = courseware;
     }
 
-    public ModalityEnum getModality() {
+    public Util.ModalityEnum getModality() {
         return modality;
     }
 
-    public void setModality(ModalityEnum modality) {
+    public void setModality(Util.ModalityEnum modality) {
         this.modality = modality;
     }
 
