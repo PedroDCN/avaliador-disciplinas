@@ -21,7 +21,7 @@ const menuItems = {
   logout: { title: "Logout", icon: LogoutIcon },
   login: { title: "Login", icon: LoginIcon },
   cadastrar_disc: { title: "Cadastrar disciplina", icon: DisciplinasIcon },
-  cadastra_prof: { title: "Cadastrar professor", icon: ProfessorIcon },
+  cadastrar_prof: { title: "Cadastrar professor", icon: ProfessorIcon },
   denuncias: { title: "Denúncias", icon: DenunciasIcon },
 };
 
@@ -42,7 +42,8 @@ function NavMenu(props) {
           "disciplinas",
           "professores",
           "cadastrar_disc",
-          "cadastra_prof",
+          "cadastrar_prof",
+          "denuncias",
           "logout",
         ]);
       } else {

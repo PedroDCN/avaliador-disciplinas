@@ -14,20 +14,16 @@ function LoginModal({handleClose, show}) {
     const displayClassname = show ? styles.show : styles.hide;
 
     function handleLoginButton(res) {
-        onSuccessGoogleLogin(res);
-        navigate('/home');
-        handleClose();
-    }
-
-    function handleSignUpButton(res) {
-        onSuccessGoogleLogin(res);
-        // do something with backend
-        navigate('/home');
+        onSuccessGoogleLogin(res).then((success) => {
+            if (success) {
+                navigate('/home');
+            }
+        });
         handleClose();
     }
 
     return (
-        <div className={`modal ${displayClassname}`}>
+        <div className={`${styles.modal} ${displayClassname}`}>
             <div className={styles.container}>
                 <div className={styles.header}>
                     <span>Login</span>
@@ -63,7 +59,7 @@ function LoginModal({handleClose, show}) {
                                 </span>
                             )}
                             buttonText="aqui"
-                            onSuccess={handleSignUpButton}
+                            onSuccess={handleLoginButton}
                             onFailure={onFailureGoogleLogin}
                             cookiePolicy={'single_host_origin'}
                         />

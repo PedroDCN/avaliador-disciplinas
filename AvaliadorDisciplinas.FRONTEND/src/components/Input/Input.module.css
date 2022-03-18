@@ -1,0 +1,20 @@
+.container {
+    width: 100%;
+    background: var(--background-input);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+}
+
+.container input {
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: var(--black);
+    font-weight: 500;
+}
+
+.container input:focus {
+    outline: none;
+}

@@ -43,7 +43,7 @@ function LandingPage() {
 
     return (
         <>
-            <div className={`${styles.container} ${show ? styles.blur : ''}`}>
+            <div className={`${styles.container}`}>
                 <div className={styles.header}>
                     <div className={styles.logo}>
                         <img src={CadeiraIcon} alt="" />

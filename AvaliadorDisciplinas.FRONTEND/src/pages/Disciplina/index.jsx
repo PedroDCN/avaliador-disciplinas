@@ -4,15 +4,17 @@ import DataList from "../../components/DataList";
 import { getAll } from "../../services/disciplinaService";
 import Dropdown from "../../components/Dropdown";
 import { atributosDisciplina } from "../../services/DadosEstaticos";
-import { renderItem } from "./itemListagem";
+import { RenderItem } from "./itemListagem";
+import { useAuth } from '../../contexts/AuthContext';
 
 function DisciplinaIndex() {
   const [disc, setDisc] = useState([]);
   const [loading, setLoading] = useState(false);
   const [atributo, setAtributo] = useState();
   const [text, setText] = useState("");
+  const { user } = useAuth();
 
-  useEffect(() => {
+  useEffect(async () => {
     async function fetchData() {
       setLoading(true);
       const data = await getAll(atributo, text);
@@ -20,7 +22,7 @@ function DisciplinaIndex() {
       setLoading(false);
     }
 
-    fetchData();
+    await fetchData();
   }, [atributo, text]);
 
   return (
@@ -49,7 +51,11 @@ function DisciplinaIndex() {
           </div>
         </div>
         <div className={styles.indexContent}>
-            <DataList data={disc} loading={loading} render={renderItem} />
+            <DataList 
+              data={disc} 
+              loading={loading} 
+              render={item => RenderItem({item, isAdmin: user.isAdmin })} 
+            />
         </div>
       </div>
     </div>

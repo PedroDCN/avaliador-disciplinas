@@ -7,6 +7,8 @@ import NavMenu from '../../components/NavMenu';
 import { useAuth } from '../../contexts/AuthContext';
 import DisciplinaIndex from '../Disciplina';
 import HomePage from '../HomePage';
+import CadastrarDisciplina from '../CadastrarDisciplina';
+import CadastrarProf from '../CadastrarProfessor';
 
 function IndexPage() {
     const [selectedItem, setSelectedItem] = useState("");
@@ -15,6 +17,9 @@ function IndexPage() {
 
     useEffect(() => {
         loadUser();
+        if (user === undefined) {
+            navigate('/');
+        }
     }, []);
 
     function handleLogoClick() {
@@ -49,6 +54,10 @@ function IndexPage() {
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/disciplinas" element={<DisciplinaIndex />} />
                     <Route path="/professores" element={<h1>Professores</h1>} />
+                    <Route path="/cadastrar_disc" element={<CadastrarDisciplina /> } />
+                    <Route path="/cadastrar_prof" element={<CadastrarProf /> } />
+                    <Route path="/cadastrar_disc/:id" element={<CadastrarDisciplina /> } />
+                    <Route path="/cadastrar_prof/:id" element={<CadastrarProf /> } />
                 </Routes>
             </div>
         </div>
