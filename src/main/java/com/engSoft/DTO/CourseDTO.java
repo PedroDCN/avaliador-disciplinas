@@ -5,13 +5,11 @@ public class CourseDTO {
     private String name;
     private String code;
     private String nameTeacher;
-    private String semester;
 
-    public CourseDTO(String name, String code, String nameTeacher, String semester) {
+    public CourseDTO(String name, String code, String nameTeacher) {
         this.name = name;
         this.code = code;
         this.nameTeacher = nameTeacher;
-        this.semester = semester;
     }
 
     public String getName() {
@@ -25,6 +23,4 @@ public class CourseDTO {
     public String getNameTeacher() {
         return nameTeacher;
     }
-
-    public String getSemester() { return semester; }
 }
