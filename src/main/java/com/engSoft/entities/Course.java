@@ -2,9 +2,7 @@ package com.engSoft.entities;
 
 import com.engSoft.DTO.CourseDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,44 +13,33 @@ public class Course {
     private Long id;
     private String name;
     private String code;
-    private Long idTeacher;
-    private Integer courseware, evaluationSystem, methodology, planning, workload;
-    private Integer grade;
-    private Integer countFeedback;
-    private String semester;
+    @ManyToOne
+    private Teacher teacher;
+    private int grade;
 
     public Course() {}
 
-    public Course(CourseDTO courseDTO, Long idTeacher) {
+    public Course(CourseDTO courseDTO, Teacher teacher) {
         this.name = courseDTO.getName();
         this.code = courseDTO.getCode();
-        this.idTeacher = idTeacher;
-        courseware = 0;
-        evaluationSystem = 0;
-        methodology = 0;
-        planning = 0;
-        workload = 0;
+        this.teacher = teacher;
         grade = 0;
-        countFeedback = 0;
-        this.semester = courseDTO.getSemester();
     }
 
-    public void update(CourseDTO courseDTO, Long idTeacher) {
+    public void update(CourseDTO courseDTO, Teacher teacher) {
         this.name = courseDTO.getName();
         this.code = courseDTO.getCode();
-        this.idTeacher = idTeacher;
-        this.semester = courseDTO.getSemester();
+        this.teacher = teacher;
     }
 
-    public void updateGrade(Feedback feedback) {
-        courseware = (courseware * countFeedback + feedback.getCourseware())/(countFeedback + 1);
-        evaluationSystem = (evaluationSystem * countFeedback + feedback.getEvaluationSystem())/(countFeedback + 1);
-        methodology = (methodology * countFeedback + feedback.getMethodology())/(countFeedback + 1);
-        planning = (planning * countFeedback + feedback.getPlanning())/(countFeedback + 1);
-        workload = (workload * countFeedback + feedback.getWorkload())/(countFeedback + 1);
-
-        grade = (courseware + evaluationSystem + methodology + planning + workload) / 5;
-        countFeedback++;
+    public void updateGrade(List<Feedback> feedbacks) {
+        int soma = 0;
+        int count = 0;
+        for(Feedback feedback : feedbacks) {
+            soma += feedback.getCourseware() + feedback.getMethodology() + feedback.getPlanning() + feedback.getWorkload() + feedback.getEvaluationSystem();
+            count++;
+        }
+        grade = (soma/5)/count;
     }
 
     public Long getId() {
@@ -67,21 +54,11 @@ public class Course {
         return code;
     }
 
-    public Long getIdTeacher() {
-        return idTeacher;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public Integer getGrade() { return grade; }
-
-    public String getSemester() { return semester;}
-
-    public String toSimpleString() {
-        return "Course{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", grade='" + grade + '\'' +
-                '}';
-    }
+    public int getGrade() { return grade; }
 
     @Override
     public String toString() {
@@ -89,14 +66,8 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
-                ", idTeacher=" + idTeacher +
-                ", courseware=" + courseware +
-                ", evaluationSystem=" + evaluationSystem +
-                ", methodology=" + methodology +
-                ", planning=" + planning +
-                ", workload=" + workload +
+                ", teacher=" + teacher +
                 ", grade=" + grade +
-                ", semester='" + semester + '\'' +
                 '}';
     }
 }

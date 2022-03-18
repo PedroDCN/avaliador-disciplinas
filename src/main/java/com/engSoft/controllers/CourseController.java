@@ -1,12 +1,14 @@
 package com.engSoft.controllers;
 
 import com.engSoft.DTO.CourseDTO;
+import com.engSoft.DTO.SimpleCourseDTO;
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Teacher;
 import com.engSoft.services.CourseService;
 import com.engSoft.services.TeacherService;
 import com.engSoft.util.ErroCourse;
 import com.engSoft.util.ErroTeacher;
+import com.engSoft.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,7 @@ public class CourseController {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
 
         if (optionalTeacher.isPresent()) {
-            Course newCourse = new Course(courseDTO, optionalTeacher.get().getId());
+            Course newCourse = new Course(courseDTO, optionalTeacher.get());
             courseService.saveCourse(newCourse);
 
             return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
@@ -49,7 +51,7 @@ public class CourseController {
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
         if(optionalCourse.isPresent()) {
-            optionalCourse.get().update(courseDTO, optionalTeacher.get().getId());
+            optionalCourse.get().update(courseDTO, optionalTeacher.get());
             courseService.saveCourse(optionalCourse.get());
 
             return new ResponseEntity<>(optionalCourse, HttpStatus.CREATED);
@@ -59,25 +61,13 @@ public class CourseController {
 
     @RequestMapping(value = "/Courses", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCourses(){
-        List<String> courses = this.courseService.listCourses();
+        List<SimpleCourseDTO> courses = this.courseService.listCourses();
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/Courses/name", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCoursesSortName(){
-        List<String> courses = this.courseService.listCoursesSortName();
-        return new ResponseEntity<>(courses, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/Courses/semester", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCoursesSortSemester(){
-        List<String> courses = this.courseService.listCoursesSortSemester();
-        return new ResponseEntity<>(courses, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/Courses/grade", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCoursesSortGrade(){
-        List<String> courses = this.courseService.listCoursesSortGrade();
+    @RequestMapping(value = "/Courses/{filter}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCoursesFilter(@PathVariable("filter") Util.FilterEnum filter){
+        List<SimpleCourseDTO> courses = this.courseService.listCoursesFilter(filter);
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
@@ -86,18 +76,18 @@ public class CourseController {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(nameTeacher);
 
         if (optionalTeacher.isPresent()) {
-            List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get().getId());
+            List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get());
             return new ResponseEntity<>(courses, HttpStatus.OK);
         } else
             return ErroTeacher.erroTeacherNotFound();
     }
 
-    @RequestMapping(value = "/Courses/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/Course/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getCourse(@PathVariable("id") Long id){
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
         if(optionalCourse.isPresent())
-            return new ResponseEntity<>(optionalCourse, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(optionalCourse.get(), HttpStatus.ACCEPTED);
         else
             return ErroCourse.erroCourseNotFound();
     }
@@ -108,7 +98,7 @@ public class CourseController {
 
         if(optionalCourse.isPresent()) {
             courseService.removeCourse(optionalCourse.get());
-            return new ResponseEntity<>(optionalCourse, HttpStatus.OK);
+            return new ResponseEntity<>(optionalCourse.get(), HttpStatus.OK);
         } else
             return ErroCourse.erroCourseNotFound();
     }
