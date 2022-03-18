@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styles from './IndexPage.module.css';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-
 import CadeiraIcon from '../../assets/icons/chair_icon.svg';
 import UserImage from '../../assets/icons/user_anonimous.svg';
-import WelcomeImage from '../../assets/icons/people_rating.svg';
 import NavMenu from '../../components/NavMenu';
 import { useAuth } from '../../contexts/AuthContext';
+import DisciplinaIndex from '../Disciplina';
+import HomePage from '../HomePage';
 
 function IndexPage() {
     const [selectedItem, setSelectedItem] = useState("");
@@ -15,7 +15,7 @@ function IndexPage() {
 
     useEffect(() => {
         loadUser();
-    },[]);
+    });
 
     function handleLogoClick() {
         setSelectedItem("");
@@ -45,15 +45,9 @@ function IndexPage() {
                 </div>
             </div>
             <div className={styles.content}>
-                {/* Esta div será trocada de acordo com o conteúdo que o usuário escolher */}
                 <Routes>
-                    <Route path="/home" element={(
-                        <div className={styles.welcomeBox}>
-                            <img src={WelcomeImage} alt="People rating other people through a window" />
-                            <span>Selecione uma das opções ao lado para conferir as disciplinas, professores ou simular o período.</span>
-                        </div>
-                    )} />
-                    <Route path="/disciplinas" element={<h1>Disciplinas</h1>} />
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/disciplinas" element={<DisciplinaIndex />} />
                     <Route path="/professores" element={<h1>Professores</h1>} />
                 </Routes>
             </div>
