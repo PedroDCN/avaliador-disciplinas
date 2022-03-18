@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.engSoft.util.ErroStudent.erroStudentAlreadyExist;
+import static com.engSoft.util.ErroStudent.erroStudentNotFound;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
@@ -25,16 +28,16 @@ public class StudentController {
         Student newStudent = new Student(studentDTO);
         Optional<Student> possibleStudent = studentService.getStudentByEmail(newStudent.getEmail());
         if (possibleStudent.isPresent()) {
-            return new ResponseEntity<>("Student already exists \n", HttpStatus.CONFLICT);
+            return erroStudentAlreadyExist();
         }
         this.studentService.saveStudent(newStudent);
-        return new ResponseEntity<String>("Student succesfully created! \n" + newStudent.toString(), HttpStatus.CREATED);
+        return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ResponseEntity<?> getAllStudents(){
         List<Student> students = this.studentService.listStudents();
-        return new ResponseEntity<String>("Ok! \n" + students, HttpStatus.OK);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/students/{id}", method = RequestMethod.GET)
@@ -42,9 +45,9 @@ public class StudentController {
 
         Optional<Student> student = this.studentService.getStudentById(id);
         if (student.isPresent()) {
-            return new ResponseEntity<String>("Student found! \n" + student.toString(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(student, HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity<>("Student does not exist \n", HttpStatus.NOT_FOUND);
+        return erroStudentNotFound();
     }
 
     @RequestMapping(value = "/students/email/{email}", method = RequestMethod.GET)
@@ -52,9 +55,9 @@ public class StudentController {
 
         Optional<Student> student = this.studentService.getStudentByEmail(email);
         if (student.isPresent()) {
-            return new ResponseEntity<String>("Student found! \n" + student.toString(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(student, HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity<>("Student does not exist \n", HttpStatus.NOT_FOUND);
+        return erroStudentNotFound();
     }
 
     @RequestMapping(value = "studentDelete/{id}", method = RequestMethod.DELETE)
@@ -63,8 +66,8 @@ public class StudentController {
         Optional<Student> toBeDeletedStudent = this.studentService.getStudentById(id);
         if (toBeDeletedStudent.isPresent()) {
             this.studentService.removeStudent(toBeDeletedStudent.get());
-            return new ResponseEntity<String>("Student succesfully deleted \n" + toBeDeletedStudent.toString(), HttpStatus.OK);
+            return new ResponseEntity<>(toBeDeletedStudent, HttpStatus.OK);
         }
-        return new ResponseEntity<>("Student does not exist \n", HttpStatus.NO_CONTENT);
+        return erroStudentNotFound();
     }
 }

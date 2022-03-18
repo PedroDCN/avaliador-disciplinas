@@ -34,7 +34,7 @@ public class CourseController {
             Course newCourse = new Course(courseDTO, optionalTeacher.get().getId());
             courseService.saveCourse(newCourse);
 
-            return new ResponseEntity<String>("Course succesfully created! \n" + newCourse, HttpStatus.CREATED);
+            return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
         } else
             return ErroTeacher.erroTeacherNotFound();
     }
@@ -52,7 +52,7 @@ public class CourseController {
             optionalCourse.get().update(courseDTO, optionalTeacher.get().getId());
             courseService.saveCourse(optionalCourse.get());
 
-            return new ResponseEntity<String>("Course succesfully updated! \n" + optionalCourse, HttpStatus.CREATED);
+            return new ResponseEntity<>(optionalCourse, HttpStatus.CREATED);
         } else
             return ErroCourse.erroCourseNotFound();
     }
@@ -60,25 +60,25 @@ public class CourseController {
     @RequestMapping(value = "/Courses", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCourses(){
         List<String> courses = this.courseService.listCourses();
-        return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/Courses/name", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesSortName(){
         List<String> courses = this.courseService.listCoursesSortName();
-        return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/Courses/semester", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesSortSemester(){
         List<String> courses = this.courseService.listCoursesSortSemester();
-        return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/Courses/grade", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesSortGrade(){
         List<String> courses = this.courseService.listCoursesSortGrade();
-        return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/CoursesTeacher/{nameTeacher}", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class CourseController {
 
         if (optionalTeacher.isPresent()) {
             List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get().getId());
-            return new ResponseEntity<String>("Ok! \n" + courses, HttpStatus.OK);
+            return new ResponseEntity<>(courses, HttpStatus.OK);
         } else
             return ErroTeacher.erroTeacherNotFound();
     }
@@ -97,7 +97,7 @@ public class CourseController {
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
         if(optionalCourse.isPresent())
-            return new ResponseEntity<String>("Course found! \n" + optionalCourse, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(optionalCourse, HttpStatus.ACCEPTED);
         else
             return ErroCourse.erroCourseNotFound();
     }
@@ -108,7 +108,7 @@ public class CourseController {
 
         if(optionalCourse.isPresent()) {
             courseService.removeCourse(optionalCourse.get());
-            return new ResponseEntity<String>("Course succesfully deleted \n" + optionalCourse, HttpStatus.OK);
+            return new ResponseEntity<>(optionalCourse, HttpStatus.OK);
         } else
             return ErroCourse.erroCourseNotFound();
     }
