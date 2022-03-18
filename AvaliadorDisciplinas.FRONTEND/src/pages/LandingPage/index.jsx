@@ -39,7 +39,7 @@ function LandingPage() {
             }
         }
         redirectWhileValidToken();
-    });
+    }, []);
 
     return (
         <>

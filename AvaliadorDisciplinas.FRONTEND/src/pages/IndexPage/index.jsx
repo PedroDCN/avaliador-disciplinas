@@ -15,7 +15,7 @@ function IndexPage() {
 
     useEffect(() => {
         loadUser();
-    });
+    }, []);
 
     function handleLogoClick() {
         setSelectedItem("");
