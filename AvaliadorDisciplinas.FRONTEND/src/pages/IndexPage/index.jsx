@@ -52,12 +52,15 @@ function IndexPage() {
             <div className={styles.content}>
                 <Routes>
                     <Route path="/home" element={<HomePage />} />
+                    <Route path="/avaliar" element={<h1>Avaliar</h1>} />
+                    <Route path="/simular" element={<h1>Simular</h1>} />
                     <Route path="/disciplinas" element={<DisciplinaIndex />} />
                     <Route path="/professores" element={<h1>Professores</h1>} />
                     <Route path="/cadastrar_disc" element={<CadastrarDisciplina /> } />
                     <Route path="/cadastrar_prof" element={<CadastrarProf /> } />
                     <Route path="/cadastrar_disc/:id" element={<CadastrarDisciplina /> } />
                     <Route path="/cadastrar_prof/:id" element={<CadastrarProf /> } />
+                    <Route path="/denuncias" element={<h1>Denúncias</h1>} />
                 </Routes>
             </div>
         </div>
