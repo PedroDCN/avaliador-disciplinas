@@ -4,6 +4,7 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import DisciplinaIndex from "./pages/Disciplina";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
+import ProfessorIndex from "./pages/Professor";
 
 function Router() {
   return (
@@ -13,6 +14,7 @@ function Router() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/disciplinas" element={<DisciplinaIndex />} />
+          <Route path="/professores" element={<ProfessorIndex />} />
         </Routes>
       </AuthContextProvider>
     </BrowserRouter>

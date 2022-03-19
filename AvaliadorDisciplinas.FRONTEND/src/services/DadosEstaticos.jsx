@@ -83,6 +83,30 @@ export function disciplinasEstaticas() {
   ];
 }
 
+export function professoresEstaticos() {
+  return [
+    {
+      nome: "REINALDO CEZAR DE MORAIS GOMES",
+      foto: "https://randomuser.me/api/portraits/med/men/75.jpg",
+      disciplinas: ["ADMINISTRACAO DE SISTEMAS"],
+    },
+    {
+      nome: "JOSE LUIZ NETO",
+      foto: "https://randomuser.me/api/portraits/med/men/70.jpg",
+      disciplinas: ["ALGEBRA LINEAR I"],
+    },
+    {
+      nome: "CLAUDIO DE SOUZA BAPTISTA",
+      foto: "https://randomuser.me/api/portraits/med/men/1.jpg",
+      disciplinas: ["BANCO DE DADOS I"],
+    },
+  ];
+}
+
+export function atributosProfessor() {
+  return [{ value: "nome", text: "Nome" }];
+}
+
 export function atributosDisciplina() {
   return [
     { value: "nome", text: "Nome" },

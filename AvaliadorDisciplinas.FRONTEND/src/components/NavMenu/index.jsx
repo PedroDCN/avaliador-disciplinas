@@ -71,6 +71,8 @@ function NavMenu() {
                   logout();
                 } else if (item === "disciplinas") {
                   navigate("/disciplinas");
+                } else if (item === "professores") {
+                  navigate("/professores");
                 }
               }}
             >
