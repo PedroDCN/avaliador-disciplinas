@@ -9,15 +9,14 @@
   box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
 }
 
-
 .itemContainer .itemConteudo {
   display: flex;
   flex-direction: column;
   padding-left: 1rem;
 }
 
-.itemContainer .itemConteudo .cadeiraNome{
-    font-weight: 700;
+.itemContainer .itemConteudo .comentario{
+  font-weight: 500;
 }
 
 .itemContainer .itemConteudo span {
@@ -27,8 +26,8 @@
   white-space: nowrap; 
   width: 35rem; 
   overflow: hidden;
-  text-overflow: ellipsis;
-   
+  text-overflow: ellipsis; 
+ 
 }
 
 .itemContainer .itemButton {

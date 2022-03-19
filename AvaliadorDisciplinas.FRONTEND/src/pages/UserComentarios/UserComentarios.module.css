@@ -3,18 +3,18 @@
     height: 100vh;
     display: flex;
     flex-direction: row;
-}
-
-.container .navMenu {
+  }
+  
+  .container .navMenu {
     height: 100%;
     width: 20%;
     min-width: 280px;
     display: flex;
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
-}
-
-.container .userBox {
+  }
+  
+  .container .userBox {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -22,206 +22,90 @@
     align-items: center;
     gap: 1rem;
     background: var(--primary);
-}
-
-.container .userBox img {
+  }
+  
+  .container .userBox img {
     border-radius: 50%;
     border: 0.25rem solid var(--white);
-}
-
-.container .userBox span {
+  }
+  
+  .container .userBox span {
     color: var(--white);
     font-weight: 400;
     font-size: 1.15rem;
-}
-
-.container .menuItems {
+  }
+  
+  .container .menuItems {
     flex-grow: 6;
     background: var(--secondary);
     padding: 1.25rem;
-}
-
-.container .content {
+  }
+  
+  .container .content {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.container .content .welcomeBox {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #F3F3F3;
-    border-radius: 2rem;
+  }
+  
+  .container .content .header {
+    width: 70%;
+    height: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: var(--secondary);
+    border-top-left-radius: 1.3rem;
+    border-top-right-radius: 1.3rem;
     padding: 2rem;
-    gap: 1rem;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
-}
-
-.container .content .welcomeBox img {
-    width: 38rem;
-}
-
-.container .content .welcomeBox img:hover {
-    cursor:pointer;
-}
-
-.container .content .welcomeBox span {
-    width: 26rem;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 300;
-    user-select: none;
-}
-
-
-.container .b{
-    position: absolute;
-    width: 60%;
-    left: 30%;
-    top: 7.2rem; 
-    display: flex;
-    flex-direction: row;
-    border-radius: 1rem 1rem 0rem 0rem;
-    list-style: none;
-    flex-flow: column;
-    max-height: 82.5%;
-    height: 100%;
+    margin-top: 11%;
+  }
+  
+    .content .header .userNav{
+        display: flex;
+        flex-direction: row;
+        gap: 7.8rem;
+        max-height: min-content;
+        border-radius: 1rem 1rem 0rem 0rem;
+        list-style: none;
+        background-color: var(--secondary);
+        
+    }
+    .content .header .userNav li{
+        color: #FAFAFA;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 1.5rem;
+        line-height: 1rem;
+        opacity: 0.7;
     
-}
+    }
+    .content .header .userNav li:hover{
 
-.container .b{
-    justify-content: center;
-    align-content: center;
-    border: 1px solid #9E9E9E;
-    border-radius: 1.2rem 1.2rem 0rem 0rem;
-    
-}
-.container .b .userBox{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    max-height: min-content;
-    padding: 2rem;
-    border-radius: 1rem 1rem 0rem 0rem;
-    list-style: none;
-    background-color: var(--secondary);
-      
-}
-.container .b .userBox li{
-    color: #FAFAFA;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 1rem;
-}
-
-.container .b .userBox a:hover{
     cursor: pointer;
- 
-}
-.container .b .informs{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 80%;
-    
-}
+    transform: scale(1.075);
+    }
 
-.container .b .informs .buttons{
-    margin-top: 2rem;
-    
-}
-
-.container .b .inputs{
-    display: flex;
-    flex-direction: column;
-    border-radius: 100rem;
-    
-}
-
-.container .b .inputs input{
-    display: flex;
-    flex-direction: column;
-    margin-top: 5rem;  
-    border-radius: .5rem;
-    margin-top: 1.5rem;
-    padding: 1.5rem 1.5rem;
-    width: 44.625rem;
-    height: 3.5rem;
-    background-color: #E5E5E5;
-    border: solid #E5E5E5;;
-    align-self: center;
-    
-}
-.container .b .inputs input[type="email"]::placeholder,
-.container .b .inputs input[type="nickName"]::placeholder,
-.container .b .inputs input[type="userName"]::placeholder{
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 1.2rem;
-    line-height: 30px;
-    display: flex;
-    align-items: left;
-    justify-content: left;
-    color: #9E9E9E;
-    padding: 0;
-}
-
-.container .b .userPhot{
-    margin-top: 1.5rem;
-    
-
-}
-
-.container .content .indexContent {
-    width: 60%;
+    .container .content .itens {
+    width: 70%;
     height: 81.5%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-top-left-radius: 2rem;
-    border-top-right-radius: 2rem;
-    margin-top: 1%;
-    padding-top: 2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     gap: 1rem;
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
-  }
+    }
 
-.container .b .itens{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 80%;
-    padding: 1rem;
-    
-}
-.container .b .userBoxAv{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 1rem 1rem;
-    max-height: min-content;
-    border-radius: 1rem 1rem 0rem 0rem;
-    list-style: none;
-    background-color: var(--secondary);
-    
-}
-
-.container .b .userBoxAv li{
-    color: #FAFAFA;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 1rem;
-}
+    .container .content .header .active{
+        opacity: 1;
+    }

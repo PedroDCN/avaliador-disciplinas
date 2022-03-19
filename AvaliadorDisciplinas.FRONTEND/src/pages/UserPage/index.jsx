@@ -1,6 +1,4 @@
-import DataList from '../../components/DataList';
 import React, { useEffect, useState } from 'react';
-
 import colors from '../../styles/colorsConfig.json';
 import Button from '../../components/Button';
 import { useAuth } from '../../contexts/AuthContext';
@@ -8,18 +6,16 @@ import UserImage from '../../assets/icons/user_anonimous.svg';
 import styles from './UserPage.module.css';
 import NavMenu from '../../components/NavMenu';
 import { useNavigate } from 'react-router-dom';
-import { renderItem } from "../Disciplina/itemListagem";
 import { getAll } from "../../services/disciplinaService";
 
 
 function UserPage() {
     const { user } = useAuth();
-    const navigate = useNavigate();
-
     const [disc, setDisc] = useState([]);
     const [loading, setLoading] = useState(false);
     const [atributo, setAtributo] = useState();
     const [text, setText] = useState("");
+    const navigate = useNavigate();
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
@@ -31,69 +27,64 @@ function UserPage() {
         fetchData();
     }, [atributo, text]);
 
-
     return (
-        <>
-            <div className={styles.container}>
-                <div className={styles.navMenu}>
-
-                    <div className={styles.userBox}>
-                        <a href="">
-                            <img
-                                src={user === undefined ? UserImage : user.photo}
-                                alt="User Logged"
-                                height={96}
-                                width={96} />
-                        </a>
-                        <span>{user === undefined ? "Usuário Anônimo" : user.name}</span>
-
-                    </div>
-                    <div className={styles.menuItems}>
-                        <NavMenu />
-                    </div>
-
+        <div className={styles.container}>
+            <div className={styles.navMenu}>
+                <div className={styles.userBox}>
+                    <img
+                        src={user === undefined ? UserImage : user.photo}
+                        alt="User Logged"
+                        height={96}
+                        width={96}
+                    />
+                    <span>{user === undefined ? "Usuário Anônimo" : user.name}</span>
                 </div>
-
-                <div className={styles.b}>
-                    <ul className={styles.userBox}>
+                <div className={styles.menuItems}>
+                    <NavMenu />
+                </div>
+            </div>
+            <div className={styles.content}>
+                <div className={styles.header}>
+                    <span><ul className={styles.userNav}>
                         <li><a onClick={() =>
                             navigate("/userAvaliacoes")}>Avaliações</a></li>
                         <li><a onClick={() =>
                             navigate("/userComentarios")}>Comentários</a></li>
-                        <li><a onClick={() =>
+                        <li className={styles.active}><a onClick={() =>
                             navigate("/user")}>Perfil</a></li>
-                    </ul>
-                    <div className={styles.informs}>
-                        <div className={styles.userPhot}>
-                            <img
-                                src={user === undefined ? UserImage : user.photo}
-                                alt="User Logged"
-                                height={96}
-                                width={96} />
-                        </div>
+                    </ul></span>
+                </div>
+                <div className={styles.itens}>
 
-                        <div className={styles.inputs}>
-                            <input type="email" placeholder='email@ccc.ufcg.edu.br' disabled />
-                            <input type="userName" placeholder='Name Surname' disabled />
-                            <input type="nickName" placeholder='nickname' />
-                        </div>
-                        <div className={styles.buttons}>
+                    <div className={styles.userPhot}>
+                        <img
+                            src={user === undefined ? UserImage : user.photo}
+                            alt="User Logged"
+                            height={96}
+                            width={96} />
+                    </div>
 
-                            <Button
-                                buttontitle="SALVAR"
-                                backgroundcolor={colors.theme.secondary}
-                                width="14rem"
-                                color={colors.theme.white}
-                            // onClick={}
-                            />
-                        </div>
+                    <div className={styles.inputs}>
+                        <input type="email" placeholder='email@ccc.ufcg.edu.br' disabled />
+                        <input type="userName" placeholder='Name Surname' disabled />
+                        <input type="nickName" placeholder='nickname' />
+                    </div>
+                    <div className={styles.buttons}>
+
+                        <Button
+                            buttontitle="SALVAR"
+                            backgroundcolor={colors.theme.secondary}
+                            width="14rem"
+                            color={colors.theme.white}
+                        // onClick={}
+                        />
                     </div>
                 </div>
             </div>
+        </div>
+    );
 
-        </>
 
-    )
 
 }
 
