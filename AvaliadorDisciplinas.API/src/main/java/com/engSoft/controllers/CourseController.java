@@ -28,6 +28,37 @@ public class CourseController {
     @Autowired
     TeacherService teacherService;
 
+    @RequestMapping(value = "/admin/Course", method = RequestMethod.POST)
+    public ResponseEntity<?> createCourse(@RequestBody CourseDTO courseDTO) {
+        Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
+
+        if (optionalTeacher.isPresent()) {
+            Course newCourse = new Course(courseDTO, optionalTeacher.get());
+            courseService.saveCourse(newCourse);
+
+            return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
+        } else
+            return ErroTeacher.erroTeacherNotFound();
+    }
+
+    @RequestMapping(value = "/admin/CourseUpdate/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestBody CourseDTO courseDTO) {
+        Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
+
+        if(!optionalTeacher.isPresent())
+            return ErroTeacher.erroTeacherNotFound();
+
+        Optional<Course> optionalCourse = courseService.findCourseById(id);
+
+        if(optionalCourse.isPresent()) {
+            optionalCourse.get().update(courseDTO, optionalTeacher.get());
+            courseService.saveCourse(optionalCourse.get());
+
+            return new ResponseEntity<>(optionalCourse, HttpStatus.CREATED);
+        } else
+            return ErroCourse.erroCourseNotFound();
+    }
+
     @RequestMapping(value = "/Courses", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCourses(){
         List<SimpleCourseDTO> courses = this.courseService.listCourses();
@@ -58,6 +89,17 @@ public class CourseController {
         if(optionalCourse.isPresent())
             return new ResponseEntity<>(optionalCourse.get(), HttpStatus.ACCEPTED);
         else
+            return ErroCourse.erroCourseNotFound();
+    }
+
+    @RequestMapping(value = "/admin/CourseDelete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeCourse(@PathVariable ("id") Long id){
+        Optional<Course> optionalCourse = courseService.findCourseById(id);
+
+        if(optionalCourse.isPresent()) {
+            courseService.removeCourse(optionalCourse.get());
+            return new ResponseEntity<>(optionalCourse.get(), HttpStatus.OK);
+        } else
             return ErroCourse.erroCourseNotFound();
     }
 }

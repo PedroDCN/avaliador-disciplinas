@@ -77,4 +77,21 @@ public class CommentController {
 
         return new ResponseEntity<>(optionalComment, HttpStatus.FOUND);
     }
+
+    @RequestMapping(value = "/admin/Comment/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeComment(@PathVariable ("id") Long id){
+        Optional<Comment> optionalComment = commentService.findCommentById(id);
+
+        if(!optionalComment.isPresent())
+            return ErroComment.erroCommentNotFound();
+
+        try{
+            commentService.removeComment(id);
+            return new ResponseEntity<>(optionalComment, HttpStatus.OK);
+        }catch (Error e ){
+            return new ResponseEntity<CustomErrorType>(
+                    new CustomErrorType("Error, comment can´t be deleted"), HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }

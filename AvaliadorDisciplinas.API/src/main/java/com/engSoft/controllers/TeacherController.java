@@ -22,6 +22,24 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
+    @RequestMapping(value = "/admin/Teacher", method = RequestMethod.POST)
+    public ResponseEntity<?> createTeacher(@RequestBody TeacherDTO teacherDTO){
+
+//        TeacherDTO teacherDTO = new TeacherDTO(name);
+        Teacher newTeacher = new Teacher(teacherDTO);
+        Optional<Teacher> auxTeacher = teacherService.getTeacherByName(newTeacher.getName());
+        if(auxTeacher.isPresent()){
+            return erroTeacherAlreadyExist();
+        }
+        this.teacherService.saveTeacher(newTeacher);
+        return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/admin/Teacher/{id}" , method = RequestMethod.PUT)
+    public ResponseEntity<?> updateTeacher(@PathVariable ("id") String name){
+        return new ResponseEntity<>("Teacher succesfully updated! \n", HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public ResponseEntity<?> getAllTeachers(){
         List<Teacher> teachers = this.teacherService.listTeachers();
@@ -43,6 +61,18 @@ public class TeacherController {
         Optional<Teacher> teacher = this.teacherService.getTeacherById(id);
         if (teacher.isPresent()){
             return new ResponseEntity<>(teacher, HttpStatus.ACCEPTED);
+        }
+        return erroTeacherNotFound();
+    }
+
+    @RequestMapping(value = "/admin/TeacherDelete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeTeacher(@PathVariable ("id") Long id){
+
+        Optional<Teacher> toBeDeletedTeacher = this.teacherService.getTeacherById(id);
+        if (toBeDeletedTeacher.isPresent())
+        {
+            this.teacherService.removeTeacher(toBeDeletedTeacher.get());
+            return new ResponseEntity<>(toBeDeletedTeacher.get() ,HttpStatus.OK);
         }
         return erroTeacherNotFound();
     }
