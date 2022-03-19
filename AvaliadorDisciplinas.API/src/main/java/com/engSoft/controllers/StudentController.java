@@ -1,8 +1,8 @@
 package com.engSoft.controllers;
 
-import com.engSoft.DTO.StudentDTO;
-import com.engSoft.entities.Student;
-import com.engSoft.services.StudentService;
+import com.engSoft.DTO.UserDTO;
+import com.engSoft.entities.User;
+import com.engSoft.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static com.engSoft.util.ErroStudent.erroStudentAlreadyExist;
-import static com.engSoft.util.ErroStudent.erroStudentNotFound;
+import static com.engSoft.util.ErroUser.erroUserAlreadyExist;
+import static com.engSoft.util.ErroUser.erroUserNotFound;
 
 @RestController
 @RequestMapping("/api")
@@ -20,54 +20,54 @@ import static com.engSoft.util.ErroStudent.erroStudentNotFound;
 public class StudentController {
 
     @Autowired
-    StudentService studentService;
+    UserService userService;
 
     @RequestMapping(value = "/student", method = RequestMethod.POST)
-    public ResponseEntity<?> createStudent(@RequestBody StudentDTO studentDTO){
+    public ResponseEntity<?> createStudent(@RequestBody UserDTO userDTO){
 
-        Student newStudent = new Student(studentDTO);
-        Optional<Student> possibleStudent = studentService.getStudentByEmail(newStudent.getEmail());
+        User newUser = new User(userDTO);
+        Optional<User> possibleStudent = userService.getUserByEmail(newUser.getEmail());
         if (possibleStudent.isPresent()) {
-            return erroStudentAlreadyExist();
+            return erroUserAlreadyExist();
         }
-        this.studentService.saveStudent(newStudent);
-        return new ResponseEntity<>(newStudent, HttpStatus.CREATED);
+        this.userService.saveUser(newUser);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public ResponseEntity<?> getAllStudents(){
-        List<Student> students = this.studentService.listStudents();
-        return new ResponseEntity<>(students, HttpStatus.OK);
+        List<User> users = this.userService.listUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/students/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getStudent(@PathVariable ("id") Long id){
 
-        Optional<Student> student = this.studentService.getStudentById(id);
+        Optional<User> student = this.userService.getUserById(id);
         if (student.isPresent()) {
             return new ResponseEntity<>(student, HttpStatus.ACCEPTED);
         }
-        return erroStudentNotFound();
+        return erroUserNotFound();
     }
 
     @RequestMapping(value = "/students/email/{email}", method = RequestMethod.GET)
     public ResponseEntity<?> getStudentByEmail(@PathVariable ("email") String email){
 
-        Optional<Student> student = this.studentService.getStudentByEmail(email);
+        Optional<User> student = this.userService.getUserByEmail(email);
         if (student.isPresent()) {
             return new ResponseEntity<>(student, HttpStatus.ACCEPTED);
         }
-        return erroStudentNotFound();
+        return erroUserNotFound();
     }
 
     @RequestMapping(value = "studentDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeStudent(@PathVariable ("id") Long id){
 
-        Optional<Student> toBeDeletedStudent = this.studentService.getStudentById(id);
+        Optional<User> toBeDeletedStudent = this.userService.getUserById(id);
         if (toBeDeletedStudent.isPresent()) {
-            this.studentService.removeStudent(toBeDeletedStudent.get());
+            this.userService.removeUser(toBeDeletedStudent.get());
             return new ResponseEntity<>(toBeDeletedStudent, HttpStatus.OK);
         }
-        return erroStudentNotFound();
+        return erroUserNotFound();
     }
 }

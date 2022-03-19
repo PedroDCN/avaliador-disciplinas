@@ -4,10 +4,10 @@ package com.engSoft.controllers;
 import com.engSoft.DTO.CommentDTO;
 import com.engSoft.entities.Comment;
 import com.engSoft.entities.Course;
-import com.engSoft.entities.Student;
+import com.engSoft.entities.User;
 import com.engSoft.services.CommentService;
 import com.engSoft.services.CourseService;
-import com.engSoft.services.StudentService;
+import com.engSoft.services.UserService;
 import com.engSoft.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,19 +28,19 @@ public class CommentController {
     CourseService courseService;
 
     @Autowired
-    StudentService studentService;
+    UserService userService;
 
     @RequestMapping(value = "/Comment", method = RequestMethod.POST)
     public ResponseEntity<?> createComment(@RequestBody CommentDTO commentDTO) {
         Optional<Course> optionalCourse = courseService.findCourseById(commentDTO.getIdCourse());
 
-        Optional<Student> optionalStudent = studentService.getStudentById(commentDTO.getIdStudent());
+        Optional<User> optionalStudent = userService.getUserById(commentDTO.getIdStudent());
 
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
         if (!optionalStudent.isPresent()){
-            return ErroStudent.erroStudentNotFound();
+            return ErroUser.erroUserNotFound();
         }
         Comment newComment = new Comment(commentDTO);
         try {
@@ -76,22 +76,5 @@ public class CommentController {
             return ErroComment.erroCommentNotFound();
 
         return new ResponseEntity<>(optionalComment, HttpStatus.FOUND);
-    }
-
-    @RequestMapping(value = "/Comment/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> removeComment(@PathVariable ("id") Long id){
-        Optional<Comment> optionalComment = commentService.findCommentById(id);
-
-        if(!optionalComment.isPresent())
-            return ErroComment.erroCommentNotFound();
-
-        try{
-            commentService.removeComment(id);
-            return new ResponseEntity<>(optionalComment, HttpStatus.OK);
-        }catch (Error e ){
-            return new ResponseEntity<CustomErrorType>(
-                    new CustomErrorType("Error, comment can´t be deleted"), HttpStatus.BAD_REQUEST);
-        }
-
     }
 }
