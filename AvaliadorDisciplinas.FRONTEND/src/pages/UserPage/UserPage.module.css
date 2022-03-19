@@ -165,3 +165,6 @@
         cursor: pointer;
      
     }
+    .container .content .header .active{
+        opacity: 1;
+    }
