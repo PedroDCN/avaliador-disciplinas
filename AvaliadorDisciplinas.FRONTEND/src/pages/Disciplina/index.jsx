@@ -35,6 +35,8 @@ function DisciplinaIndex() {
 
   useEffect(() => {
     async function filter() {
+      setLoading(true);
+
       if (atributo && text) {
         setFilteredDisc(
           loadedDisc.filter((disciplina) =>
@@ -47,6 +49,8 @@ function DisciplinaIndex() {
       } else {
         setFilteredDisc(loadedDisc);
       }
+
+      setLoading(false);
     }
 
     filter();
