@@ -11,7 +11,10 @@ import { renderItem } from "./itemListagem";
 
 function DisciplinaIndex() {
   const { user } = useAuth();
-  const [disc, setDisc] = useState([]);
+
+  const [loadedDisc, setLoadedDisc] = useState([]);
+  const [filteredDisc, setFilteredDisc] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const [atributo, setAtributo] = useState();
   const [text, setText] = useState("");
@@ -19,13 +22,35 @@ function DisciplinaIndex() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const data = await getAll(atributo, text);
-      setDisc(data);
+
+      const response = await getAll();
+      setLoadedDisc(response.data);
+      setFilteredDisc(response.data);
+
       setLoading(false);
     }
 
     fetchData();
-  }, [atributo, text]);
+  }, []);
+
+  useEffect(() => {
+    async function filter() {
+      if (atributo && text) {
+        setFilteredDisc(
+          loadedDisc.filter((disciplina) =>
+            disciplina[atributo]
+              .toString()
+              .toLowerCase()
+              .includes(text.toLowerCase())
+          )
+        );
+      } else {
+        setFilteredDisc(loadedDisc);
+      }
+    }
+
+    filter();
+  }, [atributo, text, loadedDisc]);
 
   return (
     <div className={styles.container}>
@@ -69,7 +94,7 @@ function DisciplinaIndex() {
         </div>
 
         <div className={styles.indexContent}>
-          <DataList data={disc} loading={loading} render={renderItem} />
+          <DataList data={filteredDisc} loading={loading} render={renderItem} />
         </div>
       </div>
     </div>

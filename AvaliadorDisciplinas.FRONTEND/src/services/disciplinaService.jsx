@@ -1,20 +1,7 @@
-import { disciplinasEstaticas } from "./DadosEstaticos";
+import axios from "axios";
 
-export async function getAll(atributo, text) {
-  return await new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (atributo && text) {
-        resolve(
-          disciplinasEstaticas().filter((disciplina) =>
-            disciplina[atributo]
-              .toString()
-              .toLowerCase()
-              .includes(text.toLowerCase())
-          )
-        );
-      } else {
-        resolve(disciplinasEstaticas());
-      }
-    }, 500);
-  });
+const baseUrl = "https://avaliador-disciplinas.herokuapp.com/api";
+
+export async function getAll() {
+  return await axios.get(`${baseUrl}/Courses`);
 }
