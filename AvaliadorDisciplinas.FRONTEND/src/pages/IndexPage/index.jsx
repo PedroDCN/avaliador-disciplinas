@@ -16,10 +16,13 @@ function IndexPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        loadUser();
-        if (user === undefined) {
-            navigate('/');
+        function checkTokenInvalid() {
+            const tokenInvalid = loadUser();
+            if (tokenInvalid) {
+                navigate('/');
+            }
         }
+        checkTokenInvalid();
     }, []);
 
     function handleLogoClick() {

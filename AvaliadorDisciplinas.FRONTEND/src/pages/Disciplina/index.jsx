@@ -14,7 +14,7 @@ function DisciplinaIndex() {
   const [text, setText] = useState("");
   const { user } = useAuth();
 
-  useEffect(async () => {
+  useEffect(() => {
     async function fetchData() {
       setLoading(true);
       const data = await getAll(atributo, text);
@@ -22,7 +22,9 @@ function DisciplinaIndex() {
       setLoading(false);
     }
 
-    await fetchData();
+    (async() => {
+      await fetchData();
+    })();
   }, [atributo, text]);
 
   return (
@@ -54,7 +56,7 @@ function DisciplinaIndex() {
             <DataList 
               data={disc} 
               loading={loading} 
-              render={item => RenderItem({item, isAdmin: user.isAdmin })} 
+              render={item => RenderItem({item, isAdmin: user === undefined ? false : user.isAdmin })} 
             />
         </div>
       </div>

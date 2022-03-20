@@ -5,6 +5,8 @@ import Input from '../../components/Input';
 import { useEffect, useState } from 'react';
 import { createDisciplina, getDisciplinaById, updateDisciplina } from '../../services/disciplinaService';
 import { useParams } from 'react-router-dom';
+import Select from 'react-select';
+import { getAllProfessores } from '../../services/professorService';
 
 const emptyCourse = {
     name: '',
@@ -12,10 +14,30 @@ const emptyCourse = {
     nameTeacher: ''
 };
 
+const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: 0,
+      color: '#1e1e1e',
+      fontWeight: '500',
+      backgroundColor: '#e5e5e5',
+      height: '100%',
+      width: '100%',
+      borderRadius: '0.75rem',
+      boxShadow: 0
+    }),
+    placeholder: (provided,state) => ({
+        ...provided,
+        color: '#6a6a6a',
+        fontWeight: '500'
+    })
+}
+
 function CadastrarDisciplina() {
     const [disciplina,setDisciplina] = useState(emptyCourse);
     const params = useParams();
     const isEditing = params.id !== undefined;
+    const [options, setOptions] = useState([]);
 
     function setAttributeDisciplina(attribute, value) {
         disciplina[attribute] = value;
@@ -36,12 +58,20 @@ function CadastrarDisciplina() {
         })();
     }
 
+    function handleSelectChange(e) {
+        setAttributeDisciplina('nameTeacher', e);
+    }
+
     useEffect(() => {
-        (async() => {
+        (async function loadDisciplina() {
             if (params.id) {
                 const {name, code, teacher} = await getDisciplinaById(params.id);
                 setDisciplina({...disciplina, name,code,nameTeacher: teacher.name});
             }
+        })();
+        (async function loadProfessors() {
+            const profs = await getAllProfessores();
+            setOptions(profs.map(prof => ({value: prof.name, label: prof.name})));
         })();
     },[params]);
 
@@ -64,27 +94,15 @@ function CadastrarDisciplina() {
                         setText={v => setAttributeDisciplina('code',v)}
                         styleName={styles.code}
                     />
-                    <Input 
-                        className={styles.professorName}
-                        placeholderText='Nome do professor' 
-                        text={disciplina.nameTeacher} 
-                        setText={v => setAttributeDisciplina('nameTeacher',v)}
-                        styleName={styles.prof}
+                    <Select
+                        className={styles.prof}
+                        styles={customStyles}
+                        options={options} 
+                        singleValue={disciplina.nameTeacher}
+                        onChange={handleSelectChange}
+                        components={{ DropdownIndicator:() => null, 
+                                        IndicatorSeparator:() => null }}
                     />
-                    {/* <Input 
-                        className={styles.initTime}
-                        placeholderText='Período inicial' 
-                        text={disciplina.semester} 
-                        setText={v => setAttributeDisciplina('semester',v)}
-                        styleName={styles.initTime}
-                    />
-                    <Input 
-                        className={styles.endTime}
-                        placeholderText='Período final' 
-                        text={disciplina.finalSemester}
-                        setText={v => setAttributeDisciplina('finalSemester',v)}
-                        styleName={styles.endTime}
-                    /> */}
                 </div>
                 <Button 
                     buttontitle={`${isEditing ? 'SALVAR' : 'CADASTRAR'}`} 

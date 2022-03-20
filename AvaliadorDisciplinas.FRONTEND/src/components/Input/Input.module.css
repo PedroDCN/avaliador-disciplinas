@@ -15,6 +15,10 @@
     font-weight: 500;
 }
 
+.container input::placeholder {
+    color: var(--gray-700);
+}
+
 .container input:focus {
     outline: none;
 }

@@ -11,12 +11,15 @@ export function AuthContextProvider(props) {
 
     function loadUser() {
         const token = checkAuthToken();
-        if (token) {
+        let tokenInvalid = false;
+        if (token !== 'invalid' && token !== undefined) {
             const { name, picture } = parseAuthToken(token);
             loginSetUser({name, photo:picture, isAdmin: true});
-        } else if (!logged || token === undefined) {
+        } else if (token === 'invalid') {
             logout();
+            tokenInvalid = true;
         }
+        return tokenInvalid;
     }
 
     async function onSuccessGoogleLogin(response) {

@@ -18,7 +18,7 @@ function checkAuthToken() {
         const currentTime = new Date().getTime() / 1000;
         const { exp } = parseAuthToken(token);
         if (currentTime >= exp) {
-            token = undefined;
+            token = 'invalid';
         }
     } else {
         token = undefined;
