@@ -2,10 +2,8 @@ package com.engSoft.controllers;
 
 
 import com.engSoft.DTO.CommentDTO;
-import com.engSoft.DTO.FeedbackDTO;
 import com.engSoft.entities.Comment;
 import com.engSoft.entities.Course;
-import com.engSoft.entities.Feedback;
 import com.engSoft.entities.Student;
 import com.engSoft.services.CommentService;
 import com.engSoft.services.CourseService;

@@ -10,7 +10,7 @@ import LoginIcon from '../../assets/icons/login_menu_icon.svg';
 import DenunciasIcon from '../../assets/icons/complaint_icon.svg';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import LoginModal from '../../components/LoginModal';
 
 const menuItems = {
@@ -32,9 +32,11 @@ function NavMenu(props) {
 
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const params = useParams();
 
   useEffect(() => {
     function settingMenuItems() {
+      setSelectedItem(params["*"]);
       if (user === undefined) {
         setListItems(["disciplinas", "simular", "professores", "login"]);
       } else if (user.isAdmin === true) {
@@ -57,7 +59,7 @@ function NavMenu(props) {
       }
     }
     settingMenuItems();
-  }, [user]);
+  }, [user,params]);
 
   function handleItemMenuClick(item) {
     setSelectedItem(item);   

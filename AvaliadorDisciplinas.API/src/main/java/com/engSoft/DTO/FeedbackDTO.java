@@ -1,6 +1,7 @@
 package com.engSoft.DTO;
 
-import com.engSoft.entities.types.ModalityEnum;
+
+import com.engSoft.util.Util;
 
 public class FeedbackDTO {
     private Long idCourse;
@@ -10,7 +11,7 @@ public class FeedbackDTO {
     private Integer planning;
     private Integer evaluationSystem;
     private Integer courseware;
-    private ModalityEnum modality;
+    private Util.ModalityEnum modality;
 
     public Long getIdCourse() {
         return idCourse;
@@ -40,7 +41,7 @@ public class FeedbackDTO {
         return courseware;
     }
 
-    public ModalityEnum getModality() {
+    public Util.ModalityEnum getModality() {
         return modality;
     }
 }

@@ -9,20 +9,19 @@ export function RenderItem({ item, isAdmin }) {
   const navigate = useNavigate();
 
   function handleClick() {
-    const id = '2';
     if (isAdmin) {
-      navigate(`/cadastrar_disc/${id}`); // não esquecer de mudar isso para generalizar
+      navigate(`/cadastrar_disc/${item.id}`);
     } else {
-      navigate(`/disciplina/${2}`);
+      navigate(`/disciplina/${item.id}`);
     }
   }
 
   return (
     <div className={styles.itemContainer}>
-      <div className={styles.itemNota}>{item.nota}/5</div>
+      <div className={styles.itemNota}>5/5</div>
       <div className={styles.itemConteudo}>
-        <span>{item.nome}</span>
-        <span>Periodo: {item.periodo}</span>
+        <span>{item.name}</span>
+        <span>Professor: {item.nameTeacher}</span>
       </div>
       <div className={styles.itemButton}>
         <ButtonWithIcon 

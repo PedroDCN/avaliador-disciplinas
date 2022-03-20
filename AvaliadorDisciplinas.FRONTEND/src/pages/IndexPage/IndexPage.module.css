@@ -25,6 +25,7 @@
 }
 
 .container .userBox img {
+    cursor: pointer;
     border-radius: 50%;
     border: 0.25rem solid var(--white);
 }

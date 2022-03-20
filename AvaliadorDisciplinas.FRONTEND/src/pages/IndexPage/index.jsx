@@ -9,11 +9,16 @@ import DisciplinaIndex from '../Disciplina';
 import HomePage from '../HomePage';
 import CadastrarDisciplina from '../CadastrarDisciplina';
 import CadastrarProf from '../CadastrarProfessor';
+import UserPage from '../UserPage';
+import UserComentarios from '../UserComentarios';
+import UserAvaliacoes from '../UserAvaliacoes';
+import LoginModal from '../../components/LoginModal';
 
 function IndexPage() {
     const [selectedItem, setSelectedItem] = useState("");
     const { user, loadUser } = useAuth();
     const navigate = useNavigate();
+    const [show,setShow] = useState(false);
 
     useEffect(() => {
         function checkTokenInvalid() {
@@ -30,6 +35,14 @@ function IndexPage() {
         navigate('/home');
     }
 
+    function handleUserImageClick() {
+        if (user !== undefined) {
+            navigate('/user');
+        } else {
+            setShow(true);
+        }
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.navMenu}>
@@ -38,7 +51,9 @@ function IndexPage() {
                         src={user === undefined ? UserImage : user.photo} 
                         alt="User Logged" 
                         height={96} 
-                        width={96} />
+                        width={96} 
+                        onClick={handleUserImageClick}
+                    />
                     <span>{user === undefined ? "Usuário Anônimo" : user.name }</span>
                 </div> 
                 <div className={styles.menuItems}>
@@ -64,8 +79,12 @@ function IndexPage() {
                     <Route path="/cadastrar_disc/:id" element={<CadastrarDisciplina /> } />
                     <Route path="/cadastrar_prof/:id" element={<CadastrarProf /> } />
                     <Route path="/denuncias" element={<h1>Denúncias</h1>} />
+                    <Route path="/user" element={<UserPage />} />
+                    <Route path="/userAvaliacoes" element={<UserAvaliacoes />} />
+                    <Route path="/userComentarios" element={<UserComentarios />} />
                 </Routes>
             </div>
+            <LoginModal show={show} handleClose={() => setShow(false)} />
         </div>
     );
 }

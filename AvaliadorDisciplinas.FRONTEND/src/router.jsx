@@ -4,7 +4,7 @@ import { AuthContextProvider } from './contexts/AuthContext';
 import IndexPage from './pages/IndexPage';
 import LandingPage from './pages/LandingPage';
 
-function Router(){
+function Router() {
     return (
         <BrowserRouter>
             <AuthContextProvider>
@@ -15,6 +15,6 @@ function Router(){
             </AuthContextProvider>
         </BrowserRouter>
     );
-}   
+}
 
 export default Router;

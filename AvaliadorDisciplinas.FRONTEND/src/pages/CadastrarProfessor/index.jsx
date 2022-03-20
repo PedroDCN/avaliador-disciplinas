@@ -31,6 +31,8 @@ function CadastrarProf() {
             if (params.id) {
                 const { name } = await getProfessorById(params.id);
                 setProfessorName(name);
+            } else {
+                setProfessorName("");
             }
         })();
     },[params]);

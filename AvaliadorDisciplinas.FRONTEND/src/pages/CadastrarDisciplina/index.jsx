@@ -67,6 +67,8 @@ function CadastrarDisciplina() {
             if (params.id) {
                 const {name, code, teacher} = await getDisciplinaById(params.id);
                 setDisciplina({...disciplina, name,code,nameTeacher: teacher.name});
+            } else {
+                setDisciplina(emptyCourse);
             }
         })();
         (async function loadProfessors() {
@@ -97,9 +99,12 @@ function CadastrarDisciplina() {
                     <Select
                         className={styles.prof}
                         styles={customStyles}
-                        options={options} 
-                        singleValue={disciplina.nameTeacher}
+                        value={options.find(({value}) => {
+                            return value === disciplina.nameTeacher;
+                        })}
+                        options={options}
                         onChange={handleSelectChange}
+                        placeholder={`Professor`}
                         components={{ DropdownIndicator:() => null, 
                                         IndicatorSeparator:() => null }}
                     />

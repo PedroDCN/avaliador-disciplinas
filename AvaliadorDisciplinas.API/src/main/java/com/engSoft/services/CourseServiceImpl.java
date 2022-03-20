@@ -1,13 +1,17 @@
 package com.engSoft.services;
 
+import com.engSoft.DTO.SimpleCourseDTO;
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
+import com.engSoft.entities.Teacher;
 import com.engSoft.repositories.CourseRepository;
+import com.engSoft.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,36 +27,34 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<String> listCourses() {
-        return toSimpleString(courseRepository.findAll());
+    public List<SimpleCourseDTO> listCourses() {
+        return toSimpleCourse(courseRepository.findAll());
     }
 
     @Override
-    public List<String> listCoursesSortName() {
-        return toSimpleString(courseRepository.findAll(Sort.by("name")));
-    }
-
-    @Override
-    public List<String> listCoursesSortSemester() {
-        return toSimpleString(courseRepository.findAll(Sort.by("semester")));
-    }
-
-    @Override
-    public List<String> listCoursesSortGrade() {
-        return toSimpleString(courseRepository.findAll(Sort.by("grade")));
-    }
-
-    private List<String> toSimpleString(List<Course> list) {
-        List<String> stringList = new ArrayList<>();
-        for(Course course : list) {
-            stringList.add(course.toSimpleString());
+    public List<SimpleCourseDTO> listCoursesFilter(Util.FilterEnum filter) {
+        if(filter == Util.FilterEnum.NAME) {
+            return toSimpleCourse(courseRepository.findAll(Sort.by("name")));
+        } else if(filter == Util.FilterEnum.GRADE) {
+            List<SimpleCourseDTO> list = toSimpleCourse(courseRepository.findAll(Sort.by("grade")));
+            Collections.reverse(list);
+            return list;
+        } else {
+            return toSimpleCourse(courseRepository.findAll(Sort.by("teacher")));
         }
-        return stringList;
+    }
+
+    private List<SimpleCourseDTO> toSimpleCourse(List<Course> list) {
+        List<SimpleCourseDTO> simpleList = new ArrayList<>();
+        for(Course course : list) {
+            simpleList.add(new SimpleCourseDTO(course.getId(), course.getName(), course.getTeacher().getName(), course.getGrade()));
+        }
+        return simpleList;
     }
 
     @Override
-    public List<Course> listCoursesTeacher(Long idTeacher) {
-        return courseRepository.findAllByIdTeacher(idTeacher);
+    public List<Course> listCoursesTeacher(Teacher teacher) {
+        return courseRepository.findAllByTeacher(teacher);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void updateGrade(Course course, Feedback feedback) {
+    public void updateGrade(Course course, List<Feedback> feedback) {
         course.updateGrade(feedback);
         saveCourse(course);
     }
