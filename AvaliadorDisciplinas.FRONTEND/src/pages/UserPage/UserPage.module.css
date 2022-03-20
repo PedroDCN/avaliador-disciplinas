@@ -76,7 +76,7 @@
         
     }
     .content .header .userNav li{
-        color: #FAFAFA;
+        color: var(--background);
         font-family: 'Roboto';
         font-style: normal;
         font-weight: 700;
@@ -93,25 +93,10 @@
         transform: scale(1.075);
     }
 
-   
-    .container .content .informs{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        /* min-height: 80%; */
-        height: 100%;
-        
-    }
-    
-    .container .content  .informs .buttons{
-        margin-top: 1rem;
-        
-    }
     
     .container .content  .inputs{
         display: flex;
         flex-direction: column;
-        border-radius: 100rem;
         
     }
     
@@ -124,22 +109,20 @@
         padding: 1.5rem 1.5rem;
         width: 40rem;
         height: 3.5rem;
-        background-color: #E5E5E5;
-        border: solid #E5E5E5;;
+        background-color:var(--gray-300);
+        border: solid var(--gray-300);
         align-self: center;
         
     }
     .container .content .inputs input[type="email"]::placeholder,
     .container .content .inputs input[type="nickName"]::placeholder,
     .container .content .inputs input[type="userName"]::placeholder{
-        font-family: 'Roboto';
-        font-style: normal;
         font-weight: 400;
         font-size: 1.2rem;
         display: flex;
         align-items: left;
         justify-content: left;
-        color: #9E9E9E;
+        color: var(--gray-500);
         padding: 0;
     }
     
@@ -161,7 +144,7 @@
         }
     
    
-    .container .content  .userBox a:hover{
+    .container .navMenu .userBox img{
         cursor: pointer;
      
     }

@@ -31,17 +31,14 @@ function HomePage() {
                 </div>
 
             </div>
-            {true ?
-                <div className={styles.content}>
-                    {/* Esta div será trocada de acordo com o conteúdo que o usuário escolher */}
-                    <div className={styles.welcomeBox}>
-                        <img src={WelcomeImage} alt="People rating other people through a window" />
-                        <span>Selecione uma das opções ao lado para conferir as disciplinas, professores ou simular o período.</span>
-                    </div>
+            <div className={styles.content}>
+                <div className={styles.welcomeBox}>
+                    <img src={WelcomeImage} alt="People rating other people through a window" />
+                    <span>Selecione uma das opções ao lado para conferir as disciplinas, professores ou simular o período.</span>
                 </div>
-                :
-                <></>
-            }
+            </div>
+
+
         </div >
     );
 }

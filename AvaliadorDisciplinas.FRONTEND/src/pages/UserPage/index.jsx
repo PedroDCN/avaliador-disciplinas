@@ -11,21 +11,7 @@ import { getAll } from "../../services/disciplinaService";
 
 function UserPage() {
     const { user } = useAuth();
-    const [disc, setDisc] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [atributo, setAtributo] = useState();
-    const [text, setText] = useState("");
     const navigate = useNavigate();
-    useEffect(() => {
-        async function fetchData() {
-            setLoading(true);
-            const data = await getAll(atributo, text);
-            setDisc(data);
-            setLoading(false);
-        }
-
-        fetchData();
-    }, [atributo, text]);
 
     return (
         <div className={styles.container}>
@@ -45,14 +31,14 @@ function UserPage() {
             </div>
             <div className={styles.content}>
                 <div className={styles.header}>
-                    <span><ul className={styles.userNav}>
-                        <li><a onClick={() =>
-                            navigate("/userAvaliacoes")}>Avaliações</a></li>
-                        <li><a onClick={() =>
-                            navigate("/userComentarios")}>Comentários</a></li>
-                        <li className={styles.active}><a onClick={() =>
-                            navigate("/user")}>Perfil</a></li>
-                    </ul></span>
+                    <ul className={styles.userNav}>
+                        <li><span onClick={() =>
+                            navigate("/userAvaliacoes")}>Avaliações</span></li>
+                        <li><span onClick={() =>
+                            navigate("/userComentarios")}>Comentários</span></li>
+                        <li className={styles.active}><span onClick={() =>
+                            navigate("/user")}>Perfil</span></li>
+                    </ul>
                 </div>
                 <div className={styles.itens}>
 

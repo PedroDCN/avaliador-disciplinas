@@ -8,23 +8,21 @@ import { getAll } from "../../services/comentariosService";
 import { renderItem } from "./comentariosListagem";
 import { useNavigate } from "react-router-dom";
 
-function DisciplinaIndex() {
+function UserComentarios() {
     const { user } = useAuth();
     const [disc, setDisc] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [atributo, setAtributo] = useState();
-    const [text, setText] = useState("");
     const navigate = useNavigate();
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            const data = await getAll(atributo, text);
+            const data = await getAll();
             setDisc(data);
             setLoading(false);
         }
 
         fetchData();
-    }, [atributo, text]);
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -45,12 +43,12 @@ function DisciplinaIndex() {
             <div className={styles.content}>
                 <div className={styles.header}>
                     <ul className={styles.userNav}>
-                        <li><a onClick={() =>
-                            navigate("/userAvaliacoes")}>Avaliações</a></li>
-                        <li className={styles.active}><a onClick={() =>
-                            navigate("/userComentarios")}>Comentários</a></li>
-                        <li><a onClick={() =>
-                            navigate("/user")}>Perfil</a></li>
+                        <li><span onClick={() =>
+                            navigate("/userAvaliacoes")}>Avaliações</span></li>
+                        <li className={styles.active}><span onClick={() =>
+                            navigate("/userComentarios")}>Comentários</span></li>
+                        <li><span onClick={() =>
+                            navigate("/user")}>Perfil</span></li>
                     </ul>
                 </div>
 
@@ -62,4 +60,4 @@ function DisciplinaIndex() {
     );
 }
 
-export default DisciplinaIndex;
+export default UserComentarios;
