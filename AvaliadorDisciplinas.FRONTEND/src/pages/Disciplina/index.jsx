@@ -11,50 +11,24 @@ import { renderItem } from "./itemListagem";
 
 function DisciplinaIndex() {
   const { user } = useAuth();
-
-  const [loadedDisc, setLoadedDisc] = useState([]);
-  const [filteredDisc, setFilteredDisc] = useState([]);
+  const [disc, setDisc] = useState([]);
 
   const [loading, setLoading] = useState(false);
-  const [atributo, setAtributo] = useState();
+  const [atributo, setAtributo] = useState("name");
   const [text, setText] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
 
-      const response = await getAll();
-      setLoadedDisc(response.data);
-      setFilteredDisc(response.data);
+      const data = await getAll(atributo, text);
+      setDisc(data);
 
       setLoading(false);
     }
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    async function filter() {
-      setLoading(true);
-
-      if (atributo && text) {
-        setFilteredDisc(
-          loadedDisc.filter((disciplina) =>
-            disciplina[atributo]
-              .toString()
-              .toLowerCase()
-              .includes(text.toLowerCase())
-          )
-        );
-      } else {
-        setFilteredDisc(loadedDisc);
-      }
-
-      setLoading(false);
-    }
-
-    filter();
-  }, [atributo, text, loadedDisc]);
+  }, [atributo, text]);
 
   return (
     <div className={styles.container}>
@@ -81,7 +55,12 @@ function DisciplinaIndex() {
           <input
             type="text"
             id="nome"
-            placeholder="Procure por uma disciplina"
+            placeholder={
+              "Procure por " +
+              atributosDisciplina()
+                .find((item) => item.value === atributo)
+                .text.toLowerCase()
+            }
             onChange={(e) => {
               setText(e.target.value);
             }}
@@ -93,12 +72,13 @@ function DisciplinaIndex() {
               value="value"
               label="text"
               onChange={setAtributo}
+              default={"name"}
             />
           </div>
         </div>
 
         <div className={styles.indexContent}>
-          <DataList data={filteredDisc} loading={loading} render={renderItem} />
+          <DataList data={disc} loading={loading} render={renderItem} />
         </div>
       </div>
     </div>
