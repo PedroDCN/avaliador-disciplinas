@@ -1,20 +1,20 @@
 package com.engSoft.DTO;
 
-import com.engSoft.entities.Student;
+import com.engSoft.entities.User;
 
-public class StudentDTO {
+public class UserDTO {
 
     private String name;
     private String email;
 
-    public StudentDTO(String name, String email) {
+    public UserDTO(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
-    public StudentDTO(Student student) {
-        this.name = student.getName();
-        this.email = student.getEmail();
+    public UserDTO(User user) {
+        this.name = user.getName();
+        this.email = user.getEmail();
     }
 
     public String getName() {

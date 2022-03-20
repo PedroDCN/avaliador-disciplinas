@@ -22,7 +22,7 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
-    @RequestMapping(value = "/teacher", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/Teacher", method = RequestMethod.POST)
     public ResponseEntity<?> createTeacher(@RequestBody TeacherDTO teacherDTO){
 
 //        TeacherDTO teacherDTO = new TeacherDTO(name);
@@ -35,7 +35,7 @@ public class TeacherController {
         return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/teacher{id}" , method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/Teacher/{id}" , method = RequestMethod.PUT)
     public ResponseEntity<?> updateTeacher(@PathVariable ("id") String name){
         return new ResponseEntity<>("Teacher succesfully updated! \n", HttpStatus.OK);
     }
@@ -65,7 +65,7 @@ public class TeacherController {
         return erroTeacherNotFound();
     }
 
-    @RequestMapping(value = "teacherDelete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/TeacherDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeTeacher(@PathVariable ("id") Long id){
 
         Optional<Teacher> toBeDeletedTeacher = this.teacherService.getTeacherById(id);

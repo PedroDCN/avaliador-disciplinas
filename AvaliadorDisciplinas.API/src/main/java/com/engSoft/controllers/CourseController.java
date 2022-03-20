@@ -28,7 +28,7 @@ public class CourseController {
     @Autowired
     TeacherService teacherService;
 
-    @RequestMapping(value = "/Course", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/Course", method = RequestMethod.POST)
     public ResponseEntity<?> createCourse(@RequestBody CourseDTO courseDTO) {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
 
@@ -41,7 +41,7 @@ public class CourseController {
             return ErroTeacher.erroTeacherNotFound();
     }
 
-    @RequestMapping(value = "/CourseUpdate/{id}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/admin/CourseUpdate/{id}", method = RequestMethod.PATCH)
     public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestBody CourseDTO courseDTO) {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
 
@@ -92,7 +92,7 @@ public class CourseController {
             return ErroCourse.erroCourseNotFound();
     }
 
-    @RequestMapping(value = "CourseDelete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/CourseDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeCourse(@PathVariable ("id") Long id){
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
