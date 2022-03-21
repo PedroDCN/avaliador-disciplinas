@@ -34,6 +34,18 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/user/{email}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> updateUser(@PathVariable ("email") String email, @RequestParam String nick){
+
+        Optional<User> user = this.userService.getUserByEmail(email);
+        if (user.isPresent()) {
+            user.get().setNick(nick);
+            userService.saveUser(user.get());
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return erroUserNotFound();
+    }
+
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<?> getAllStudents(){
         List<User> users = this.userService.listUsers();
