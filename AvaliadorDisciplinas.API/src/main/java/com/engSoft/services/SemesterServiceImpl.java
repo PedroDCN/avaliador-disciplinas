@@ -3,7 +3,6 @@ package com.engSoft.services;
 import com.engSoft.entities.Semester;
 import com.engSoft.repositories.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -24,7 +23,7 @@ public class SemesterServiceImpl implements SemesterService {
     @Override
     public List<Semester> getAll() {
         List<Semester> list = semesterRepository.findAll();
-        Collections.reverse(list);
+        Collections.sort(list);
         return list;
     }
 
