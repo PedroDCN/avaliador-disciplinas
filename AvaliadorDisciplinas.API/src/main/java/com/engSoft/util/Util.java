@@ -8,4 +8,7 @@ public class Util {
     public enum FilterEnum {
         NAME, GRADE, TEACHER
     }
+    public enum ReactionTypeEnum {
+        LIKE, DISLIKE
+    }
 }

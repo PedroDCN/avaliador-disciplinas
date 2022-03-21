@@ -1,6 +1,8 @@
 package com.engSoft.services;
 
 import com.engSoft.entities.Comment;
+import com.engSoft.entities.User;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,4 +12,5 @@ public interface CommentService {
     public List<Comment> listCommentByCourse(Long idCourse);
     public void removeComment(Long id);
     public Optional<Comment> findCommentById(Long id);
+    public void updateDeletedComments(User user);
 }

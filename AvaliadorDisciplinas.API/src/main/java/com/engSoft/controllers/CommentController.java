@@ -84,9 +84,16 @@ public class CommentController {
 
         if(!optionalComment.isPresent())
             return ErroComment.erroCommentNotFound();
+        Optional<User> user = userService.getUserById(optionalComment.get().getIdStudent());
+        Long idAuthor = optionalComment.get().getIdStudent();
+        if (!user.get().getIsAdmin() || user.get().getId()!=idAuthor){
+            return ErroComment.erroCommentNotAccessible();
+
+        }
 
         try{
             commentService.removeComment(id);
+            commentService.updateDeletedComments(user.get());
             return new ResponseEntity<>(optionalComment, HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<CustomErrorType>(
