@@ -10,6 +10,4 @@ public interface CommentService {
     public List<Comment> listCommentByCourse(Long idCourse);
     public void removeComment(Long id);
     public Optional<Comment> findCommentById(Long id);
-    public List<Comment> listCommentBySemester(Long idSemester);
-
 }
