@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FeedbackService {
-    public void saveFeedback(Feedback feedback);
-    public List<Feedback> listFeedbacks();
-    public List<Feedback> listFeedbackByCourse(Long idCourse);
-    public void removeFeedback(Long idFeedback);
-    public Optional<Feedback> findFeedbackById(Long id);
-    public List<Feedback> findFeedbackBySemester(Long idSemester);
+    void saveFeedback(Feedback feedback);
+    List<Feedback> listFeedbacks();
+    List<Feedback> listFeedbackByCourse(Long idCourse);
+    void removeFeedback(Long idFeedback);
+    Optional<Feedback> findFeedbackById(Long id);
+    List<Feedback> findFeedbackBySemester(Long idSemester);
+    List<Feedback> findFeedbakByCourseAndSemester(Long idCourse, Long idSemester);
 }

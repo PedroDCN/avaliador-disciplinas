@@ -44,4 +44,9 @@ public class FeedbackServiceImpl implements FeedbackService {
         return this.feedbackRepository.findAllByIdSemester(idSemester);
     }
 
+    @Override
+    public List<Feedback> findFeedbakByCourseAndSemester(Long idCourse, Long idSemester) {
+        return this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+    }
+
 }
