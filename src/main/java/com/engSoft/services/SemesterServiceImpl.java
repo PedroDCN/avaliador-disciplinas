@@ -3,7 +3,6 @@ package com.engSoft.services;
 import com.engSoft.entities.Semester;
 import com.engSoft.repositories.SemesterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
