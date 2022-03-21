@@ -42,6 +42,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public List<Comment> listCommentBySemester(Long idSemester) {
         return this.commentRepository.findAllByIdSemester(idSemester);
+    }
 
     @Override
     public void updateDeletedComments(User user) {
