@@ -52,7 +52,7 @@ public class FeedbackController {
             courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
             return new ResponseEntity<>(newFeedback, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                      new CustomErrorType("Error, feedback can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
@@ -74,6 +74,7 @@ public class FeedbackController {
         return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
 
     }
+
     @RequestMapping(value = "/Feedback/listBySemester/{idSemester}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedbacksfromSemester(@PathVariable("idSemester") Long idSemester){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
@@ -82,6 +83,22 @@ public class FeedbackController {
             return ErroSemester.erroSemesterNotFound();
         }
         List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(idSemester);
+        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+
+    }
+
+    @RequestMapping(value = "/Feedback/listByCourseSemester/", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam Long idCourse){
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
+        Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
+
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+        if (!optionalCourse.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+        List<Feedback> feedbacks = feedbackService.findFeedbakByCourseAndSemester(idCourse, idSemester);
         return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
 
     }
@@ -105,9 +122,11 @@ public class FeedbackController {
 
         try{
             feedbackService.removeFeedback(id);
+            Optional<Course> optionalCourse = courseService.findCourseById(optionalFeedback.get().getIdCourse());
+            optionalCourse.ifPresent(course -> courseService.updateGrade(course, feedbackService.listFeedbackByCourse(course.getId())));
             return new ResponseEntity<>(optionalFeedback, HttpStatus.OK);
         }catch (Error e ){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, feedback can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 
