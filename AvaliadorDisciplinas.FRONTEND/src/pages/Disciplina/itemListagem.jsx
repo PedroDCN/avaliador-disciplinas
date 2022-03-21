@@ -10,7 +10,7 @@ export function RenderItem({ item, isAdmin }) {
 
   function handleClick() {
     if (isAdmin) {
-      navigate(`/cadastrar_disc/${item.id}`);
+      navigate(`/disciplina/edicao/${item.id}`);
     } else {
       navigate(`/disciplina/${item.id}`);
     }

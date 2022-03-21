@@ -7,12 +7,7 @@ import { createDisciplina, getDisciplinaById, updateDisciplina } from '../../ser
 import { useParams } from 'react-router-dom';
 import Select from 'react-select';
 import { getAllProfessores } from '../../services/professorService';
-
-const emptyCourse = {
-    name: '',
-    code: '',
-    nameTeacher: ''
-};
+import { newDisciplina } from '../../services/DadosEstaticos';
 
 const customStyles = {
     control: (provided, state) => ({
@@ -34,7 +29,7 @@ const customStyles = {
 }
 
 function CadastrarDisciplina() {
-    const [disciplina,setDisciplina] = useState(emptyCourse);
+    const [disciplina,setDisciplina] = useState(newDisciplina());
     const params = useParams();
     const isEditing = params.id !== undefined;
     const [options, setOptions] = useState([]);
@@ -47,9 +42,10 @@ function CadastrarDisciplina() {
     function handleCadastrarButton() {
         createDisciplina(disciplina).then(() => {
             console.log('disciplina criada!');
+            setDisciplina(newDisciplina());
         }).catch(e => {
             console.log(e, 'erro ao cadastrar disciplina');
-        }).then(() => setDisciplina(emptyCourse));
+        });
     }
 
     function handleSalvarButton() {
@@ -59,16 +55,24 @@ function CadastrarDisciplina() {
     }
 
     function handleSelectChange(e) {
-        setAttributeDisciplina('nameTeacher', e);
+        setAttributeDisciplina('nameTeacher', e.value);
+    }
+
+    function professorValue() {
+        let result = null;
+        if (isEditing || disciplina.nameTeacher !== '') {
+            result = options.find(({value}) => value === disciplina.nameTeacher);
+        }
+        return result;
     }
 
     useEffect(() => {
         (async function loadDisciplina() {
             if (params.id) {
                 const {name, code, teacher} = await getDisciplinaById(params.id);
-                setDisciplina({...disciplina, name,code,nameTeacher: teacher.name});
+                setDisciplina({name,code,nameTeacher: teacher.name});
             } else {
-                setDisciplina(emptyCourse);
+                setDisciplina(newDisciplina());
             }
         })();
         (async function loadProfessors() {
@@ -87,21 +91,19 @@ function CadastrarDisciplina() {
                     <Input 
                         placeholderText='Nome da disciplina' 
                         text={disciplina.name} 
-                        setText={v => setAttributeDisciplina('name',v)}
+                        onTextChange={v => setAttributeDisciplina('name',v)}
                         styleName={styles.name}
                     />
                     <Input
                         placeholderText='Código' 
                         text={disciplina.code} 
-                        setText={v => setAttributeDisciplina('code',v)}
+                        onTextChange={v => setAttributeDisciplina('code',v)}
                         styleName={styles.code}
                     />
                     <Select
                         className={styles.prof}
                         styles={customStyles}
-                        value={options.find(({value}) => {
-                            return value === disciplina.nameTeacher;
-                        })}
+                        value={professorValue()}
                         options={options}
                         onChange={handleSelectChange}
                         placeholder={`Professor`}

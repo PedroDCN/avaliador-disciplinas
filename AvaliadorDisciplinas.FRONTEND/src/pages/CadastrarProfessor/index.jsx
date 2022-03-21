@@ -50,7 +50,7 @@ function CadastrarProf() {
                 <Input 
                     placeholderText='Nome do professor' 
                     text={professorName} 
-                    setText={setProfessorName}
+                    onTextChange    ={setProfessorName}
                 />
                 <Button 
                     buttontitle={`${isEditing ? 'SALVAR' : 'CADASTRAR'}`}

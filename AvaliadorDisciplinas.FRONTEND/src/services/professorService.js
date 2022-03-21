@@ -1,7 +1,7 @@
 import { api } from "./api";
 
 async function createProfessor(professor) {
-    await api.post('/teacher', professor);
+    await api.post('/admin/Teacher', professor);
 }
 
 async function getAllProfessores() {
@@ -17,7 +17,7 @@ async function getProfessorByName(name) {
 }
 
 async function updateProfessor(id, name) {
-    await api.put(`/teacher/${id}`, name); // essa rota ainda não está ok no backend
+    await api.put(`/admin/Teacher/${id}`, name); // essa rota ainda não está ok no backend
 }
 
 export { 

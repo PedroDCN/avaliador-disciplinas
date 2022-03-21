@@ -13,8 +13,10 @@ export function AuthContextProvider(props) {
         const token = checkAuthToken();
         let tokenInvalid = false;
         if (token !== 'invalid' && token !== undefined) {
-            const { name, picture } = parseAuthToken(token);
-            loginSetUser({name, photo:picture, isAdmin: true});
+            const { name, picture, email } = parseAuthToken(token);
+            getUserByEmail(email).then((res) => {
+                loginSetUser({name, photo:picture, isAdmin: res.isAdmin});
+            });
         } else if (token === 'invalid') {
             logout();
             tokenInvalid = true;
@@ -46,8 +48,8 @@ export function AuthContextProvider(props) {
         console.log(response, 'A autenticação pelo Google deu falha.');
     }
 
-    function loginSetUser(user) {
-        setUser(user);
+    function loginSetUser(newUser) {
+        setUser(newUser);
         setLogged(true);
     }
 

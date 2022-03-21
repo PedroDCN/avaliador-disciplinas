@@ -3,30 +3,12 @@ import ProfessorIcon from '../../assets/icons/user_image_prof.svg';
 import { useState } from 'react';
 import DataList from '../DataList';
 import { RenderItem } from '../../pages/Disciplina/itemListagem';
-
-const emptyProf = {
-    name: 'Professor X',
-    profGrade: 3.0,
-    courses: [
-        {
-            id: 1,
-            nome: 'Disciplina 1',
-            nota: 2.0,
-            periodo: '2020'
-        },
-        {
-            id: 2,
-            nome: 'Disciplina 2',
-            nota: 4.0,
-            periodo: '2021'
-        }
-    ]
-}
+import { newProfessor } from '../../services/DadosEstaticos';
 
 function ProfessorModal({show, isAdmin, handleClose}) {
     const displayClassname = show ? styles.show : styles.hide;
     const [loading, setLoading] = useState(false);
-    const [professor, setProfessor] = useState(emptyProf)
+    const [professor, setProfessor] = useState(newProfessor());
 
     function handleClickOutside(e) {
         const classes = e.target.classList;

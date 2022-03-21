@@ -3,9 +3,7 @@ import CloseButton from '../../assets/icons/delete_icon.svg';
 import GoogleLogin from 'react-google-login';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
-// Delete a linha abaixo quando colocar em produção e coloque numa variável de ambiente
-const clientId = '89493011611-gevim53h29otjcjuhrljf99hkamlk7rs.apps.googleusercontent.com';
+import { getGoogleClientId } from '../../services/DadosEstaticos';
 
 function LoginModal({handleClose, show}) {
     const { onSuccessGoogleLogin, onFailureGoogleLogin } = useAuth();
@@ -40,7 +38,7 @@ function LoginModal({handleClose, show}) {
                     <p>Faça login com sua conta @ccc para ter acesso completo aos serviços de avaliações e comentários</p>
                     <GoogleLogin 
                         className={styles.googleLoginButton}
-                        clientId={clientId}
+                        clientId={getGoogleClientId()}
                         buttonText='Login com Google'
                         onSuccess={handleLoginButton}
                         onFailure={onFailureGoogleLogin}
@@ -49,7 +47,7 @@ function LoginModal({handleClose, show}) {
                     <span>
                         Nunca fez login antes? Cadastre-se&nbsp;
                         <GoogleLogin
-                            clientId={clientId}
+                            clientId={getGoogleClientId()}
                             render={renderProps => (
                                 <span 
                                     className={styles.googleSignUpButton}

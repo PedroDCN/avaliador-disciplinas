@@ -12,7 +12,7 @@ async function getAll(atributo, text) {
 }
 
 async function createDisciplina(disciplina) {
-  await api.post('/Course', disciplina);
+  await api.post('/admin/Course', disciplina);
 }
 
 async function getDisciplinaById(id) {
@@ -25,7 +25,7 @@ async function getDisciplinaById(id) {
 }
 
 async function updateDisciplina(id, disciplina) {
-  await api.patch(`/CourseUpdate/${id}`, disciplina);
+  await api.patch(`/admin/CourseUpdate/${id}`, disciplina);
 }
 
 export { getAll, createDisciplina, getDisciplinaById, updateDisciplina };

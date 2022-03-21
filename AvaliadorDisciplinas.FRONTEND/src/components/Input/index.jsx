@@ -3,7 +3,7 @@ import styles from './Input.module.css';
 function Input(props) {
 
     function handleOnChange(event) {
-        props.setText(event.target.value);
+        props.onTextChange(event.target.value);
     }
 
     return (
@@ -11,7 +11,7 @@ function Input(props) {
             <input 
                 type="text" 
                 placeholder={props.placeholderText} 
-                value={props.text} 
+                value={props.text}
                 onChange={handleOnChange}
             />
         </div>
