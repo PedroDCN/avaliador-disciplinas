@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     List<Feedback> findAllByIdCourse(Long idCourse);
+    List<Feedback> findAllByIdSemester(Long idSemester);
 }

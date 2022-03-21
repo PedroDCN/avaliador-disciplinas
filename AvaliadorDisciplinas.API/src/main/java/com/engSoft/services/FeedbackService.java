@@ -11,4 +11,5 @@ public interface FeedbackService {
     public List<Feedback> listFeedbackByCourse(Long idCourse);
     public void removeFeedback(Long idFeedback);
     public Optional<Feedback> findFeedbackById(Long id);
+    public List<Feedback> findFeedbackBySemester(Long idSemester);
 }
