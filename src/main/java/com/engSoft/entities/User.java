@@ -5,7 +5,9 @@ import com.engSoft.DTO.UserDTO;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name = "users")
 @Entity
 public class User {
 
