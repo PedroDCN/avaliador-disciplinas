@@ -1,6 +1,5 @@
 package com.engSoft.util;
 
-import com.engSoft.entities.Course;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

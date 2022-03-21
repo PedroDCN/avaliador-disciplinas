@@ -1,25 +1,15 @@
 package com.engSoft.controllers;
 
-import com.engSoft.DTO.CourseDTO;
-import com.engSoft.DTO.SimpleCourseDTO;
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
-import com.engSoft.entities.Teacher;
 import com.engSoft.services.CourseService;
 import com.engSoft.services.FeedbackService;
-import com.engSoft.services.TeacherService;
-import com.engSoft.util.ErroCourse;
 import com.engSoft.util.ErroSimulation;
-import com.engSoft.util.ErroTeacher;
-import com.engSoft.util.Util;
-import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +27,7 @@ public class SimulationController {
     @RequestMapping(value = "/simulation", method = RequestMethod.POST)
     public ResponseEntity<?> getSimulation(@RequestBody List<Long> courses_id) {
 
-        Integer[] simulation = {0, 0, 0};
+        Simulation simulation = new Simulation();
 
         for (Long id : courses_id) {
             Optional<Course> possibleCourse = courseService.findCourseById(id);
@@ -49,12 +39,12 @@ public class SimulationController {
         return new ResponseEntity<>(simulation, HttpStatus.OK);
     }
 
-    private void addSimulacao(Integer[] simulation, Course course) {
+    private void addSimulacao(Simulation simulation, Course course) {
         List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(course.getId());
         int workload = getMediaWorkload(feedbacks);
-        simulation[0] += 1;
-        simulation[1] += (workload * workload);   //Importância ao quadrado para aumentar o peso quanto maior o valor
-        simulation[2] += course.getGrade();
+        simulation.addCreditos(1);
+        simulation.addWorkload((workload*workload)); //Importância ao quadrado para aumentar o peso quanto maior o valor
+        simulation.addAvaliacao(course.getGrade());
     }
 
     private int getMediaWorkload(List<Feedback> feedbacks) {
@@ -72,4 +62,27 @@ public class SimulationController {
         return soma/count;
     }
 
+    private static class Simulation {
+        public int creditos;
+        public int workload;
+        public int avaliacao;
+
+        public Simulation() {
+            this.creditos = 0;
+            this.workload = 0;
+            this.avaliacao = 0;
+        }
+
+        public void addCreditos(int creditos) {
+            this.creditos += creditos;
+        }
+
+        public void addWorkload(int workload) {
+            this.workload += workload;
+        }
+
+        public void addAvaliacao(int avaliacao) {
+            this.avaliacao += avaliacao;
+        }
+    }
 }
