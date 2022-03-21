@@ -1,0 +1,16 @@
+{
+  "theme": {
+    "background": "#FAFAFA",
+    "white": "#FFF",
+    "primary": "#05445E",
+    "secondary": "#189AB4",
+    "terciary": "#75E6DA",
+    "black": "#1E1E1E",
+    "gray-200": "#EEEEEE",
+    "gray-500": "#9E9E9E",
+    "gray-700": "#6A6A6A",
+    "red-400": "#F15E5E",
+    "green-500": "#8BC34A",
+    "transparent": "transparent"
+  }
+}

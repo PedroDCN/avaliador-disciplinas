@@ -3,14 +3,14 @@ package com.engSoft.controllers;
 import com.engSoft.DTO.FeedbackDTO;
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
-import com.engSoft.entities.Student;
+import com.engSoft.entities.User;
 import com.engSoft.services.CourseService;
 import com.engSoft.services.FeedbackService;
-import com.engSoft.services.StudentService;
+import com.engSoft.services.UserService;
 import com.engSoft.util.CustomErrorType;
 import com.engSoft.util.ErroCourse;
 import com.engSoft.util.ErroFeedback;
-import com.engSoft.util.ErroStudent;
+import com.engSoft.util.ErroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,27 +30,28 @@ public class FeedbackController {
     CourseService courseService;
 
     @Autowired
-    StudentService studentService;
+    UserService userService;
 
     @RequestMapping(value = "/Feedback", method = RequestMethod.POST)
     public ResponseEntity<?> createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
         Optional<Course> optionalCourse = courseService.findCourseById(feedbackDTO.getIdCourse());
 
-        Optional<Student> optionalStudent = studentService.getStudentById(feedbackDTO.getIdStudent());
+        Optional<User> optionalStudent = userService.getUserById(feedbackDTO.getIdStudent());
 
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
         if (!optionalStudent.isPresent()){
-            return ErroStudent.erroStudentNotFound();
+            return ErroUser.erroUserNotFound();
         }
         Feedback newFeedback = new Feedback(feedbackDTO);
         try {
             feedbackService.saveFeedback(newFeedback);
+            courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
             return new ResponseEntity<String>("Feedback succesfully created! \n" + newFeedback, HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<CustomErrorType>(
-                     new CustomErrorType("Error, feedback can´t be created"), HttpStatus.NOT_FOUND);
+                     new CustomErrorType("Error, feedback can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -82,7 +83,7 @@ public class FeedbackController {
         return new ResponseEntity<String>("Feedback found! \n" + optionalFeedback, HttpStatus.FOUND);
     }
 
-    @RequestMapping(value = "Feedback/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/Feedback/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeFeedback(@PathVariable ("id") Long id){
         Optional<Feedback> optionalFeedback = feedbackService.findFeedbackById(id);
 
@@ -94,7 +95,7 @@ public class FeedbackController {
             return new ResponseEntity<String>("Feedback succesfully deleted \n" + optionalFeedback, HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<CustomErrorType>(
-                    new CustomErrorType("Error, feedback can´t be deleted"), HttpStatus.NOT_FOUND);
+                    new CustomErrorType("Error, feedback can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 
     }
