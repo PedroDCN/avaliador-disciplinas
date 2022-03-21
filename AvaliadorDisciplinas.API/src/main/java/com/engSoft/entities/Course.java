@@ -36,7 +36,7 @@ public class Course {
         int soma = 0;
         int count = 0;
         for(Feedback feedback : feedbacks) {
-            soma += feedback.getCourseware() + feedback.getMethodology() + feedback.getPlanning() + feedback.getWorkload() + feedback.getEvaluationSystem();
+            soma += feedback.getCourseware() + feedback.getDidactic() + feedback.getOrganization() + feedback.getWorkload() + feedback.getEvaluationSystem();
             count++;
         }
         grade = (soma/5)/count;

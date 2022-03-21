@@ -38,4 +38,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     public Optional<Feedback> findFeedbackById(Long id) {
         return this.feedbackRepository.findById(id);
     }
+
+    @Override
+    public List<Feedback> findFeedbackBySemester(Long idSemester) {
+        return this.feedbackRepository.findAllByIdSemester(idSemester);
+    }
+
 }

@@ -2,11 +2,10 @@ package com.engSoft.controllers;
 
 
 import com.engSoft.DTO.CommentDTO;
-import com.engSoft.entities.Comment;
-import com.engSoft.entities.Course;
-import com.engSoft.entities.User;
+import com.engSoft.entities.*;
 import com.engSoft.services.CommentService;
 import com.engSoft.services.CourseService;
+import com.engSoft.services.SemesterService;
 import com.engSoft.services.UserService;
 import com.engSoft.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,10 @@ public class CommentController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    SemesterService semesterService;
+
 
     @RequestMapping(value = "/Comment", method = RequestMethod.POST)
     public ResponseEntity<?> createComment(@RequestBody CommentDTO commentDTO) {
@@ -67,7 +70,17 @@ public class CommentController {
         return new ResponseEntity<>(comments, HttpStatus.FOUND);
 
     }
+    @RequestMapping(value = "/Comment/listBySemester/{idSemester}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCommentsfromSemester(@PathVariable("idSemester") Long idSemester){
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+        List<Comment> comments = commentService.listCommentBySemester(idSemester);
+        return new ResponseEntity<>(comments, HttpStatus.FOUND);
+
+    }
     @RequestMapping(value = "/Comment/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getComment(@PathVariable("id") Long id){
         Optional<Comment> optionalComment = commentService.findCommentById(id);
