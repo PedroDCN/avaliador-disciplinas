@@ -37,4 +37,10 @@ public class CommentServiceImpl implements CommentService{
     public Optional<Comment> findCommentById(Long id) {
         return this.commentRepository.findById(id);
     }
+
+    @Override
+    public List<Comment> listCommentBySemester(Long idSemester) {
+        return this.commentRepository.findAllByIdSemester(idSemester);
+
+    }
 }
