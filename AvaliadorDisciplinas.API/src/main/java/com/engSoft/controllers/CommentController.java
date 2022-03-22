@@ -57,7 +57,7 @@ public class CommentController {
     }
     @RequestMapping(value = "/Comment", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComment(){
-        Iterable<Comment> comments = this.commentService.listComments();
+        List<Comment> comments = this.commentService.listComments();
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
     @RequestMapping(value = "/Comment/listByCourse/{idCourse}", method = RequestMethod.GET)
