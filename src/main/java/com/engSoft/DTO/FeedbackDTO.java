@@ -6,9 +6,10 @@ import com.engSoft.util.Util;
 public class FeedbackDTO {
     private Long idCourse;
     private Long idStudent;
+    private Long idSemester;
     private Integer workload;
-    private Integer methodology;
-    private Integer planning;
+    private Integer didactic;
+    private Integer organization;
     private Integer evaluationSystem;
     private Integer courseware;
     private Util.ModalityEnum modality;
@@ -21,17 +22,15 @@ public class FeedbackDTO {
         return idStudent;
     }
 
+    public Long getIdSemester() { return idSemester; }
+
     public Integer getWorkload() {
         return workload;
     }
 
-    public Integer getMethodology() {
-        return methodology;
-    }
+    public Integer getDidactic() { return didactic; }
 
-    public Integer getPlanning() {
-        return planning;
-    }
+    public Integer getOrganization() { return organization; }
 
     public Integer getEvaluationSystem() {
         return evaluationSystem;

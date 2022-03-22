@@ -3,14 +3,13 @@ package com.engSoft.controllers;
 import com.engSoft.DTO.FeedbackDTO;
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
+import com.engSoft.entities.Semester;
 import com.engSoft.entities.User;
 import com.engSoft.services.CourseService;
 import com.engSoft.services.FeedbackService;
+import com.engSoft.services.SemesterService;
 import com.engSoft.services.UserService;
-import com.engSoft.util.CustomErrorType;
-import com.engSoft.util.ErroCourse;
-import com.engSoft.util.ErroFeedback;
-import com.engSoft.util.ErroUser;
+import com.engSoft.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +31,9 @@ public class FeedbackController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    SemesterService semesterService;
+
     @RequestMapping(value = "/Feedback", method = RequestMethod.POST)
     public ResponseEntity<?> createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
         Optional<Course> optionalCourse = courseService.findCourseById(feedbackDTO.getIdCourse());
@@ -48,9 +50,9 @@ public class FeedbackController {
         try {
             feedbackService.saveFeedback(newFeedback);
             courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
-            return new ResponseEntity<String>("Feedback succesfully created! \n" + newFeedback, HttpStatus.CREATED);
+            return new ResponseEntity<>(newFeedback, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                      new CustomErrorType("Error, feedback can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
@@ -58,7 +60,7 @@ public class FeedbackController {
     @RequestMapping(value = "/Feedback", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedback(){
         List<Feedback> feedbacks = this.feedbackService.listFeedbacks();
-        return new ResponseEntity<String>("Feedbacks found! \n" + feedbacks, HttpStatus.OK);
+        return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/Feedback/listByCourse/{idCourse}", method = RequestMethod.GET)
@@ -69,7 +71,35 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(idCourse);
-        return new ResponseEntity<String>("Feedback Found! \n" + feedbacks, HttpStatus.FOUND);
+        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+
+    }
+
+    @RequestMapping(value = "/Feedback/listBySemester/{idSemester}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllFeedbacksfromSemester(@PathVariable("idSemester") Long idSemester){
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
+
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+        List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(idSemester);
+        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+
+    }
+
+    @RequestMapping(value = "/Feedback/listByCourseSemester/", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam Long idCourse){
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
+        Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
+
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+        if (!optionalCourse.isPresent()){
+            return ErroCourse.erroCourseNotFound();
+        }
+        List<Feedback> feedbacks = feedbackService.findFeedbakByCourseAndSemester(idCourse, idSemester);
+        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
 
     }
 
@@ -80,7 +110,7 @@ public class FeedbackController {
         if(!optionalFeedback.isPresent())
             return ErroFeedback.erroFeedbackNotFound();
 
-        return new ResponseEntity<String>("Feedback found! \n" + optionalFeedback, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalFeedback, HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/Feedback/{id}", method = RequestMethod.DELETE)
@@ -92,9 +122,11 @@ public class FeedbackController {
 
         try{
             feedbackService.removeFeedback(id);
-            return new ResponseEntity<String>("Feedback succesfully deleted \n" + optionalFeedback, HttpStatus.OK);
+            Optional<Course> optionalCourse = courseService.findCourseById(optionalFeedback.get().getIdCourse());
+            optionalCourse.ifPresent(course -> courseService.updateGrade(course, feedbackService.listFeedbackByCourse(course.getId())));
+            return new ResponseEntity<>(optionalFeedback, HttpStatus.OK);
         }catch (Error e ){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, feedback can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 

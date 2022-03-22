@@ -23,7 +23,7 @@ public class SemesterServiceImpl implements SemesterService {
     @Override
     public List<Semester> getAll() {
         List<Semester> list = semesterRepository.findAll();
-        Collections.reverse(list);
+        Collections.sort(list);
         return list;
     }
 
