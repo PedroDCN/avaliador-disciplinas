@@ -7,7 +7,10 @@ function Dropdown(props) {
 
   return (
     <div className={styles.container}>
-      <select defaultValue="default" onChange={_innerOnChange}>
+      <select
+        defaultValue={props.default ? props.default : "default"}
+        onChange={_innerOnChange}
+      >
         <option value="default" disabled hidden>
           {props.placeholder}
         </option>

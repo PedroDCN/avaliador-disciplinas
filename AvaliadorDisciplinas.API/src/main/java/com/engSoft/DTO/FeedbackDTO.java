@@ -1,16 +1,18 @@
 package com.engSoft.DTO;
 
-import com.engSoft.entities.types.ModalityEnum;
+
+import com.engSoft.util.Util;
 
 public class FeedbackDTO {
     private Long idCourse;
     private Long idStudent;
+    private Long idSemester;
     private Integer workload;
-    private Integer methodology;
-    private Integer planning;
+    private Integer didactic;
+    private Integer organization;
     private Integer evaluationSystem;
     private Integer courseware;
-    private ModalityEnum modality;
+    private Util.ModalityEnum modality;
 
     public Long getIdCourse() {
         return idCourse;
@@ -20,17 +22,15 @@ public class FeedbackDTO {
         return idStudent;
     }
 
+    public Long getIdSemester() { return idSemester; }
+
     public Integer getWorkload() {
         return workload;
     }
 
-    public Integer getMethodology() {
-        return methodology;
-    }
+    public Integer getDidactic() { return didactic; }
 
-    public Integer getPlanning() {
-        return planning;
-    }
+    public Integer getOrganization() { return organization; }
 
     public Integer getEvaluationSystem() {
         return evaluationSystem;
@@ -40,7 +40,7 @@ public class FeedbackDTO {
         return courseware;
     }
 
-    public ModalityEnum getModality() {
+    public Util.ModalityEnum getModality() {
         return modality;
     }
 }

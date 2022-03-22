@@ -1,8 +1,7 @@
 package com.engSoft.entities;
 
 import com.engSoft.DTO.FeedbackDTO;
-import com.engSoft.entities.types.ModalityEnum;
-import org.hibernate.type.descriptor.sql.SmallIntTypeDescriptor;
+import com.engSoft.util.Util;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,19 +14,21 @@ public class Feedback {
     private Long id;
     private Long idCourse;
     private Long idStudent;
+    private Long idSemester;
     private Integer workload;
-    private Integer methodology;
-    private Integer planning;
+    private Integer didactic;
+    private Integer organization;
     private Integer evaluationSystem;
     private Integer courseware;
-    private ModalityEnum modality;
+    private Util.ModalityEnum modality;
 
     public Feedback(FeedbackDTO feedbackDTO) {
         this.idCourse = feedbackDTO.getIdCourse();
         this.idStudent = feedbackDTO.getIdStudent();
+        this.idSemester = feedbackDTO.getIdSemester();
         this.workload = feedbackDTO.getWorkload();
-        this.methodology = feedbackDTO.getMethodology();
-        this.planning = feedbackDTO.getPlanning();
+        this.didactic = feedbackDTO.getDidactic();
+        this.organization = feedbackDTO.getOrganization();
         this.evaluationSystem = feedbackDTO.getEvaluationSystem();
         this.courseware = feedbackDTO.getCourseware();
         this.modality = feedbackDTO.getModality();
@@ -49,6 +50,14 @@ public class Feedback {
         this.idCourse = idCourse;
     }
 
+    public Long getIdSemester() {
+        return idSemester;
+    }
+
+    public void setIdSemester(Long idSemester) {
+        this.idSemester = idSemester;
+    }
+
     public Long getIdStudent() {
         return idStudent;
     }
@@ -65,20 +74,20 @@ public class Feedback {
         this.workload = workload;
     }
 
-    public Integer getMethodology() {
-        return methodology;
+    public Integer getDidactic() {
+        return didactic;
     }
 
-    public void setMethodology(Integer methodology) {
-        this.methodology = methodology;
+    public void setDidactic(Integer didactic) {
+        this.didactic = didactic;
     }
 
-    public Integer getPlanning() {
-        return planning;
+    public Integer getOrganization() {
+        return organization;
     }
 
-    public void setPlanning(Integer planning) {
-        this.planning = planning;
+    public void setOrganization(Integer organization) {
+        this.organization = organization;
     }
 
     public Integer getEvaluationSystem() {
@@ -97,11 +106,11 @@ public class Feedback {
         this.courseware = courseware;
     }
 
-    public ModalityEnum getModality() {
+    public Util.ModalityEnum getModality() {
         return modality;
     }
 
-    public void setModality(ModalityEnum modality) {
+    public void setModality(Util.ModalityEnum modality) {
         this.modality = modality;
     }
 
@@ -112,8 +121,8 @@ public class Feedback {
                 ", idCourse=" + idCourse +
                 ", idStudent=" + idStudent +
                 ", workload=" + workload +
-                ", methodology=" + methodology +
-                ", planning=" + planning +
+                ", didactic=" + didactic +
+                ", organization=" + organization +
                 ", evaluationSystem=" + evaluationSystem +
                 ", courseware=" + courseware +
                 ", modality=" + modality +

@@ -12,15 +12,18 @@ import { renderItem } from "./itemListagem";
 function DisciplinaIndex() {
   const { user } = useAuth();
   const [disc, setDisc] = useState([]);
+
   const [loading, setLoading] = useState(false);
-  const [atributo, setAtributo] = useState();
+  const [atributo, setAtributo] = useState("name");
   const [text, setText] = useState("");
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
+
       const data = await getAll(atributo, text);
       setDisc(data);
+
       setLoading(false);
     }
 
@@ -52,7 +55,12 @@ function DisciplinaIndex() {
           <input
             type="text"
             id="nome"
-            placeholder="Procure por uma disciplina"
+            placeholder={
+              "Procure por " +
+              atributosDisciplina()
+                .find((item) => item.value === atributo)
+                .text.toLowerCase()
+            }
             onChange={(e) => {
               setText(e.target.value);
             }}
@@ -64,6 +72,7 @@ function DisciplinaIndex() {
               value="value"
               label="text"
               onChange={setAtributo}
+              default={"name"}
             />
           </div>
         </div>
