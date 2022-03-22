@@ -1,6 +1,7 @@
 package com.engSoft.services;
 
 import com.engSoft.DTO.FeedbackDTO;
+import com.engSoft.entities.AvarageFeedback;
 import com.engSoft.entities.Feedback;
 import com.engSoft.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Feedback avarageFeedbackByCourse(Long idCourse) {
+    public AvarageFeedback avarageFeedbackByCourse(Long idCourse) {
         List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourse(idCourse);
 
-        Feedback feedbackAvarage = new Feedback();
+        AvarageFeedback avarageFeedback = new AvarageFeedback();
 
         double organization = 0;
         double workload = 0;
@@ -54,14 +55,14 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         }
 
-        feedbackAvarage.setOrganization(organization/quantityFeedbacks);
-        feedbackAvarage.setWorkload(workload/quantityFeedbacks);
-        feedbackAvarage.setDidactic(didatic/quantityFeedbacks);
-        feedbackAvarage.setEvaluationSystem(evaluationSystem/quantityFeedbacks);
-        feedbackAvarage.setCourseware(courseware/quantityFeedbacks);
+        avarageFeedback.setAvarageOrganization(organization/quantityFeedbacks);
+        avarageFeedback.setAvarageWorkload(workload/quantityFeedbacks);
+        avarageFeedback.setAvarageDidactic(didatic/quantityFeedbacks);
+        avarageFeedback.setAvarageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+        avarageFeedback.setAvarageCourseware(courseware/quantityFeedbacks);
 
 
-        return feedbackAvarage;
+        return avarageFeedback;
     }
 
 
@@ -88,37 +89,38 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public Feedback avarageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
-        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+    public AvarageFeedback avarageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
+            List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
 
-        Feedback feedbackAvarage = new Feedback();
+            AvarageFeedback avarageFeedback = new AvarageFeedback();
 
-        double organization = 0;
-        double workload = 0;
-        double didatic = 0;
-        double evaluationSystem = 0;
-        double courseware = 0;
+            double organization = 0;
+            double workload = 0;
+            double didatic = 0;
+            double evaluationSystem = 0;
+            double courseware = 0;
 
-        double quantityFeedbacks = feedbacks.size();
-
-
-        for (int i = 0; i < quantityFeedbacks; i++) {
-            organization += feedbacks.get(i).getOrganization();
-            workload += feedbacks.get(i).getWorkload();
-            didatic += feedbacks.get(i).getDidactic();
-            evaluationSystem += feedbacks.get(i).getEvaluationSystem();
-            courseware += feedbacks.get(i).getCourseware();
-
-        }
-
-        feedbackAvarage.setOrganization(organization/quantityFeedbacks);
-        feedbackAvarage.setWorkload(workload/quantityFeedbacks);
-        feedbackAvarage.setDidactic(didatic/quantityFeedbacks);
-        feedbackAvarage.setEvaluationSystem(evaluationSystem/quantityFeedbacks);
-        feedbackAvarage.setCourseware(courseware/quantityFeedbacks);
+            double quantityFeedbacks = feedbacks.size();
 
 
-        return feedbackAvarage;
+            for (int i = 0; i < quantityFeedbacks; i++) {
+                organization += feedbacks.get(i).getOrganization();
+                workload += feedbacks.get(i).getWorkload();
+                didatic += feedbacks.get(i).getDidactic();
+                evaluationSystem += feedbacks.get(i).getEvaluationSystem();
+                courseware += feedbacks.get(i).getCourseware();
+
+            }
+
+            avarageFeedback.setAvarageOrganization((organization/quantityFeedbacks));
+            avarageFeedback.setAvarageWorkload(workload/quantityFeedbacks);
+            avarageFeedback.setAvarageDidactic(didatic/quantityFeedbacks);
+            avarageFeedback.setAvarageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+            avarageFeedback.setAvarageCourseware(courseware/quantityFeedbacks);
+
+
+            return avarageFeedback;
+
     }
 
     @Override

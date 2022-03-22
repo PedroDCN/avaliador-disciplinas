@@ -1,16 +1,14 @@
 package com.engSoft.controllers;
 
 import com.engSoft.DTO.FeedbackDTO;
-import com.engSoft.entities.Course;
-import com.engSoft.entities.Feedback;
-import com.engSoft.entities.Semester;
-import com.engSoft.entities.User;
+import com.engSoft.entities.*;
 import com.engSoft.services.CourseService;
 import com.engSoft.services.FeedbackService;
 import com.engSoft.services.SemesterService;
 import com.engSoft.services.UserService;
 import com.engSoft.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,8 +96,8 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        Feedback feedbacks = feedbackService.avarageFeedbackByCourse(idCourse);
-        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+        AvarageFeedback avarageFeedback = feedbackService.avarageFeedbackByCourse(idCourse);
+        return new ResponseEntity<>(avarageFeedback, HttpStatus.FOUND);
 
     }
 
@@ -142,8 +140,8 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        Feedback feedbacks = feedbackService.avarageFeedbackByCourseAndSemester(idCourse, idSemester);
-        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+        AvarageFeedback avarageFeedback = feedbackService.avarageFeedbackByCourseAndSemester(idCourse, idSemester);
+        return new ResponseEntity<>(avarageFeedback, HttpStatus.FOUND);
 
     }
 
