@@ -1,5 +1,6 @@
 package com.engSoft.services;
 
+import com.engSoft.DTO.FeedbackDTO;
 import com.engSoft.entities.Feedback;
 import com.engSoft.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,41 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
+    public Feedback avarageFeedbackByCourse(Long idCourse) {
+        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourse(idCourse);
+
+        Feedback feedbackAvarage = new Feedback();
+
+        double organization = 0;
+        double workload = 0;
+        double didatic = 0;
+        double evaluationSystem = 0;
+        double courseware = 0;
+
+        double quantityFeedbacks = feedbacks.size();
+
+
+        for (int i = 0; i < quantityFeedbacks; i++) {
+            organization += feedbacks.get(i).getOrganization();
+            workload += feedbacks.get(i).getWorkload();
+            didatic += feedbacks.get(i).getDidactic();
+            evaluationSystem += feedbacks.get(i).getEvaluationSystem();
+            courseware += feedbacks.get(i).getCourseware();
+
+        }
+
+        feedbackAvarage.setOrganization(organization/quantityFeedbacks);
+        feedbackAvarage.setWorkload(workload/quantityFeedbacks);
+        feedbackAvarage.setDidactic(didatic/quantityFeedbacks);
+        feedbackAvarage.setEvaluationSystem(evaluationSystem/quantityFeedbacks);
+        feedbackAvarage.setCourseware(courseware/quantityFeedbacks);
+
+
+        return feedbackAvarage;
+    }
+
+
+    @Override
     public void removeFeedback(Long idFeedback) {
         this.feedbackRepository.deleteById(idFeedback);
     }
@@ -46,7 +82,49 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public List<Feedback> findFeedbakByCourseAndSemester(Long idCourse, Long idSemester) {
+
+
         return this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
     }
+
+    @Override
+    public Feedback avarageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
+        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+
+        Feedback feedbackAvarage = new Feedback();
+
+        double organization = 0;
+        double workload = 0;
+        double didatic = 0;
+        double evaluationSystem = 0;
+        double courseware = 0;
+
+        double quantityFeedbacks = feedbacks.size();
+
+
+        for (int i = 0; i < quantityFeedbacks; i++) {
+            organization += feedbacks.get(i).getOrganization();
+            workload += feedbacks.get(i).getWorkload();
+            didatic += feedbacks.get(i).getDidactic();
+            evaluationSystem += feedbacks.get(i).getEvaluationSystem();
+            courseware += feedbacks.get(i).getCourseware();
+
+        }
+
+        feedbackAvarage.setOrganization(organization/quantityFeedbacks);
+        feedbackAvarage.setWorkload(workload/quantityFeedbacks);
+        feedbackAvarage.setDidactic(didatic/quantityFeedbacks);
+        feedbackAvarage.setEvaluationSystem(evaluationSystem/quantityFeedbacks);
+        feedbackAvarage.setCourseware(courseware/quantityFeedbacks);
+
+
+        return feedbackAvarage;
+    }
+
+    @Override
+    public List<Feedback> findFeedbackByStudent(Long idStudent) {
+        return this.feedbackRepository.findAllByIdStudent(idStudent);
+    }
+
 
 }

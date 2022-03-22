@@ -34,6 +34,9 @@ public class FeedbackController {
     @Autowired
     SemesterService semesterService;
 
+    @Autowired
+    UserController userController;
+
     @RequestMapping(value = "/Feedback", method = RequestMethod.POST)
     public ResponseEntity<?> createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
         Optional<Course> optionalCourse = courseService.findCourseById(feedbackDTO.getIdCourse());
@@ -63,6 +66,19 @@ public class FeedbackController {
         return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/Feedback/listByUser/{idUser}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllFeedbacksfromUser(@PathVariable("idUser") Long idUser){
+        Optional<User> optionalUser = userService.getUserById(idUser);
+
+
+        if (!optionalUser.isPresent()){
+            return ErroUser.erroUserNotFound();
+        }
+        List<Feedback> feedbacks = feedbackService.findFeedbackByStudent(idUser);
+        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+
+    }
+
     @RequestMapping(value = "/Feedback/listByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
@@ -71,6 +87,18 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(idCourse);
+        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+
+    }
+
+    @RequestMapping(value = "/Feedback/avarageByCourse/{idCourse}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAvarageFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
+        Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
+
+        if (!optionalCourse.isPresent()){
+            return ErroCourse.erroCourseNotFound();
+        }
+        Feedback feedbacks = feedbackService.avarageFeedbackByCourse(idCourse);
         return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
 
     }
@@ -99,6 +127,22 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Feedback> feedbacks = feedbackService.findFeedbakByCourseAndSemester(idCourse, idSemester);
+        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+
+    }
+
+    @RequestMapping(value = "/Feedback/avarageByCourseSemester/{idCourse}/{idSemester}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAvarageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
+        Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
+
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+        if (!optionalCourse.isPresent()){
+            return ErroCourse.erroCourseNotFound();
+        }
+        Feedback feedbacks = feedbackService.avarageFeedbackByCourseAndSemester(idCourse, idSemester);
         return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
 
     }
