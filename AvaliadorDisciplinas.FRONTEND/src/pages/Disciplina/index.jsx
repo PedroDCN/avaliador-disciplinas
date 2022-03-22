@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import styles from "./Disciplina.module.css";
-import UserImage from "../../assets/icons/user_anonimous.svg";
-import NavMenu from "../../components/NavMenu";
-import { useAuth } from "../../contexts/AuthContext";
 import DataList from "../../components/DataList";
 import Dropdown from "../../components/Dropdown";
 import { atributosDisciplina } from "../../services/DadosEstaticos";
@@ -18,25 +15,10 @@ function DisciplinaIndex() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.navMenu}>
-        <div className={styles.userBox}>
-          <img
-            src={user === undefined ? UserImage : user.photo}
-            alt="User Logged"
-            height={96}
-            width={96}
-          />
-          <span>{user === undefined ? "Usuário Anônimo" : user.name}</span>
-        </div>
-        <div className={styles.menuItems}>
-          <NavMenu />
-        </div>
-      </div>
       <div className={styles.content}>
         <div className={styles.header}>
           <span>Lista de Disciplinas</span>
         </div>
-
         <div className={styles.filter}>
           <input
             type="text"
@@ -62,9 +44,17 @@ function DisciplinaIndex() {
             />
           </div>
         </div>
-
         <div className={styles.indexContent}>
-          <DataList data={data} loading={loading} render={renderItem} />
+          <DataList
+            data={data}
+            loading={loading}
+            render={(item) =>
+              RenderItem({
+                item,
+                isAdmin: user === undefined ? false : user.isAdmin,
+              })
+            }
+          />
         </div>
       </div>
     </div>

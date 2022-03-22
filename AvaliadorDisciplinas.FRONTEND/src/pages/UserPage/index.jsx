@@ -4,9 +4,7 @@ import Button from '../../components/Button';
 import { useAuth } from '../../contexts/AuthContext';
 import UserImage from '../../assets/icons/user_anonimous.svg';
 import styles from './UserPage.module.css';
-import NavMenu from '../../components/NavMenu';
 import { useNavigate } from 'react-router-dom';
-import { getAll } from "../../services/disciplinaService";
 
 
 function UserPage() {
@@ -15,20 +13,6 @@ function UserPage() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.navMenu}>
-                <div className={styles.userBox}>
-                    <img
-                        src={user === undefined ? UserImage : user.photo}
-                        alt="User Logged"
-                        height={96}
-                        width={96}
-                    />
-                    <span>{user === undefined ? "Usuário Anônimo" : user.name}</span>
-                </div>
-                <div className={styles.menuItems}>
-                    <NavMenu />
-                </div>
-            </div>
             <div className={styles.content}>
                 <div className={styles.header}>
                     <ul className={styles.userNav}>
