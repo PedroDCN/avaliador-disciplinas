@@ -26,7 +26,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Iterable<Comment> listComments() {
+    public List<Comment> listComments() {
         return this.commentRepository.findAll();
     }
 

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface CommentService {
     public void saveComment(Comment comment);
-    public Iterable<Comment> listComments();
+    public List<Comment> listComments();
     public List<Comment> listCommentByCourse(Long idCourse);
     public void removeComment(Long id);
     public Optional<Comment> findCommentById(Long id);
