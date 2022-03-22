@@ -96,7 +96,7 @@ public class FeedbackController {
             return ErroSemester.erroSemesterNotFound();
         }
         if (!optionalCourse.isPresent()){
-            return ErroSemester.erroSemesterNotFound();
+            return ErroCourse.erroCourseNotFound();
         }
         List<Feedback> feedbacks = feedbackService.findFeedbakByCourseAndSemester(idCourse, idSemester);
         return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
