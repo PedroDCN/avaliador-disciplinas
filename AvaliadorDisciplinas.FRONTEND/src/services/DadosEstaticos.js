@@ -4,3 +4,7 @@ export function atributosDisciplina() {
     { value: "nameTeacher", text: "Professor" },
   ];
 }
+
+export function atributosProfessor() {
+  return [{ value: "name", text: "Nome" }];
+}

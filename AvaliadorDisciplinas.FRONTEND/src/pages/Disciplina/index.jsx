@@ -1,34 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./Disciplina.module.css";
 import UserImage from "../../assets/icons/user_anonimous.svg";
 import NavMenu from "../../components/NavMenu";
 import { useAuth } from "../../contexts/AuthContext";
 import DataList from "../../components/DataList";
-import { getAll } from "../../services/disciplinaService";
 import Dropdown from "../../components/Dropdown";
 import { atributosDisciplina } from "../../services/DadosEstaticos";
 import { renderItem } from "./itemListagem";
+import useStore from "../../store/disciplinaIndexStore";
 
 function DisciplinaIndex() {
   const { user } = useAuth();
-  const [disc, setDisc] = useState([]);
+  const [text, setText] = useState();
+  const [attribute, setAttribute] = useState("name");
 
-  const [loading, setLoading] = useState(false);
-  const [atributo, setAtributo] = useState("name");
-  const [text, setText] = useState("");
-
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-
-      const data = await getAll(atributo, text);
-      setDisc(data);
-
-      setLoading(false);
-    }
-
-    fetchData();
-  }, [atributo, text]);
+  const { loading, error, data } = useStore(text, attribute);
 
   return (
     <div className={styles.container}>
@@ -58,7 +44,7 @@ function DisciplinaIndex() {
             placeholder={
               "Procure por " +
               atributosDisciplina()
-                .find((item) => item.value === atributo)
+                .find((item) => item.value === attribute)
                 .text.toLowerCase()
             }
             onChange={(e) => {
@@ -71,14 +57,14 @@ function DisciplinaIndex() {
               placeholder={"Selecione um filtro"}
               value="value"
               label="text"
-              onChange={setAtributo}
+              onChange={setAttribute}
               default={"name"}
             />
           </div>
         </div>
 
         <div className={styles.indexContent}>
-          <DataList data={disc} loading={loading} render={renderItem} />
+          <DataList data={data} loading={loading} render={renderItem} />
         </div>
       </div>
     </div>

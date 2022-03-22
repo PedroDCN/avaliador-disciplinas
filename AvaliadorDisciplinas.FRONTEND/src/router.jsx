@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
 import UserPage from "./pages/UserPage";
 import DisciplinaIndex from "./pages/Disciplina";
-import DisciplinaIndex from "./pages/Professor";
+import ProfessorIndex from "./pages/Professor";
 import UserAvaliacoes from "./pages/UserAvaliacoes";
 import UserComentarios from "./pages/UserComentarios";
 
