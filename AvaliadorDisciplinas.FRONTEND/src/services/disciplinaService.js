@@ -1,9 +1,7 @@
-import axios from "axios";
+import { api } from "./api";
 
-const baseUrl = "https://avaliador-disciplinas.herokuapp.com/api";
-
-export async function getAll(atributo, text) {
-  const response = await axios.get(`${baseUrl}/Courses`);
+async function getAll(atributo, text) {
+  const response = await api.get('/Courses');
   if (atributo && text) {
     return response.data.filter((disciplina) =>
       disciplina[atributo].toString().toLowerCase().includes(text.toLowerCase())
@@ -12,3 +10,22 @@ export async function getAll(atributo, text) {
     return response.data;
   }
 }
+
+async function createDisciplina(disciplina) {
+  await api.post('/admin/Course', disciplina);
+}
+
+async function getDisciplinaById(id) {
+  try {
+    const response = await api.get(`/Course/${id}`);
+    return response.data;
+  } catch (e) {
+    return {};
+  }
+}
+
+async function updateDisciplina(id, disciplina) {
+  await api.patch(`/admin/CourseUpdate/${id}`, disciplina);
+}
+
+export { getAll, createDisciplina, getDisciplinaById, updateDisciplina };
