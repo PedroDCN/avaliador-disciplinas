@@ -34,7 +34,7 @@ public class CommentController {
     SemesterService semesterService;
 
 
-    @RequestMapping(value = "/Comment", method = RequestMethod.POST)
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
     public ResponseEntity<?> createComment(@RequestBody CommentDTO commentDTO) {
         Optional<Course> optionalCourse = courseService.findCourseById(commentDTO.getIdCourse());
 
@@ -55,12 +55,12 @@ public class CommentController {
                     new CustomErrorType("Error, comment can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
-    @RequestMapping(value = "/Comment", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComment(){
         List<Comment> comments = this.commentService.listComments();
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
     }
-    @RequestMapping(value = "/Comment/listByCourse/{idCourse}", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment/listByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCommentsfromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
@@ -68,39 +68,42 @@ public class CommentController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Comment> comments = commentService.listCommentByCourse(idCourse);
-        return new ResponseEntity<>(comments, HttpStatus.FOUND);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
 
     }
-    @RequestMapping(value = "/Comment/listBySemesterAndCourse/{idSemester}/{idCourse}/{page}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromSemesterAndCourse(@PathVariable("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse, @PathVariable("page") Integer page){
+    @RequestMapping(value = "/comment/listBySemesterAndCourse/{page}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCommentsfromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse, @PathVariable("page") Integer page){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
         if (!optionalSemester.isPresent()){
             return ErroSemester.erroSemesterNotFound();
         }
         Page<Comment> comments = commentService.listCommentBySemesterAndCourse(idSemester, idCourse, page);
-        return new ResponseEntity<>(comments, HttpStatus.FOUND);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
 
     }
-    @RequestMapping(value = "/Comment/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getComment(@PathVariable("id") Long id){
         Optional<Comment> optionalComment = commentService.findCommentById(id);
 
         if(!optionalComment.isPresent())
             return ErroComment.erroCommentNotFound();
 
-        return new ResponseEntity<>(optionalComment, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalComment, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/admin/Comment/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/comment/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeComment(@PathVariable ("id") Long id){
         Optional<Comment> optionalComment = commentService.findCommentById(id);
 
         if(!optionalComment.isPresent())
             return ErroComment.erroCommentNotFound();
+
         Optional<User> user = userService.getUserById(optionalComment.get().getIdStudent());
+        if (!user.isPresent())
+            return ErroUser.erroUserNotFound();
         Long idAuthor = optionalComment.get().getIdStudent();
-        if (!user.get().getIsAdmin() || user.get().getId()!=idAuthor){
+        if (!user.get().getIsAdmin() || !user.get().getId().equals(idAuthor)){
             return ErroComment.erroCommentNotAccessible();
 
         }

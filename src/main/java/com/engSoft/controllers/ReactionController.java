@@ -26,7 +26,7 @@ public class ReactionController {
     @Autowired
     ReactionService reactionService;
 
-    @RequestMapping(value = "/Reaction", method = RequestMethod.POST)
+    @RequestMapping(value = "/reaction", method = RequestMethod.POST)
     public ResponseEntity<?> createReaction(@RequestBody ReactionDTO reactionDTO) {
 
         if (reactionDTO.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT)
@@ -50,20 +50,20 @@ public class ReactionController {
             commentService.saveComment(optionalComment.get());
             return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
 
 
-    @RequestMapping(value = "/Reactions", method = RequestMethod.GET)
+    @RequestMapping(value = "/reactions", method = RequestMethod.GET)
     public ResponseEntity<?> getAllReactions() {
         List<Reaction> reactions = this.reactionService.listReactions();
         reactions.removeIf(r -> r.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.OK);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Reaction/listByComment/{idComment}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reaction/listByComment/{idComment}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllReactionsFromComment(@PathVariable("idComment") Long idComment) {
         Optional<Comment> optionalComment = commentService.findCommentById(idComment);
 
@@ -71,12 +71,12 @@ public class ReactionController {
             return ErroComment.erroCommentNotFound();
         }
         List<Reaction> reactions = reactionService.findReactionByComment(idComment);
-        return new ResponseEntity<>(reactions, HttpStatus.FOUND);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
 
     }
 
-    @RequestMapping(value = "/Reaction/listByStudentAndComment/", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllReactionsFromComment(@RequestParam Long idComment, @RequestParam Long idStudent) {
+    @RequestMapping(value = "/reaction/listByStudentAndComment/", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllReactionsFromComment(@RequestParam("idComment") Long idComment, @RequestParam("idStudent") Long idStudent) {
 
         Optional<Comment> optionalComment = commentService.findCommentById(idComment);
         if (!optionalComment.isPresent()) {
@@ -86,22 +86,22 @@ public class ReactionController {
         if (!optionalUser.isPresent())
             return  ErroUser.erroUserNotFound();
         List<Reaction> reactions = reactionService.findReactionByStudentAndComment(idStudent, idComment);
-        return new ResponseEntity<>(reactions, HttpStatus.FOUND);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
 
     }
 
-    @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reaction/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getReaction(@PathVariable("id") Long id) {
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
         if (!optionalReaction.isPresent())
             return ErroReaction.erroReactionNotFound();
 
-        return new ResponseEntity<>(optionalReaction, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalReaction, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> removeReaction(@PathVariable("id") Long id, @RequestParam Long idUser) {
+    @RequestMapping(value = "/reaction/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeReaction(@PathVariable("id") Long id, @RequestParam("idUser") Long idUser) {
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
         if (!optionalReaction.isPresent())
@@ -112,6 +112,11 @@ public class ReactionController {
 
         if (optionalReaction.get().getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT)
             return ErroReaction.erroInvalidTypeForOperation(optionalReaction.get().getReactionTypeEnum().toString(), "Like/dislike");
+
+        if (!user.isPresent())
+            return ErroUser.erroUserNotFound();
+        if (!comment.isPresent())
+            return ErroComment.erroCommentNotFound();
 
         try {
             reactionService.removeVotes(comment.get(), optionalReaction.get(), user.get());
@@ -126,7 +131,7 @@ public class ReactionController {
 
     }
 
-    @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/reaction/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateReaction(@PathVariable("id") Long id, @RequestBody Util.ReactionTypeEnum reactionType) {
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
         if(!optionalReaction.isPresent())
@@ -137,11 +142,16 @@ public class ReactionController {
 
         Reaction oldReaction = optionalReaction.get();
         if (oldReaction.getReactionTypeEnum()==reactionType)
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be Updated"), HttpStatus.BAD_REQUEST);
 
         Optional<Comment> comment = commentService.findCommentById(oldReaction.getIdComment());
         Optional<User> user = userService.getUserById(oldReaction.getIdStudent());
+
+        if (!user.isPresent())
+            return ErroUser.erroUserNotFound();
+        if (!comment.isPresent())
+            return ErroComment.erroCommentNotFound();
 
         reactionService.removeVotes(comment.get(), oldReaction, user.get());
         oldReaction.setReactionTypeEnum(reactionType);

@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface TeacherService {
 
-    void saveTeacher(Teacher teacher);
-    void removeTeacher(Teacher teacher);
-    Optional<Teacher> updateTeacher (Long id, Teacher teacher);
-    List<Teacher> listTeachers();
-    Optional<Teacher> getTeacherById(Long id);
-    Optional<Teacher> getTeacherByName(String name);
+    public void saveTeacher(Teacher teacher);
+    public void removeTeacher(Long id);
+    public Optional<Teacher> updateTeacher (Long id, String updatedAttribute);
+    public List<Teacher> listTeachers();
+    public Optional<Teacher> getTeacherById(Long id);
+    public Optional<Teacher> getTeacherByName(String name);
 }
