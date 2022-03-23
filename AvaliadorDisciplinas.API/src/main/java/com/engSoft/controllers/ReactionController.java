@@ -75,6 +75,21 @@ public class ReactionController {
 
     }
 
+    @RequestMapping(value = "/Reaction/listByStudentAndComment/", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllReactionsFromComment(@RequestParam Long idComment, @RequestParam Long idStudent) {
+
+        Optional<Comment> optionalComment = commentService.findCommentById(idComment);
+        if (!optionalComment.isPresent()) {
+            return ErroComment.erroCommentNotFound();
+        }
+        Optional<User> optionalUser = userService.getUserById(idStudent);
+        if (!optionalUser.isPresent())
+            return  ErroUser.erroUserNotFound();
+        List<Reaction> reactions = reactionService.findReactionByStudentAndComment(idStudent, idComment);
+        return new ResponseEntity<>(reactions, HttpStatus.FOUND);
+
+    }
+
     @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getReaction(@PathVariable("id") Long id) {
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
