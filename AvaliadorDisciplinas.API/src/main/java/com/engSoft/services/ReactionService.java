@@ -4,6 +4,7 @@ import com.engSoft.entities.Comment;
 import com.engSoft.entities.Feedback;
 import com.engSoft.entities.Reaction;
 import com.engSoft.entities.User;
+import com.engSoft.util.Util;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,5 +18,6 @@ public interface ReactionService {
     public void updateVotes(Comment comment, Reaction reaction, User user);
     public void removeVotes(Comment comment, Reaction reaction,User user);
     public List<Reaction> findReactionByComment(Long idComment);
-    List<Reaction> findAllByIdCommentAndReactionTypeEnum_Complaint(Long idComment);
+    List<Reaction> findAllByIdCommentAndReactionTypeEnum(Long idComment, Util.ReactionTypeEnum reactionTypeEnum);
+    List<Reaction> findAllByReactionTypeEnum(Util.ReactionTypeEnum reactionTypeEnum);
 }

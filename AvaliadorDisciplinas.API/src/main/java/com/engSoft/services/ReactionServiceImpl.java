@@ -39,6 +39,7 @@ public class ReactionServiceImpl implements  ReactionService{
     public Optional<Reaction> findReactionById(Long id) {
         return this.reactionRepository.findById(id);
     }
+
     @Override
     public void updateVotes(Comment comment, Reaction reaction,User user){
         if (reaction.getReactionTypeEnum()== Util.ReactionTypeEnum.LIKE){
@@ -71,7 +72,13 @@ public class ReactionServiceImpl implements  ReactionService{
     }
 
     @Override
-    public List<Reaction> findAllByIdCommentAndReactionTypeEnum_Complaint(Long idComment) {
-        return reactionRepository.findAllByIdCommentAndReactionTypeEnum_Complaint(idComment);
+    public List<Reaction> findAllByIdCommentAndReactionTypeEnum(Long idComment, Util.ReactionTypeEnum reactionTypeEnum) {
+        return reactionRepository.findAllByIdCommentAndReactionTypeEnum(idComment, reactionTypeEnum);
     }
+
+    @Override
+    public List<Reaction> findAllByReactionTypeEnum(Util.ReactionTypeEnum reactionTypeEnum){
+        return reactionRepository.findAllByReactionTypeEnum(reactionTypeEnum);
+    }
+
 }
