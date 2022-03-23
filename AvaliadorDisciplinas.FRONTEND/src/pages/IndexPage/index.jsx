@@ -13,6 +13,7 @@ import UserPage from '../UserPage';
 import UserComentarios from '../UserComentarios';
 import UserAvaliacoes from '../UserAvaliacoes';
 import LoginModal from '../../components/LoginModal';
+import SimularPeriodo from '../SimularPeriodo';
 
 function IndexPage() {
     const [selectedItem, setSelectedItem] = useState("");
@@ -71,7 +72,7 @@ function IndexPage() {
                 <Routes>
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/avaliar" element={<h1>Avaliar</h1>} />
-                    <Route path="/simular" element={<h1>Simular</h1>} />
+                    <Route path="/simular" element={<SimularPeriodo />} />
                     <Route path="/disciplinas" element={<DisciplinaIndex />} />
                     <Route path="/professores" element={<h1>Professores</h1>} />
                     <Route path="/disciplina/cadastro" element={<CadastrarDisciplina /> } />
