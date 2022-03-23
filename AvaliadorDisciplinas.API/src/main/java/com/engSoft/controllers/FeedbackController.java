@@ -88,8 +88,8 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/avarageByCourse/{idCourse}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAvarageFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
+    @RequestMapping(value = "/Feedback/averageByCourse/{idCourse}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAverageFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
         if (!optionalCourse.isPresent()){
@@ -128,8 +128,8 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/avarageByCourseSemester/{idCourse}/{idSemester}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAvarageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
+    @RequestMapping(value = "/Feedback/averageByCourseSemester/{idCourse}/{idSemester}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAverageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
