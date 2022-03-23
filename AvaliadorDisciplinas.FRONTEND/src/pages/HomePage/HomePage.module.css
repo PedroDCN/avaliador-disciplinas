@@ -1,0 +1,31 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .welcomeBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #F3F3F3;
+    border-radius: 2rem;
+    padding: 2rem;
+    gap: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+}
+
+.container .welcomeBox img {
+    width: 38rem;
+}
+
+.container .welcomeBox span {
+    width: 26rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 300;
+    user-select: none;
+}

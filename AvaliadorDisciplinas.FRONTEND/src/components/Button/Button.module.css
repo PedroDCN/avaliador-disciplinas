@@ -5,11 +5,16 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-size: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+    transition: transform 0.2s;
 }
 
-.container p {
-    font-size: 1.5rem;
+.container:hover {
+    transform: scale(1.05);
+}
+
+.container .buttonTitle {
     font-weight: 500;
     text-align: center;
 }

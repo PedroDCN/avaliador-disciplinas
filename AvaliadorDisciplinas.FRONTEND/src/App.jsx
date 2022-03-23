@@ -1,11 +1,9 @@
-import LandingPage from './pages/LandingPage';
+import Router from './router';
 import './styles/global.css';
 
 function App() {
   return (
-    <div>
-      <LandingPage />
-    </div>
+    <Router />
   );
 }
 
