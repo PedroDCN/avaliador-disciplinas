@@ -58,7 +58,7 @@ public class CommentController {
     @RequestMapping(value = "/Comment", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComment(){
         List<Comment> comments = this.commentService.listComments();
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
     }
     @RequestMapping(value = "/Comment/listByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCommentsfromCourse(@PathVariable("idCourse") Long idCourse){
@@ -68,7 +68,7 @@ public class CommentController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Comment> comments = commentService.listCommentByCourse(idCourse);
-        return new ResponseEntity<>(comments, HttpStatus.FOUND);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/Comment/listBySemesterAndCourse/{idSemester}/{idCourse}/{page}", method = RequestMethod.GET)
@@ -79,7 +79,7 @@ public class CommentController {
             return ErroSemester.erroSemesterNotFound();
         }
         Page<Comment> comments = commentService.listCommentBySemesterAndCourse(idSemester, idCourse, page);
-        return new ResponseEntity<>(comments, HttpStatus.FOUND);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/Comment/{id}", method = RequestMethod.GET)
@@ -89,7 +89,7 @@ public class CommentController {
         if(!optionalComment.isPresent())
             return ErroComment.erroCommentNotFound();
 
-        return new ResponseEntity<>(optionalComment, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalComment, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/admin/Comment/{id}", method = RequestMethod.DELETE)
@@ -98,9 +98,12 @@ public class CommentController {
 
         if(!optionalComment.isPresent())
             return ErroComment.erroCommentNotFound();
+
         Optional<User> user = userService.getUserById(optionalComment.get().getIdStudent());
+        if (!user.isPresent())
+            return ErroUser.erroUserNotFound();
         Long idAuthor = optionalComment.get().getIdStudent();
-        if (!user.get().getIsAdmin() || user.get().getId()!=idAuthor){
+        if (!user.get().getIsAdmin() || !user.get().getId().equals(idAuthor)){
             return ErroComment.erroCommentNotAccessible();
 
         }

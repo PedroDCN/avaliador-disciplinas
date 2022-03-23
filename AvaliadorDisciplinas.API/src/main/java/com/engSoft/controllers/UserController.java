@@ -49,7 +49,7 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity<?> getAllStudents(){
         List<User> users = this.userService.listUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)

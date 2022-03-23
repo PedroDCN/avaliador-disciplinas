@@ -31,7 +31,7 @@ public class SemesterController {
 
     @RequestMapping(value = "/Semesters", method = RequestMethod.GET)
     public ResponseEntity<?> getAllSemesters(){
-        return new ResponseEntity<>(semesterService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(semesterService.getAll(), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "SemesterDelete/{id}", method = RequestMethod.DELETE)

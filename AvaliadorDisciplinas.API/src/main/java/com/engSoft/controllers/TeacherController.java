@@ -59,10 +59,8 @@ public class TeacherController {
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public ResponseEntity<?> getAllTeachers(){
         List<Teacher> teachers = this.teacherService.listTeachers();
-        if (teachers.size() == 0){
-            return new ResponseEntity<>("Por enquanto a lista está vazia!",HttpStatus.ACCEPTED);
-        }
-        return new ResponseEntity<>(teachers, HttpStatus.OK);
+
+        return new ResponseEntity<>(teachers, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/techers{name}", method = RequestMethod.GET)

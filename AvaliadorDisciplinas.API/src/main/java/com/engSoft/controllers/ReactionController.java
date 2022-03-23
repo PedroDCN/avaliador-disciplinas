@@ -50,7 +50,7 @@ public class ReactionController {
             commentService.saveComment(optionalComment.get());
             return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
@@ -60,7 +60,7 @@ public class ReactionController {
     public ResponseEntity<?> getAllReactions() {
         List<Reaction> reactions = this.reactionService.listReactions();
         reactions.removeIf(r -> r.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.OK);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/Reaction/listByComment/{idComment}", method = RequestMethod.GET)
@@ -71,7 +71,7 @@ public class ReactionController {
             return ErroComment.erroCommentNotFound();
         }
         List<Reaction> reactions = reactionService.findReactionByComment(idComment);
-        return new ResponseEntity<>(reactions, HttpStatus.FOUND);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
 
     }
 
@@ -86,7 +86,7 @@ public class ReactionController {
         if (!optionalUser.isPresent())
             return  ErroUser.erroUserNotFound();
         List<Reaction> reactions = reactionService.findReactionByStudentAndComment(idStudent, idComment);
-        return new ResponseEntity<>(reactions, HttpStatus.FOUND);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
 
     }
 
@@ -97,7 +97,7 @@ public class ReactionController {
         if (!optionalReaction.isPresent())
             return ErroReaction.erroReactionNotFound();
 
-        return new ResponseEntity<>(optionalReaction, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalReaction, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.DELETE)
@@ -112,6 +112,11 @@ public class ReactionController {
 
         if (optionalReaction.get().getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT)
             return ErroReaction.erroInvalidTypeForOperation(optionalReaction.get().getReactionTypeEnum().toString(), "Like/dislike");
+
+        if (!user.isPresent())
+            return ErroUser.erroUserNotFound();
+        if (!comment.isPresent())
+            return ErroComment.erroCommentNotFound();
 
         try {
             reactionService.removeVotes(comment.get(), optionalReaction.get(), user.get());
@@ -137,11 +142,16 @@ public class ReactionController {
 
         Reaction oldReaction = optionalReaction.get();
         if (oldReaction.getReactionTypeEnum()==reactionType)
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be Updated"), HttpStatus.BAD_REQUEST);
 
         Optional<Comment> comment = commentService.findCommentById(oldReaction.getIdComment());
         Optional<User> user = userService.getUserById(oldReaction.getIdStudent());
+
+        if (!user.isPresent())
+            return ErroUser.erroUserNotFound();
+        if (!comment.isPresent())
+            return ErroComment.erroCommentNotFound();
 
         reactionService.removeVotes(comment.get(), oldReaction, user.get());
         oldReaction.setReactionTypeEnum(reactionType);

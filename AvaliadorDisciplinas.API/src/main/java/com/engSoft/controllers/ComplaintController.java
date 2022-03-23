@@ -56,7 +56,7 @@ public class ComplaintController {
             commentService.saveComment(optionalComment.get());
             return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
@@ -65,7 +65,7 @@ public class ComplaintController {
     @RequestMapping(value = "/Complaints", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComplaints(){
         List<Reaction> reactions = this.reactionService.findAllByReactionTypeEnum(Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.OK);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/Complaints/listByComment/{idComment}", method = RequestMethod.GET)
@@ -76,7 +76,7 @@ public class ComplaintController {
             return ErroComment.erroCommentNotFound();
         }
         List<Reaction> reactions = reactionService.findAllByIdCommentAndReactionTypeEnum(idComment, Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.FOUND);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
 
     }
 
@@ -87,7 +87,7 @@ public class ComplaintController {
         if(!optionalReaction.isPresent())
             return ErroReaction.erroReactionNotFound();
 
-        return new ResponseEntity<>(optionalReaction, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalReaction, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/Complaint/{id}", method = RequestMethod.DELETE)
@@ -104,7 +104,8 @@ public class ComplaintController {
             return ErroUser.erroUserNotFound();
 
         Optional<Comment> comment =commentService.findCommentById(optionalReaction.get().getIdComment());
-
+        if (!comment.isPresent())
+            return ErroComment.erroCommentNotFound();
         try{
             reactionService.removeVotes(comment.get(), optionalReaction.get(),user.get());
             reactionService.removeReaction(id);
@@ -112,7 +113,7 @@ public class ComplaintController {
             commentService.saveComment(comment.get());
             return new ResponseEntity<>(optionalReaction.get(), HttpStatus.OK);
         }catch (Error e ){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, Complaint can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 

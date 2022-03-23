@@ -60,7 +60,7 @@ public class FeedbackController {
     @RequestMapping(value = "/Feedback", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedback(){
         List<Feedback> feedbacks = this.feedbackService.listFeedbacks();
-        return new ResponseEntity<>(feedbacks, HttpStatus.OK);
+        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/Feedback/listByUser/{idUser}", method = RequestMethod.GET)
@@ -72,7 +72,7 @@ public class FeedbackController {
             return ErroUser.erroUserNotFound();
         }
         List<Feedback> feedbacks = feedbackService.findFeedbackByStudent(idUser);
-        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
 
     }
 
@@ -84,7 +84,7 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(idCourse);
-        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
 
     }
 
@@ -96,7 +96,7 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
         AvarageFeedback avarageFeedback = feedbackService.avarageFeedbackByCourse(idCourse);
-        return new ResponseEntity<>(avarageFeedback, HttpStatus.FOUND);
+        return new ResponseEntity<>(avarageFeedback, HttpStatus.ACCEPTED);
 
     }
 
@@ -108,7 +108,7 @@ public class FeedbackController {
             return ErroSemester.erroSemesterNotFound();
         }
         List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(idSemester);
-        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
 
     }
 
@@ -124,7 +124,7 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Feedback> feedbacks = feedbackService.findFeedbakByCourseAndSemester(idCourse, idSemester);
-        return new ResponseEntity<>(feedbacks, HttpStatus.FOUND);
+        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
 
     }
 
@@ -140,7 +140,7 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
         AvarageFeedback avarageFeedback = feedbackService.avarageFeedbackByCourseAndSemester(idCourse, idSemester);
-        return new ResponseEntity<>(avarageFeedback, HttpStatus.FOUND);
+        return new ResponseEntity<>(avarageFeedback, HttpStatus.ACCEPTED);
 
     }
 
@@ -151,7 +151,7 @@ public class FeedbackController {
         if(!optionalFeedback.isPresent())
             return ErroFeedback.erroFeedbackNotFound();
 
-        return new ResponseEntity<>(optionalFeedback, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalFeedback, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/Feedback/{id}", method = RequestMethod.DELETE)

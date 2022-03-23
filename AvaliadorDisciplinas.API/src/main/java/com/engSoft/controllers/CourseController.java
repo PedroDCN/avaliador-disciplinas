@@ -54,7 +54,7 @@ public class CourseController {
             optionalCourse.get().update(courseDTO, optionalTeacher.get());
             courseService.saveCourse(optionalCourse.get());
 
-            return new ResponseEntity<>(optionalCourse, HttpStatus.CREATED);
+            return new ResponseEntity<>(optionalCourse, HttpStatus.OK);
         } else
             return ErroCourse.erroCourseNotFound();
     }
@@ -62,13 +62,13 @@ public class CourseController {
     @RequestMapping(value = "/Courses", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCourses(){
         List<SimpleCourseDTO> courses = this.courseService.listCourses();
-        return new ResponseEntity<>(courses, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/Courses/{filter}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesFilter(@PathVariable("filter") Util.FilterEnum filter){
         List<SimpleCourseDTO> courses = this.courseService.listCoursesFilter(filter);
-        return new ResponseEntity<>(courses, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/CoursesTeacher/{nameTeacher}", method = RequestMethod.GET)
@@ -77,7 +77,7 @@ public class CourseController {
 
         if (optionalTeacher.isPresent()) {
             List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get());
-            return new ResponseEntity<>(courses, HttpStatus.OK);
+            return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
         } else
             return ErroTeacher.erroTeacherNotFound();
     }
