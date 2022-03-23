@@ -132,32 +132,52 @@ function HomePage() {
                         />
                     </div>
                     <div className={styles.MYCommentList}>
-                        <div> 
-                                1
+                        <div className={styles.MYCommentListItem}> 
+                            <img 
+                                src='https://lh3.googleusercontent.com/a-/AOh14GjL6s9Fu4UmogiPNFJMJ-sm8OQQ0Zrsd8qd1ts=s288-p-no' 
+                                height={40} 
+                                width={40}
+                                border
+                            />
+                            <div className={styles.MYCommentTextArea}>
+                                <h4>Girafa Anônima</h4>
+                                <p>Como já diria o general, estrategista e filósofo chinês Sun Tzu, “Você só conhece o inferno quando paga LOAC”.</p>
+                                <div>
+                                    avaliação
+                                </div>
+                            </div>
+                            <ButtonWithIcon
+                                buttontitle="" 
+                                icon={LeftIcon} 
+                                boxShadow="none"
+                                alignItems="center"
+                                hasTitle={false}
+                                /* onClick={handleLoginButton} */
+                            />
                         </div>
-                        <div> 
-                                2
-                        </div>
-                        <div> 
-                                3
-                        </div>
-                        <div> 
-                                4
-                        </div>
-                        <div> 
-                                5
-                        </div>
-                        <div> 
-                                6
-                        </div>
-                        <div> 
-                                7
-                        </div>
-                        <div> 
-                                8
-                        </div>
-                        <div> 
-                                9
+
+                        <div className={styles.MYCommentListItem}> 
+                            <img 
+                                src='https://lh3.googleusercontent.com/a-/AOh14GjL6s9Fu4UmogiPNFJMJ-sm8OQQ0Zrsd8qd1ts=s288-p-no' 
+                                height={40} 
+                                width={40}
+                                border
+                            />
+                            <div className={styles.MYCommentTextArea}>
+                                <h4>Girafa Anônima</h4>
+                                <p>É verdade essa fita aí.</p>
+                                <div>
+                                    avaliação
+                                </div>
+                            </div>
+                            <ButtonWithIcon
+                                buttontitle="" 
+                                icon={LeftIcon} 
+                                boxShadow="none"
+                                alignItems="center"
+                                hasTitle={false}
+                                /* onClick={handleLoginButton} */
+                            />
                         </div>
                     </div>
 
