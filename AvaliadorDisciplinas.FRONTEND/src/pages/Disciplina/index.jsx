@@ -38,7 +38,7 @@ function DisciplinaIndex() {
   const [text, setText] = useState();
   const [attribute, setAttribute] = useState({ value: "name", label: "Nome" });
 
-  const { loading, error, data } = useStore(text, attribute.value);
+  const { loading, data } = useStore(text, attribute.value);
 
   return (
     <div className={styles.container}>
