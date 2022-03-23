@@ -1,29 +1,62 @@
 import { createContext, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { checkAuthToken, parseAuthToken, removeAuthToken, setAuthToken } from "../utils/tokenUtil";
+import { createUser, getUserByEmail } from '../services/userService';
+import { checkEmailComputacao } from '../utils/loginUtil';
 
 const AuthContext = createContext();
 
 export function AuthContextProvider(props) {
     const [user,setUser] = useState(undefined);
-    const navigate = useNavigate();
+    const [logged,setLogged] = useState(false);
 
-    function onSuccessGoogleLogin(response) {
-        const profile = response.profileObj;
-        loginSetUser({name: profile.name, photo: profile.imageUrl, isAdmin: false});
-        navigate('/home');
+    function loadUser() {
+        const token = checkAuthToken();
+        let tokenInvalid = false;
+        if (token !== 'invalid' && token !== undefined) {
+            const { name, picture, email } = parseAuthToken(token);
+            getUserByEmail(email).then((res) => {
+                loginSetUser({name, photo:picture, isAdmin: res.isAdmin});
+            });
+        } else if (token === 'invalid') {
+            logout();
+            tokenInvalid = true;
+        }
+        return tokenInvalid;
+    }
+
+    async function onSuccessGoogleLogin(response) {
+        const {name, email} = response.profileObj;
+        let success = false;
+        const userAlreadyExists = (await getUserByEmail(email)) !== '';
+
+        if (checkEmailComputacao(email)) {
+            if (!userAlreadyExists) {
+                createUser({email,name}).then(() => {
+                    console.log('user created!');
+                }).catch(e => {
+                    console.log('error on user created');
+                });
+            }
+            setAuthToken(response.tokenId);
+            loadUser();
+            success = true;
+        }
+        return success;
     }
 
     function onFailureGoogleLogin(response) {
         console.log(response, 'A autenticação pelo Google deu falha.');
     }
 
-    function loginSetUser(user) {
-        setUser(user);
+    function loginSetUser(newUser) {
+        setUser(newUser);
+        setLogged(true);
     }
 
     function logout() {
         setUser(undefined);
-        navigate('/');
+        setLogged(false);
+        removeAuthToken();
     }
 
     return (
@@ -32,7 +65,9 @@ export function AuthContextProvider(props) {
                     loginSetUser, 
                     onSuccessGoogleLogin, 
                     onFailureGoogleLogin,
-                    logout
+                    logout,
+                    logged,
+                    loadUser,
                     }}
         >
             {props.children}

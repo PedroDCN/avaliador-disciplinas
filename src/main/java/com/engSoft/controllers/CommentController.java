@@ -9,6 +9,7 @@ import com.engSoft.services.SemesterService;
 import com.engSoft.services.UserService;
 import com.engSoft.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class CommentController {
             commentService.saveComment(newComment);
             return new ResponseEntity<>(newComment, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, comment can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
@@ -70,14 +71,14 @@ public class CommentController {
         return new ResponseEntity<>(comments, HttpStatus.FOUND);
 
     }
-    @RequestMapping(value = "/Comment/listBySemester/{idSemester}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromSemester(@PathVariable("idSemester") Long idSemester){
+    @RequestMapping(value = "/Comment/listBySemesterAndCourse/{idSemester}/{idCourse}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCommentsfromSemesterAndCourse(@PathVariable("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse, @PathVariable("page") Integer page){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
         if (!optionalSemester.isPresent()){
             return ErroSemester.erroSemesterNotFound();
         }
-        List<Comment> comments = commentService.listCommentBySemester(idSemester);
+        Page<Comment> comments = commentService.listCommentBySemesterAndCourse(idSemester, idCourse, page);
         return new ResponseEntity<>(comments, HttpStatus.FOUND);
 
     }
@@ -109,7 +110,7 @@ public class CommentController {
             commentService.updateDeletedComments(user.get());
             return new ResponseEntity<>(optionalComment, HttpStatus.OK);
         }catch (Error e ){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, comment can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 

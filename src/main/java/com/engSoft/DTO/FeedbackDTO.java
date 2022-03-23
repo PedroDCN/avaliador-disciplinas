@@ -7,11 +7,11 @@ public class FeedbackDTO {
     private Long idCourse;
     private Long idStudent;
     private Long idSemester;
-    private Integer workload;
-    private Integer didactic;
-    private Integer organization;
-    private Integer evaluationSystem;
-    private Integer courseware;
+    private double workload;
+    private double didactic;
+    private double organization;
+    private double evaluationSystem;
+    private double courseware;
     private Util.ModalityEnum modality;
 
     public Long getIdCourse() {
@@ -24,19 +24,19 @@ public class FeedbackDTO {
 
     public Long getIdSemester() { return idSemester; }
 
-    public Integer getWorkload() {
+    public double getWorkload() {
         return workload;
     }
 
-    public Integer getDidactic() { return didactic; }
+    public double getDidactic() { return didactic; }
 
-    public Integer getOrganization() { return organization; }
+    public double getOrganization() { return organization; }
 
-    public Integer getEvaluationSystem() {
+    public double getEvaluationSystem() {
         return evaluationSystem;
     }
 
-    public Integer getCourseware() {
+    public double getCourseware() {
         return courseware;
     }
 

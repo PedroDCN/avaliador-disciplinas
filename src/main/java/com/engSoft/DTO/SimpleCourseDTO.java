@@ -5,9 +5,9 @@ public class SimpleCourseDTO {
     private Long id;
     private String name;
     private String nameTeacher;
-    private Integer grade;
+    private double grade;
 
-    public SimpleCourseDTO(Long id, String name, String nameTeacher, Integer grade) {
+    public SimpleCourseDTO(Long id, String name, String nameTeacher, double grade) {
         this.id = id;
         this.name = name;
         this.nameTeacher = nameTeacher;
@@ -26,7 +26,7 @@ public class SimpleCourseDTO {
         return nameTeacher;
     }
 
-    public Integer getGrade() {
+    public double getGrade() {
         return grade;
     }
 }

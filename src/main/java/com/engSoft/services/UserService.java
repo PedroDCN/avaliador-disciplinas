@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    public void saveUser(User user);
-    public void removeUser(User user);
-    public List<User> listUsers();
-    public Optional<User> getUserById(Long id);
-    public Optional<User> getUserByEmail(String email);
+    void saveUser(User user);
+    void removeUser(User user);
+    List<User> listUsers();
+    Optional<User> getUserById(Long id);
+    Optional<User> getUserByEmail(String email);
 }

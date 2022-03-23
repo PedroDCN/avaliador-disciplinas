@@ -11,12 +11,12 @@ public class ErroUser {
 
 
     public static ResponseEntity<CustomErrorType> erroUserNotFound() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroUser.STUDENT_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
     public static ResponseEntity<CustomErrorType> erroUserAlreadyExist() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroUser.STUDENT_ALREADY_EXISTS), HttpStatus.CONFLICT);
     }
 

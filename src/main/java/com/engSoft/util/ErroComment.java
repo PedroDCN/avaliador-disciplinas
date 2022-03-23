@@ -9,11 +9,11 @@ public class ErroComment {
 
 
     public static ResponseEntity<CustomErrorType> erroCommentNotFound() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroComment.COMMENT_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
     public static ResponseEntity<CustomErrorType> erroCommentNotAccessible() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroComment.COMMENT_NOT_ACCESSIBLE), HttpStatus.FORBIDDEN);
     }
 
