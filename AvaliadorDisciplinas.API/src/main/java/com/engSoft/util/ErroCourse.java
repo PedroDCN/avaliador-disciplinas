@@ -10,7 +10,7 @@ public class ErroCourse {
 
 
     public static ResponseEntity<CustomErrorType> erroCourseNotFound() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroCourse.COURSE_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 
