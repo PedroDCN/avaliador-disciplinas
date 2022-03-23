@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { getAll } from "../services/disciplinaService";
+import { getAllProfessores } from "../services/professorService";
 
 const initialState = {
   loading: false,
@@ -32,11 +32,11 @@ const useStore = (text, attribute) => {
       dispatch({ type: "ERROR", payload: null });
       dispatch({ type: "LOADED", payload: [] });
       try {
-        const response = await getAll();
+        const response = await getAllProfessores();
 
         dispatch({
           type: "LOADED",
-          payload: response.data,
+          payload: response,
         });
       } catch (error) {
         dispatch({ type: "ERROR", payload: error });
@@ -52,8 +52,8 @@ const useStore = (text, attribute) => {
       dispatch({ type: "SUCCESS", payload: [] });
       try {
         if (text && attribute) {
-          const filtered = state.loaded.filter((disciplina) =>
-            disciplina[attribute]
+          const filtered = state.loaded.filter((professor) =>
+            professor[attribute]
               .toString()
               .toLowerCase()
               .includes(text.toLowerCase())

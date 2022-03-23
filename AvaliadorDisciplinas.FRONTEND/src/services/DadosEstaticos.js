@@ -8,13 +8,13 @@ import DenunciasIcon from "../assets/icons/complaint_icon.svg";
 
 export function atributosDisciplina() {
   return [
-    { value: "name", text: "Nome" },
-    { value: "nameTeacher", text: "Professor" },
+    { value: "name", label: "Nome" },
+    { value: "nameTeacher", label: "Professor" },
   ];
 }
 
 export function atributosProfessor() {
-  return [{ value: "name", text: "Nome" }];
+  return [{ value: "name", label: "Nome" }];
 }
 
 export function newDisciplina() {

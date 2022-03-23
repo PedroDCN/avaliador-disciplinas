@@ -1,6 +1,6 @@
 import { api } from "./api";
 
-export async function getAll() {
+async function getAll() {
   return await api.get("/Courses");
 }
 
