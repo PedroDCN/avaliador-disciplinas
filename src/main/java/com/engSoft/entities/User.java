@@ -20,6 +20,7 @@ public class User {
     private Boolean isBanned;
     private Boolean isAdmin;
     private int deletedComments;
+    private int reportedComments;
 
     public User(){}
 
@@ -87,6 +88,14 @@ public class User {
 
     public void setDeletedComments(int deletedComments) {
         this.deletedComments = deletedComments;
+    }
+
+    public int getReportedComments() {
+        return reportedComments;
+    }
+
+    public void setReportedComments(int reportedComments) {
+        this.reportedComments = reportedComments;
     }
 
     @Override

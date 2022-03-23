@@ -32,4 +32,20 @@ public class Reaction {
     public Long getIdComment() {
         return idComment;
     }
+
+    public Long getIdStudent() {
+        return idStudent;
+    }
+
+    public void setReactionTypeEnum(Util.ReactionTypeEnum reactionTypeEnum) {
+        this.reactionTypeEnum = reactionTypeEnum;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
