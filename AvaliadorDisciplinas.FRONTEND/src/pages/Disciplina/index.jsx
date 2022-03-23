@@ -14,9 +14,9 @@ const customStyles = {
     textAlign: "center",
     border: 0,
     fontSize: "1.5rem",
-    color: "#1e1e1e",
+    color: "var(--black)",
     fontWeight: "400",
-    backgroundColor: "#e5e5e5",
+    backgroundColor: "var(--background-input)",
     height: "100%",
     width: "100%",
     borderRadius: "0.75rem",
@@ -26,7 +26,7 @@ const customStyles = {
     ...provided,
     textAlign: "center",
     fontSize: "1.5rem",
-    color: "#6a6a6a",
+    color: "var(--gray-700)",
     fontWeight: "500",
   }),
 };
@@ -68,6 +68,7 @@ function DisciplinaIndex() {
               options={atributosDisciplina()}
               onChange={setAttribute}
               placeholder={"Selecione um filtro"}
+              isSearchable={false}
             />
           </div>
         </div>
