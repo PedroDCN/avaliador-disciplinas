@@ -36,6 +36,7 @@ public class SimulationController {
             }
             addSimulacao(simulation, possibleCourse.get());
         }
+        simulation.toPercent();
         return new ResponseEntity<>(simulation, HttpStatus.OK);
     }
 
@@ -43,7 +44,7 @@ public class SimulationController {
         List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(course.getId());
         int workload = getMediaWorkload(feedbacks);
         simulation.addCreditos(1);
-        simulation.addWorkload((workload*workload)); //Importância ao quadrado para aumentar o peso quanto maior o valor
+        simulation.addWorkload(Math.log(workload)/Math.log(10)); //Importância ao quadrado para aumentar o peso quanto maior o valor
         simulation.addAvaliacao(course.getGrade());
     }
 
@@ -83,6 +84,12 @@ public class SimulationController {
 
         public void addAvaliacao(double avaliacao) {
             this.avaliacao += avaliacao;
+        }
+
+        public void toPercent() {
+            creditos /= 6;
+            workload /= 6;
+            avaliacao /= 10;
         }
     }
 }
