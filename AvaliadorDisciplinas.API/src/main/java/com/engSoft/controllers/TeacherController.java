@@ -22,7 +22,6 @@ public class TeacherController {
     @RequestMapping(value = "/teacher", method = RequestMethod.POST)
     public ResponseEntity<?> createTeacher(@RequestBody TeacherDTO teacherDTO){
 
-//        TeacherDTO teacherDTO = new TeacherDTO(name);
         Teacher newTeacher = new Teacher(teacherDTO);
         Optional<Teacher> auxTeacher = teacherService.getTeacherByName(newTeacher.getName());
         if(auxTeacher.isPresent()){
@@ -33,14 +32,30 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/teacher{id}" , method = RequestMethod.PUT)
-    public ResponseEntity<?> updateTeacher(@PathVariable ("id") String name){
-        return new ResponseEntity<String>("Teacher succesfully updated! \n", HttpStatus.OK);
+    public ResponseEntity<?> updateTeacher(@PathVariable ("id") Long id, @RequestParam String name){
+        Optional<Teacher> teacherOptional = this.teacherService.getTeacherById(id);
+
+        if (!teacherOptional.isPresent()){
+            return null;
+        }
+        try {
+            Optional<Teacher> updatedTeacher = this.teacherService.updateTeacher(id,name);
+
+            return new ResponseEntity<String>(updatedTeacher.get() + "\n Teacher succesfully updated! \n", HttpStatus.OK);
+
+        }catch (Error e){
+          return  new ResponseEntity<>("a",HttpStatus.BAD_REQUEST);
+//            new CustomErrorType("Error, this teacher can't be updated!")
+        }
+
     }
+
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public ResponseEntity<?> getAllTeachers(){
         List<Teacher> teachers = this.teacherService.listTeachers();
         return new ResponseEntity<String>("Ok! \n" + teachers, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/techers{name}", method = RequestMethod.GET)
     public ResponseEntity<?> getTeacherByName(@PathVariable ("name") String name){
         Optional<Teacher> teacher = this.teacherService.getTeacherByName(name);
@@ -54,7 +69,7 @@ public class TeacherController {
         return new ResponseEntity<String>("Teacher found! \n" + teacher.toString(), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "teacherDelete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/teacherDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeTeacher(@PathVariable ("id") Long id){
 
         Optional<Teacher> toBeDeletedTeacher = this.teacherService.getTeacherById(id);
