@@ -9,4 +9,5 @@ import java.util.List;
 public interface ReactionRepository extends JpaRepository<Reaction, Long> {
     List<Reaction> findAllByIdCommentAndIdStudent(Long idComment,Long idStudent);
     List<Reaction> findReactionByIdComment(Long idComment);
+    List<Reaction> findAllByIdCommentAndReactionTypeEnum_Complaint(Long idComment);
 }

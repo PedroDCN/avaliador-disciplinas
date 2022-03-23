@@ -30,18 +30,18 @@ public class ReactionController {
     public ResponseEntity<?> createReaction(@RequestBody ReactionDTO reactionDTO) {
         Optional<Comment> optionalComment = commentService.findCommentById(reactionDTO.getIdComment());
 
-        Optional<User> optionalStudent = userService.getUserById(reactionDTO.getIdStudent());
+        Optional<User> user = userService.getUserById(reactionDTO.getIdStudent());
 
         if (!optionalComment.isPresent()){
             return ErroComment.erroCommentNotFound();
         }
-        if (!optionalStudent.isPresent()){
+        if (!user.isPresent()){
             return ErroUser.erroUserNotFound();
         }
         Reaction newReaction = new Reaction(reactionDTO);
         try {
             reactionService.saveReaction(newReaction);
-            reactionService.updateVotes(optionalComment.get(), newReaction);
+            reactionService.updateVotes(optionalComment.get(), newReaction,user.get());
             return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<CustomErrorType>(
@@ -79,20 +79,20 @@ public class ReactionController {
     }
 
     @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> removeReaction(@PathVariable ("id") Long id,@RequestParam Long idStudent){
+    public ResponseEntity<?> removeReaction(@PathVariable ("id") Long id,@RequestParam Long idUser){
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
         if(!optionalReaction.isPresent())
             return ErroReaction.erroReactionNotFound();
-        List<Reaction> userReaction= reactionService.findReactionByStudentAndComment(id,idStudent);
-        Optional<User> user = userService.getUserById(idStudent);
+        List<Reaction> userReaction= reactionService.findReactionByStudentAndComment(id,idUser);
+        Optional<User> user = userService.getUserById(idUser);
         if (userReaction.isEmpty() || !user.get().getIsAdmin()){
             return ErroReaction.erroReactionNotAccessible();
         }
         Optional<Comment> comment =commentService.findCommentById(optionalReaction.get().getIdComment());
 
         try{
-            reactionService.removeVotes(comment.get(), optionalReaction.get());
+            reactionService.removeVotes(comment.get(), optionalReaction.get(),user.get());
             reactionService.removeReaction(id);
             return new ResponseEntity<>(optionalReaction, HttpStatus.OK);
         }catch (Error e ){
