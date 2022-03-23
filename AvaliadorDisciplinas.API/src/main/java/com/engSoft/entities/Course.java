@@ -15,7 +15,7 @@ public class Course {
     private String code;
     @ManyToOne
     private Teacher teacher;
-    private int grade;
+    private double grade;
 
     public Course() {}
 
@@ -39,7 +39,7 @@ public class Course {
             soma += feedback.getCourseware() + feedback.getDidactic() + feedback.getOrganization() + feedback.getWorkload() + feedback.getEvaluationSystem();
             count++;
         }
-        grade = (soma/5)/count;
+        grade = (soma/5d)/count;
     }
 
     public Long getId() {
@@ -58,7 +58,7 @@ public class Course {
         return teacher;
     }
 
-    public int getGrade() { return grade; }
+    public double getGrade() { return grade; }
 
     @Override
     public String toString() {

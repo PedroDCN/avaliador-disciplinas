@@ -64,8 +64,8 @@ public class SimulationController {
 
     private static class Simulation {
         public int creditos;
-        public int workload;
-        public int avaliacao;
+        public double workload;
+        public double avaliacao;
 
         public Simulation() {
             this.creditos = 0;
@@ -77,11 +77,11 @@ public class SimulationController {
             this.creditos += creditos;
         }
 
-        public void addWorkload(int workload) {
+        public void addWorkload(double workload) {
             this.workload += workload;
         }
 
-        public void addAvaliacao(int avaliacao) {
+        public void addAvaliacao(double avaliacao) {
             this.avaliacao += avaliacao;
         }
     }
