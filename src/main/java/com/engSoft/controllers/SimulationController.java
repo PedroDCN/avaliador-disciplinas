@@ -24,7 +24,7 @@ public class SimulationController {
     @Autowired
     FeedbackService feedbackService;
 
-    @RequestMapping(value = "/simulation", method = RequestMethod.POST)
+    @RequestMapping(value = "/simulation", method = RequestMethod.GET)
     public ResponseEntity<?> getSimulation(@RequestBody List<Long> courses_id) {
 
         Simulation simulation = new Simulation();
