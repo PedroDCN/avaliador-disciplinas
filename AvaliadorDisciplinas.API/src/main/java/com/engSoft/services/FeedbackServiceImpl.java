@@ -45,12 +45,12 @@ public class FeedbackServiceImpl implements FeedbackService {
         double quantityFeedbacks = feedbacks.size();
 
 
-        for (int i = 0; i < quantityFeedbacks; i++) {
-            organization += feedbacks.get(i).getOrganization();
-            workload += feedbacks.get(i).getWorkload();
-            didatic += feedbacks.get(i).getDidactic();
-            evaluationSystem += feedbacks.get(i).getEvaluationSystem();
-            courseware += feedbacks.get(i).getCourseware();
+        for (Feedback feedback : feedbacks) {
+            organization += feedback.getOrganization();
+            workload += feedback.getWorkload();
+            didatic += feedback.getDidactic();
+            evaluationSystem += feedback.getEvaluationSystem();
+            courseware += feedback.getCourseware();
 
         }
 
@@ -102,14 +102,14 @@ public class FeedbackServiceImpl implements FeedbackService {
             double quantityFeedbacks = feedbacks.size();
 
 
-            for (int i = 0; i < quantityFeedbacks; i++) {
-                organization += feedbacks.get(i).getOrganization();
-                workload += feedbacks.get(i).getWorkload();
-                didatic += feedbacks.get(i).getDidactic();
-                evaluationSystem += feedbacks.get(i).getEvaluationSystem();
-                courseware += feedbacks.get(i).getCourseware();
+        for (Feedback feedback : feedbacks) {
+            organization += feedback.getOrganization();
+            workload += feedback.getWorkload();
+            didatic += feedback.getDidactic();
+            evaluationSystem += feedback.getEvaluationSystem();
+            courseware += feedback.getCourseware();
 
-            }
+        }
 
             averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
             averageFeedback.setAverageWorkload(workload/quantityFeedbacks);

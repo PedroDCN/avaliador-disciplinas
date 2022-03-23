@@ -28,7 +28,7 @@ public class CourseController {
     @Autowired
     TeacherService teacherService;
 
-    @RequestMapping(value = "/admin/Course", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/course", method = RequestMethod.POST)
     public ResponseEntity<?> createCourse(@RequestBody CourseDTO courseDTO) {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
 
@@ -41,7 +41,7 @@ public class CourseController {
             return ErroTeacher.erroTeacherNotFound();
     }
 
-    @RequestMapping(value = "/admin/CourseUpdate/{id}", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/admin/courseUpdate/{id}", method = RequestMethod.PATCH)
     public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestBody CourseDTO courseDTO) {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
 
@@ -54,35 +54,35 @@ public class CourseController {
             optionalCourse.get().update(courseDTO, optionalTeacher.get());
             courseService.saveCourse(optionalCourse.get());
 
-            return new ResponseEntity<>(optionalCourse, HttpStatus.CREATED);
+            return new ResponseEntity<>(optionalCourse, HttpStatus.OK);
         } else
             return ErroCourse.erroCourseNotFound();
     }
 
-    @RequestMapping(value = "/Courses", method = RequestMethod.GET)
+    @RequestMapping(value = "/courses", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCourses(){
         List<SimpleCourseDTO> courses = this.courseService.listCourses();
-        return new ResponseEntity<>(courses, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Courses/{filter}", method = RequestMethod.GET)
+    @RequestMapping(value = "/courses/{filter}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesFilter(@PathVariable("filter") Util.FilterEnum filter){
         List<SimpleCourseDTO> courses = this.courseService.listCoursesFilter(filter);
-        return new ResponseEntity<>(courses, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/CoursesTeacher/{nameTeacher}", method = RequestMethod.GET)
+    @RequestMapping(value = "/coursesTeacher/{nameTeacher}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesfromTeacher(@PathVariable("nameTeacher") String nameTeacher){
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(nameTeacher);
 
         if (optionalTeacher.isPresent()) {
             List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get());
-            return new ResponseEntity<>(courses, HttpStatus.OK);
+            return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
         } else
             return ErroTeacher.erroTeacherNotFound();
     }
 
-    @RequestMapping(value = "/Course/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/course/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getCourse(@PathVariable("id") Long id){
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
@@ -92,7 +92,7 @@ public class CourseController {
             return ErroCourse.erroCourseNotFound();
     }
 
-    @RequestMapping(value = "/admin/CourseDelete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/courseDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeCourse(@PathVariable ("id") Long id){
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 

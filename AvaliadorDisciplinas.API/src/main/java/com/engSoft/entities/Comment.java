@@ -17,6 +17,7 @@ public class Comment {
     private String description;
     private Integer up;
     private Integer down;
+    private Integer complaints;
 
     public Comment(CommentDTO commentDTO) {
         this.idCourse = commentDTO.getIdCourse();
@@ -25,6 +26,7 @@ public class Comment {
         this.description = commentDTO.getDescription();
         this.up = 0;
         this.down = 0;
+        this.complaints = 0;
     }
 
     public Comment() {
@@ -81,6 +83,14 @@ public class Comment {
 
     public void setDown(Integer down) {
         this.down = down;
+    }
+
+    public Integer getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(Integer complaints) {
+        this.complaints = complaints;
     }
 
     @Override
