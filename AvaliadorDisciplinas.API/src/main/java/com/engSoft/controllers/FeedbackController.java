@@ -8,7 +8,6 @@ import com.engSoft.services.SemesterService;
 import com.engSoft.services.UserService;
 import com.engSoft.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -129,7 +128,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/avarageByCourseSemester/{idCourse}/{idSemester}", method = RequestMethod.GET)
+    @RequestMapping(value = "/Feedback/avarageByCourseSemester", method = RequestMethod.GET)
     public ResponseEntity<?> getAvarageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);

@@ -51,7 +51,7 @@ public class CommentController {
             commentService.saveComment(newComment);
             return new ResponseEntity<>(newComment, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, comment can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
@@ -110,7 +110,7 @@ public class CommentController {
             commentService.updateDeletedComments(user.get());
             return new ResponseEntity<>(optionalComment, HttpStatus.OK);
         }catch (Error e ){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, comment can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 

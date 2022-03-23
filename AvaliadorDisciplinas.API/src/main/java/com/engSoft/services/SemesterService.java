@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface SemesterService {
 
-    public void saveSemester(Semester semester);
-    public List<Semester> getAll();
-    public void removeSemester(Semester semester);
-    public Optional<Semester> findSemesterById(Long id);
-    public Optional<Semester> findSemesterByName(String name);
+    void saveSemester(Semester semester);
+    List<Semester> getAll();
+    void removeSemester(Semester semester);
+    Optional<Semester> findSemesterById(Long id);
+    Optional<Semester> findSemesterByName(String name);
 }
