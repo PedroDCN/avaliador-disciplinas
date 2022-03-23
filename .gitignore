@@ -33,3 +33,4 @@ build/
 ### VS Code ###
 .vscode/
 /target/
+/AvaliadorDisciplinas.API/target/
