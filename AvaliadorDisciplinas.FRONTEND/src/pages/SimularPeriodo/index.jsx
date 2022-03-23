@@ -7,6 +7,7 @@ import { getAll } from '../../services/disciplinaService';
 import { useNavigate } from 'react-router-dom';
 import ProgressBar from '../../components/ProgressBar';
 import { getSimulacao } from '../../services/simularPeriodoService';
+import { newProgress } from '../../services/DadosEstaticos';
 
 const customStyles = {
     control: (provided, state) => ({
@@ -25,14 +26,6 @@ const customStyles = {
         color: '#6a6a6a',
         fontWeight: '500'
     })
-}
-
-const newProgress = () => {
-    return {
-        credits: 0.9,
-        difficulty: 0.6,
-        rating: 0.1
-    }
 }
 
 function SimularPeriodo() {

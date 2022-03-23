@@ -42,6 +42,14 @@ export function newProfessor() {
   }
 }
 
+export function newProgress() {
+  return {
+      credits: 0.0,
+      difficulty: 0.0,
+      rating: 0.0
+  }
+}
+
 export function getGoogleClientId() {
   return '89493011611-gevim53h29otjcjuhrljf99hkamlk7rs.apps.googleusercontent.com';
 }
