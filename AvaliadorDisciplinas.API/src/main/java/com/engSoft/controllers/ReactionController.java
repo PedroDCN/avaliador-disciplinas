@@ -49,7 +49,7 @@ public class ReactionController {
             userService.saveUser(user.get());
             commentService.saveComment(optionalComment.get());
             return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
-        } catch (Error e) {
+        }catch (Error e){
             return new ResponseEntity<CustomErrorType>(
                     new CustomErrorType("Error, reaction can´t be created"), HttpStatus.BAD_REQUEST);
         }
@@ -104,8 +104,8 @@ public class ReactionController {
             userService.saveUser(user.get());
             commentService.saveComment(comment.get());
             return new ResponseEntity<>(optionalReaction, HttpStatus.OK);
-        } catch (Error e) {
-            return new ResponseEntity<CustomErrorType>(
+        }catch (Error e ){
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 

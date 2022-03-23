@@ -10,12 +10,12 @@ public class ErroTeacher {
 
 
     public static ResponseEntity<CustomErrorType> erroTeacherAlreadyExist() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroTeacher.TEACHER_ALREADY_EXISTS), HttpStatus.CONFLICT);
     }
 
     public static ResponseEntity<CustomErrorType> erroTeacherNotFound() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroTeacher.TEACHER_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 }
