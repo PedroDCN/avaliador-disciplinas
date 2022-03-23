@@ -34,7 +34,7 @@ public class CommentController {
     SemesterService semesterService;
 
 
-    @RequestMapping(value = "/Comment", method = RequestMethod.POST)
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
     public ResponseEntity<?> createComment(@RequestBody CommentDTO commentDTO) {
         Optional<Course> optionalCourse = courseService.findCourseById(commentDTO.getIdCourse());
 
@@ -55,12 +55,12 @@ public class CommentController {
                     new CustomErrorType("Error, comment can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
-    @RequestMapping(value = "/Comment", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComment(){
         List<Comment> comments = this.commentService.listComments();
         return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
     }
-    @RequestMapping(value = "/Comment/listByCourse/{idCourse}", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment/listByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCommentsfromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
@@ -71,8 +71,8 @@ public class CommentController {
         return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
 
     }
-    @RequestMapping(value = "/Comment/listBySemesterAndCourse/{idSemester}/{idCourse}/{page}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromSemesterAndCourse(@PathVariable("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse, @PathVariable("page") Integer page){
+    @RequestMapping(value = "/comment/listBySemesterAndCourse/{page}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCommentsfromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse, @PathVariable("page") Integer page){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
         if (!optionalSemester.isPresent()){
@@ -82,7 +82,7 @@ public class CommentController {
         return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
 
     }
-    @RequestMapping(value = "/Comment/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getComment(@PathVariable("id") Long id){
         Optional<Comment> optionalComment = commentService.findCommentById(id);
 
@@ -92,7 +92,7 @@ public class CommentController {
         return new ResponseEntity<>(optionalComment, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/admin/Comment/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/comment/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeComment(@PathVariable ("id") Long id){
         Optional<Comment> optionalComment = commentService.findCommentById(id);
 

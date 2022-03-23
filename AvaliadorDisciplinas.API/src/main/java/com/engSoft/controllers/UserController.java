@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{email}", method = RequestMethod.PATCH)
-    public ResponseEntity<?> updateUser(@PathVariable ("email") String email, @RequestParam String nick){
+    public ResponseEntity<?> updateUser(@PathVariable ("email") String email, @RequestParam("nick") String nick){
 
         Optional<User> user = this.userService.getUserByEmail(email);
         if (user.isPresent()) {
@@ -84,7 +84,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/user/{email}", method = RequestMethod.PATCH)
-    public ResponseEntity<?> updateUserForAdmin(@PathVariable ("email") String email, @RequestParam Boolean isAdmin){
+    public ResponseEntity<?> updateUserForAdmin(@PathVariable ("email") String email, @RequestParam("isAdmin") Boolean isAdmin){
 
         Optional<User> user = this.userService.getUserByEmail(email);
         if (user.isPresent()) {

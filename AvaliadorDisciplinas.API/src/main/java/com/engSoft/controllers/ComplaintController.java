@@ -30,7 +30,7 @@ public class ComplaintController {
     @Autowired
     ReactionService reactionService;
 
-    @RequestMapping(value = "/Complaint", method = RequestMethod.POST)
+    @RequestMapping(value = "/complaint", method = RequestMethod.POST)
     public ResponseEntity<?> createComplaint(@RequestBody ReactionDTO reactionDTO) {
 
         if(reactionDTO.getReactionTypeEnum() != Util.ReactionTypeEnum.COMPLAINT)
@@ -62,13 +62,13 @@ public class ComplaintController {
     }
 
 
-    @RequestMapping(value = "/Complaints", method = RequestMethod.GET)
+    @RequestMapping(value = "/complaints", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComplaints(){
         List<Reaction> reactions = this.reactionService.findAllByReactionTypeEnum(Util.ReactionTypeEnum.COMPLAINT);
         return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Complaints/listByComment/{idComment}", method = RequestMethod.GET)
+    @RequestMapping(value = "/complaints/listByComment/{idComment}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComplaintsFromComment(@PathVariable("idComment") Long idComment){
         Optional<Comment> optionalComment = commentService.findCommentById(idComment);
 
@@ -80,7 +80,7 @@ public class ComplaintController {
 
     }
 
-    @RequestMapping(value = "/Complaint/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/complaint/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getComplaint(@PathVariable("id") Long id){
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
@@ -90,8 +90,8 @@ public class ComplaintController {
         return new ResponseEntity<>(optionalReaction, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Complaint/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> removeComplaint(@PathVariable ("id") Long id,@RequestParam Long idUser){
+    @RequestMapping(value = "/complaint/{idComplaint}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeComplaint(@PathVariable("idComplaint") Long id,@RequestParam("idUser") Long idUser){
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
         if(!optionalReaction.isPresent())

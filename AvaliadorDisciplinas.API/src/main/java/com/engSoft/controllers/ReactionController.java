@@ -26,7 +26,7 @@ public class ReactionController {
     @Autowired
     ReactionService reactionService;
 
-    @RequestMapping(value = "/Reaction", method = RequestMethod.POST)
+    @RequestMapping(value = "/reaction", method = RequestMethod.POST)
     public ResponseEntity<?> createReaction(@RequestBody ReactionDTO reactionDTO) {
 
         if (reactionDTO.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT)
@@ -56,14 +56,14 @@ public class ReactionController {
     }
 
 
-    @RequestMapping(value = "/Reactions", method = RequestMethod.GET)
+    @RequestMapping(value = "/reactions", method = RequestMethod.GET)
     public ResponseEntity<?> getAllReactions() {
         List<Reaction> reactions = this.reactionService.listReactions();
         reactions.removeIf(r -> r.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT);
         return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Reaction/listByComment/{idComment}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reaction/listByComment/{idComment}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllReactionsFromComment(@PathVariable("idComment") Long idComment) {
         Optional<Comment> optionalComment = commentService.findCommentById(idComment);
 
@@ -75,8 +75,8 @@ public class ReactionController {
 
     }
 
-    @RequestMapping(value = "/Reaction/listByStudentAndComment/", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllReactionsFromComment(@RequestParam Long idComment, @RequestParam Long idStudent) {
+    @RequestMapping(value = "/reaction/listByStudentAndComment/", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllReactionsFromComment(@RequestParam("idComment") Long idComment, @RequestParam("idStudent") Long idStudent) {
 
         Optional<Comment> optionalComment = commentService.findCommentById(idComment);
         if (!optionalComment.isPresent()) {
@@ -90,7 +90,7 @@ public class ReactionController {
 
     }
 
-    @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reaction/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getReaction(@PathVariable("id") Long id) {
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
@@ -100,8 +100,8 @@ public class ReactionController {
         return new ResponseEntity<>(optionalReaction, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> removeReaction(@PathVariable("id") Long id, @RequestParam Long idUser) {
+    @RequestMapping(value = "/reaction/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeReaction(@PathVariable("id") Long id, @RequestParam("idUser") Long idUser) {
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
         if (!optionalReaction.isPresent())
@@ -131,7 +131,7 @@ public class ReactionController {
 
     }
 
-    @RequestMapping(value = "/Reaction/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/reaction/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> updateReaction(@PathVariable("id") Long id, @RequestBody Util.ReactionTypeEnum reactionType) {
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
         if(!optionalReaction.isPresent())

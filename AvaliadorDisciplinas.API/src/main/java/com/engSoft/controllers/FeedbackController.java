@@ -34,7 +34,7 @@ public class FeedbackController {
     @Autowired
     UserController userController;
 
-    @RequestMapping(value = "/Feedback", method = RequestMethod.POST)
+    @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     public ResponseEntity<?> createFeedback(@RequestBody FeedbackDTO feedbackDTO) {
         Optional<Course> optionalCourse = courseService.findCourseById(feedbackDTO.getIdCourse());
 
@@ -57,13 +57,13 @@ public class FeedbackController {
         }
     }
 
-    @RequestMapping(value = "/Feedback", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedback(){
         List<Feedback> feedbacks = this.feedbackService.listFeedbacks();
         return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Feedback/listByUser/{idUser}", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/listByUser/{idUser}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedbacksfromUser(@PathVariable("idUser") Long idUser){
         Optional<User> optionalUser = userService.getUserById(idUser);
 
@@ -76,7 +76,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/listByCourse/{idCourse}", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/listByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
@@ -88,7 +88,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/avarageByCourse/{idCourse}", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/avarageByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getAvarageFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
@@ -100,7 +100,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/listBySemester/{idSemester}", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/listBySemester/{idSemester}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedbacksfromSemester(@PathVariable("idSemester") Long idSemester){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
@@ -112,7 +112,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/listByCourseSemester/", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/listByCourseSemester/", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
@@ -128,7 +128,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/avarageByCourseSemester", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/avarageByCourseSemester", method = RequestMethod.GET)
     public ResponseEntity<?> getAvarageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
@@ -144,7 +144,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getFeedback(@PathVariable("id") Long id){
         Optional<Feedback> optionalFeedback = feedbackService.findFeedbackById(id);
 
@@ -154,7 +154,7 @@ public class FeedbackController {
         return new ResponseEntity<>(optionalFeedback, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Feedback/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/feedback/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeFeedback(@PathVariable ("id") Long id){
         Optional<Feedback> optionalFeedback = feedbackService.findFeedbackById(id);
 

@@ -38,7 +38,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/admin/teacher{id}" , method = RequestMethod.PUT)
-    public ResponseEntity<?> updateTeacher(@PathVariable ("id") Long id, @RequestParam String name){
+    public ResponseEntity<?> updateTeacher(@PathVariable ("id") Long id, @RequestParam("name") String name){
         Optional<Teacher> teacherOptional = this.teacherService.getTeacherById(id);
 
         if (!teacherOptional.isPresent()){
