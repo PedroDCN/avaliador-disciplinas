@@ -31,7 +31,12 @@ public class ComplaintController {
     ReactionService reactionService;
 
     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
-    public ResponseEntity<?> createComplaint(@RequestBody ReactionDTO reactionDTO) {
+    public ResponseEntity<?> createComplaint(@RequestParam("idComment") Long idComment, @RequestParam("idStudent") Long idStudent) {
+
+        ReactionDTO reactionDTO = new ReactionDTO();
+        reactionDTO.setIdComment(idComment);
+        reactionDTO.setReactionTypeEnum(Util.ReactionTypeEnum.COMPLAINT);
+        reactionDTO.setIdStudent(idStudent);
 
         if(reactionDTO.getReactionTypeEnum() != Util.ReactionTypeEnum.COMPLAINT)
             return ErroReaction.erroInvalidTypeForOperation(reactionDTO.getReactionTypeEnum().toString(), "Complaint");
