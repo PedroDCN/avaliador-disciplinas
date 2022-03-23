@@ -23,6 +23,8 @@ public class Comment {
         this.idStudent = commentDTO.getIdStudent();
         this.idSemester = commentDTO.getIdSemester();
         this.description = commentDTO.getDescription();
+        this.up = 0;
+        this.down = 0;
     }
 
     public Comment() {

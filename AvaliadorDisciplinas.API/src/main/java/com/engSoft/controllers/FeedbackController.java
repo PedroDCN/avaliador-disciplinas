@@ -8,7 +8,6 @@ import com.engSoft.services.SemesterService;
 import com.engSoft.services.UserService;
 import com.engSoft.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.availability.AvailabilityChangeEvent;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -96,8 +95,8 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        AvarageFeedback avarageFeedback = feedbackService.avarageFeedbackByCourse(idCourse);
-        return new ResponseEntity<>(avarageFeedback, HttpStatus.FOUND);
+        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourse(idCourse);
+        return new ResponseEntity<>(averageFeedback, HttpStatus.FOUND);
 
     }
 
@@ -140,8 +139,8 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        AvarageFeedback avarageFeedback = feedbackService.avarageFeedbackByCourseAndSemester(idCourse, idSemester);
-        return new ResponseEntity<>(avarageFeedback, HttpStatus.FOUND);
+        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourseAndSemester(idCourse, idSemester);
+        return new ResponseEntity<>(averageFeedback, HttpStatus.FOUND);
 
     }
 
