@@ -5,6 +5,8 @@ import com.engSoft.DTO.CourseDTO;
 import javax.persistence.*;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 @Entity
 public class Course {
 
@@ -36,7 +38,7 @@ public class Course {
         int soma = 0;
         int count = 0;
         for(Feedback feedback : feedbacks) {
-            soma += feedback.getCourseware() + feedback.getDidactic() + feedback.getOrganization() + feedback.getWorkload() + feedback.getEvaluationSystem();
+            soma += feedback.getCourseware() + feedback.getDidactic() + feedback.getOrganization() + abs(feedback.getWorkload()-10) + feedback.getEvaluationSystem();
             count++;
         }
         grade = (soma/5d)/count;
