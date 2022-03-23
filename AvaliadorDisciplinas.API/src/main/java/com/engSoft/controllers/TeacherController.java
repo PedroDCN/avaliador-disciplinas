@@ -3,6 +3,8 @@ package com.engSoft.controllers;
 import com.engSoft.DTO.TeacherDTO;
 import com.engSoft.entities.Teacher;
 import com.engSoft.services.TeacherService;
+import com.engSoft.util.CustomErrorType;
+import com.engSoft.util.ErroTeacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +27,14 @@ public class TeacherController {
         Teacher newTeacher = new Teacher(teacherDTO);
         Optional<Teacher> auxTeacher = teacherService.getTeacherByName(newTeacher.getName());
         if(auxTeacher.isPresent()){
-            return new ResponseEntity<>("Teacher already exists! \n",HttpStatus.CONFLICT);
+            return ErroTeacher.erroTeacherAlreadyExist();
         }
-        this.teacherService.saveTeacher(newTeacher);
-        return new ResponseEntity<String>("Teacher succesfully created! \n" + newTeacher.toString(), HttpStatus.CREATED);
+        try {
+            this.teacherService.saveTeacher(newTeacher);
+            return new ResponseEntity<String>("Teacher succesfully created! \n" + newTeacher.toString(), HttpStatus.CREATED);
+        }catch (Error e){
+            return new ResponseEntity<>(new CustomErrorType("Error, this teacher can't be created!"),HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/teacher{id}" , method = RequestMethod.PUT)
@@ -36,7 +42,7 @@ public class TeacherController {
         Optional<Teacher> teacherOptional = this.teacherService.getTeacherById(id);
 
         if (!teacherOptional.isPresent()){
-            return null;
+            return ErroTeacher.erroTeacherNotFound();
         }
         try {
             Optional<Teacher> updatedTeacher = this.teacherService.updateTeacher(id,name);
@@ -44,8 +50,8 @@ public class TeacherController {
             return new ResponseEntity<String>(updatedTeacher.get() + "\n Teacher succesfully updated! \n", HttpStatus.OK);
 
         }catch (Error e){
-          return  new ResponseEntity<>("a",HttpStatus.BAD_REQUEST);
-//            new CustomErrorType("Error, this teacher can't be updated!")
+          return  new ResponseEntity<>(new CustomErrorType("Error, this teacher can't be updated!"),HttpStatus.BAD_REQUEST);
+//
         }
 
     }
