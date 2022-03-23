@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface TeacherService {
 
     public void saveTeacher(Teacher teacher);
-    public void removeTeacher(Teacher teacher);
+    public void removeTeacher(Long id);
     public Optional<Teacher> updateTeacher (Long id, Teacher teacher);
     public List<Teacher> listTeachers();
     public Optional<Teacher> getTeacherById(Long id);

@@ -20,8 +20,8 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
-    public void removeTeacher(Teacher teacher) {
-        this.teacherRepository.delete(teacher);
+    public void removeTeacher(Long id) {
+        this.teacherRepository.deleteById(id);
     }
     @Override
     public Optional<Teacher> updateTeacher(Long id, Teacher teacher){

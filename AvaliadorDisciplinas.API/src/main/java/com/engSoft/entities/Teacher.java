@@ -12,6 +12,7 @@ public class Teacher {
     @GeneratedValue
     private Long id;
     private String name;
+    // private String photo;
 
 
     public Teacher() {

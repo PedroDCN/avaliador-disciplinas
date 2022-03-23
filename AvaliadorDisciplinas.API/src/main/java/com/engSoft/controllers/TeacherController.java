@@ -58,7 +58,7 @@ public class TeacherController {
     public ResponseEntity<?> removeTeacher(@PathVariable ("id") Long id){
 
         Optional<Teacher> toBeDeletedTeacher = this.teacherService.getTeacherById(id);
-        this.teacherService.removeTeacher(toBeDeletedTeacher.get());
+        this.teacherService.removeTeacher(id);
         return new ResponseEntity<String>("Teacher succesfully deleted \n" + toBeDeletedTeacher.toString(),HttpStatus.OK);
     }
 }
