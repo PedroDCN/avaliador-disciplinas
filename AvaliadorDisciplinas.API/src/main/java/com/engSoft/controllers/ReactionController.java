@@ -44,7 +44,7 @@ public class ReactionController {
             reactionService.updateVotes(optionalComment.get(), newReaction);
             return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
@@ -96,7 +96,7 @@ public class ReactionController {
             reactionService.removeReaction(id);
             return new ResponseEntity<>(optionalReaction, HttpStatus.OK);
         }catch (Error e ){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 

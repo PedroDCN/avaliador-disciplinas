@@ -9,11 +9,11 @@ public class ErroReaction {
 
 
     public static ResponseEntity<CustomErrorType> erroReactionNotFound() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroReaction.REACTION_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
     public static ResponseEntity<CustomErrorType> erroReactionNotAccessible() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroReaction.REACTION_NOT_ACCESSIBLE), HttpStatus.FORBIDDEN);
     }
 
