@@ -1,5 +1,7 @@
 package com.engSoft.services;
 
+import com.engSoft.DTO.FeedbackDTO;
+import com.engSoft.entities.AvarageFeedback;
 import com.engSoft.entities.Feedback;
 import com.engSoft.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,41 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
+    public AvarageFeedback avarageFeedbackByCourse(Long idCourse) {
+        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourse(idCourse);
+
+        AvarageFeedback avarageFeedback = new AvarageFeedback();
+
+        double organization = 0;
+        double workload = 0;
+        double didatic = 0;
+        double evaluationSystem = 0;
+        double courseware = 0;
+
+        double quantityFeedbacks = feedbacks.size();
+
+
+        for (int i = 0; i < quantityFeedbacks; i++) {
+            organization += feedbacks.get(i).getOrganization();
+            workload += feedbacks.get(i).getWorkload();
+            didatic += feedbacks.get(i).getDidactic();
+            evaluationSystem += feedbacks.get(i).getEvaluationSystem();
+            courseware += feedbacks.get(i).getCourseware();
+
+        }
+
+        avarageFeedback.setAvarageOrganization(organization/quantityFeedbacks);
+        avarageFeedback.setAvarageWorkload(workload/quantityFeedbacks);
+        avarageFeedback.setAvarageDidactic(didatic/quantityFeedbacks);
+        avarageFeedback.setAvarageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+        avarageFeedback.setAvarageCourseware(courseware/quantityFeedbacks);
+
+
+        return avarageFeedback;
+    }
+
+
+    @Override
     public void removeFeedback(Long idFeedback) {
         this.feedbackRepository.deleteById(idFeedback);
     }
@@ -46,7 +83,50 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public List<Feedback> findFeedbakByCourseAndSemester(Long idCourse, Long idSemester) {
+
+
         return this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
     }
+
+    @Override
+    public AvarageFeedback avarageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
+            List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+
+            AvarageFeedback avarageFeedback = new AvarageFeedback();
+
+            double organization = 0;
+            double workload = 0;
+            double didatic = 0;
+            double evaluationSystem = 0;
+            double courseware = 0;
+
+            double quantityFeedbacks = feedbacks.size();
+
+
+            for (int i = 0; i < quantityFeedbacks; i++) {
+                organization += feedbacks.get(i).getOrganization();
+                workload += feedbacks.get(i).getWorkload();
+                didatic += feedbacks.get(i).getDidactic();
+                evaluationSystem += feedbacks.get(i).getEvaluationSystem();
+                courseware += feedbacks.get(i).getCourseware();
+
+            }
+
+            avarageFeedback.setAvarageOrganization((organization/quantityFeedbacks));
+            avarageFeedback.setAvarageWorkload(workload/quantityFeedbacks);
+            avarageFeedback.setAvarageDidactic(didatic/quantityFeedbacks);
+            avarageFeedback.setAvarageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+            avarageFeedback.setAvarageCourseware(courseware/quantityFeedbacks);
+
+
+            return avarageFeedback;
+
+    }
+
+    @Override
+    public List<Feedback> findFeedbackByStudent(Long idStudent) {
+        return this.feedbackRepository.findAllByIdStudent(idStudent);
+    }
+
 
 }
