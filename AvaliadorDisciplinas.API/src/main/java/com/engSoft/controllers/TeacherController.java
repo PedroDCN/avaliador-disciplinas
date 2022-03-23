@@ -21,7 +21,7 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
-    @RequestMapping(value = "/teacher", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/teacher", method = RequestMethod.POST)
     public ResponseEntity<?> createTeacher(@RequestBody TeacherDTO teacherDTO){
 
         Teacher newTeacher = new Teacher(teacherDTO);
@@ -37,7 +37,7 @@ public class TeacherController {
         }
     }
 
-    @RequestMapping(value = "/teacher{id}" , method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/teacher{id}" , method = RequestMethod.PUT)
     public ResponseEntity<?> updateTeacher(@PathVariable ("id") Long id, @RequestParam String name){
         Optional<Teacher> teacherOptional = this.teacherService.getTeacherById(id);
 
@@ -59,27 +59,42 @@ public class TeacherController {
     @RequestMapping(value = "/teachers", method = RequestMethod.GET)
     public ResponseEntity<?> getAllTeachers(){
         List<Teacher> teachers = this.teacherService.listTeachers();
+        if (teachers.size() == 0){
+            return new ResponseEntity<>("Por enquanto a lista está vazia!",HttpStatus.ACCEPTED);
+        }
         return new ResponseEntity<String>("Ok! \n" + teachers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/techers{name}", method = RequestMethod.GET)
     public ResponseEntity<?> getTeacherByName(@PathVariable ("name") String name){
+
         Optional<Teacher> teacher = this.teacherService.getTeacherByName(name);
-        return new ResponseEntity<String>("Teacher found! \n" + teacher.toString(), HttpStatus.ACCEPTED);
+        if(!teacher.isPresent()){
+            return ErroTeacher.erroTeacherNotFound();
+        }
+
+        return new ResponseEntity<String>("Teacher found! \n" + teacher, HttpStatus.ACCEPTED);
+
     }
 
     @RequestMapping(value = "/teachers/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getTeacher(@PathVariable ("id") Long id){
 
         Optional<Teacher> teacher = this.teacherService.getTeacherById(id);
-        return new ResponseEntity<String>("Teacher found! \n" + teacher.toString(), HttpStatus.ACCEPTED);
+        if(!teacher.isPresent()){
+            return ErroTeacher.erroTeacherNotFound();
+        }
+        return new ResponseEntity<String>("Teacher found! \n" + teacher, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/teacherDelete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/admin/teacherDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeTeacher(@PathVariable ("id") Long id){
 
         Optional<Teacher> toBeDeletedTeacher = this.teacherService.getTeacherById(id);
+        if (!toBeDeletedTeacher.isPresent()){
+            return ErroTeacher.erroTeacherNotFound();
+        }
         this.teacherService.removeTeacher(id);
-        return new ResponseEntity<String>("Teacher succesfully deleted \n" + toBeDeletedTeacher.toString(),HttpStatus.OK);
+        return new ResponseEntity<String>("Teacher succesfully deleted \n" + toBeDeletedTeacher,HttpStatus.OK);
     }
 }

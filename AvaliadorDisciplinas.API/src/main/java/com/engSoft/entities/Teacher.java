@@ -12,7 +12,6 @@ public class Teacher implements Comparable<Teacher> {
     @GeneratedValue
     private Long id;
     private String name;
-    // private String photo;
 
 
     public Teacher() {
