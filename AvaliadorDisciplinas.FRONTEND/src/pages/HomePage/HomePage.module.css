@@ -1,54 +1,12 @@
 .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
-}
-
-.container .navMenu {
+    width: 100%;
     height: 100%;
-    width: 20%;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
-}
-
-.container .userBox {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    background: var(--primary);
-}
-
-.container .userBox img {
-    border-radius: 50%;
-    border: 0.25rem solid var(--white);
-}
-
-.container .userBox span {
-    color: var(--white);
-    font-weight: 400;
-    font-size: 1.15rem;
-}
-
-.container .menuItems {
-    flex-grow: 6;
-    background: var(--secondary);
-    padding: 1.25rem;
-}
-
-.container .content {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.container .content .welcomeBox {
+.container .welcomeBox {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -60,15 +18,14 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
 }
 
-.container .content .welcomeBox img {
+.container .welcomeBox img {
     width: 38rem;
 }
 
-.container .content .welcomeBox span {
+.container .welcomeBox span {
     width: 26rem;
     text-align: center;
     font-size: 1.5rem;
     font-weight: 300;
     user-select: none;
 }
-

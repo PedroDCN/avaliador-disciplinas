@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./UserComentarios.module.css";
-import UserImage from "../../assets/icons/user_anonimous.svg";
-import NavMenu from "../../components/NavMenu";
 import { useAuth } from "../../contexts/AuthContext";
 import DataList from "../../components/DataList";
 import { getAll } from "../../services/comentariosService";
@@ -26,20 +24,6 @@ function UserComentarios() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.navMenu}>
-                <div className={styles.userBox}>
-                    <img
-                        src={user === undefined ? UserImage : user.photo}
-                        alt="User Logged"
-                        height={96}
-                        width={96}
-                    />
-                    <span>{user === undefined ? "Usuário Anônimo" : user.name}</span>
-                </div>
-                <div className={styles.menuItems}>
-                    <NavMenu />
-                </div>
-            </div>
             <div className={styles.content}>
                 <div className={styles.header}>
                     <ul className={styles.userNav}>
