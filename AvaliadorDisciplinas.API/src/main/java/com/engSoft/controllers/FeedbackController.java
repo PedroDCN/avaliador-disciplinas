@@ -88,7 +88,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/averageByCourse/{idCourse}", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/averageByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getAverageFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
@@ -129,7 +129,7 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/Feedback/averageByCourseSemester", method = RequestMethod.GET)
+    @RequestMapping(value = "/feedback/averageByCourseSemester", method = RequestMethod.GET)
     public ResponseEntity<?> getAverageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
