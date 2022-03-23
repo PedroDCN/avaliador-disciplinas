@@ -17,7 +17,7 @@ public class SemesterController {
     @Autowired
     SemesterService semesterService;
 
-    @RequestMapping(value = "/Semester/{name}", method = RequestMethod.POST)
+    @RequestMapping(value = "/semester/{name}", method = RequestMethod.POST)
     public ResponseEntity<?> createSemester(@PathVariable("name") String name) {
         Optional<Semester> optionalSemester = semesterService.findSemesterByName(name);
 
@@ -29,12 +29,12 @@ public class SemesterController {
         return new ResponseEntity<>(newSemester, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/Semesters", method = RequestMethod.GET)
+    @RequestMapping(value = "/semesters", method = RequestMethod.GET)
     public ResponseEntity<?> getAllSemesters(){
-        return new ResponseEntity<>(semesterService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(semesterService.getAll(), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "SemesterDelete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "semesterDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeSemester(@PathVariable ("id") Long id){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(id);
 

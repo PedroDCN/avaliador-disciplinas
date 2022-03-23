@@ -37,7 +37,7 @@ public class SimulationController {
             addSimulacao(simulation, possibleCourse.get());
         }
         simulation.toPercent();
-        return new ResponseEntity<>(simulation, HttpStatus.OK);
+        return new ResponseEntity<>(simulation, HttpStatus.ACCEPTED);
     }
 
     private void addSimulacao(Simulation simulation, Course course) {

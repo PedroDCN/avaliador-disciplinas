@@ -30,7 +30,7 @@ public class ComplaintController {
     @Autowired
     ReactionService reactionService;
 
-    @RequestMapping(value = "/Complaint", method = RequestMethod.POST)
+    @RequestMapping(value = "/complaint", method = RequestMethod.POST)
     public ResponseEntity<?> createComplaint(@RequestBody ReactionDTO reactionDTO) {
 
         if(reactionDTO.getReactionTypeEnum() != Util.ReactionTypeEnum.COMPLAINT)
@@ -56,19 +56,19 @@ public class ComplaintController {
             commentService.saveComment(optionalComment.get());
             return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
         }catch (Error e){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
 
 
-    @RequestMapping(value = "/Complaints", method = RequestMethod.GET)
+    @RequestMapping(value = "/complaints", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComplaints(){
         List<Reaction> reactions = this.reactionService.findAllByReactionTypeEnum(Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.OK);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Complaints/listByComment/{idComment}", method = RequestMethod.GET)
+    @RequestMapping(value = "/complaints/listByComment/{idComment}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComplaintsFromComment(@PathVariable("idComment") Long idComment){
         Optional<Comment> optionalComment = commentService.findCommentById(idComment);
 
@@ -76,22 +76,22 @@ public class ComplaintController {
             return ErroComment.erroCommentNotFound();
         }
         List<Reaction> reactions = reactionService.findAllByIdCommentAndReactionTypeEnum(idComment, Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.FOUND);
+        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
 
     }
 
-    @RequestMapping(value = "/Complaint/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/complaint/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getComplaint(@PathVariable("id") Long id){
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
         if(!optionalReaction.isPresent())
             return ErroReaction.erroReactionNotFound();
 
-        return new ResponseEntity<>(optionalReaction, HttpStatus.FOUND);
+        return new ResponseEntity<>(optionalReaction, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/Complaint/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> removeComplaint(@PathVariable ("id") Long id,@RequestParam Long idUser){
+    @RequestMapping(value = "/complaint/{idComplaint}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeComplaint(@PathVariable("idComplaint") Long id,@RequestParam("idUser") Long idUser){
         Optional<Reaction> optionalReaction = reactionService.findReactionById(id);
 
         if(!optionalReaction.isPresent())
@@ -104,7 +104,8 @@ public class ComplaintController {
             return ErroUser.erroUserNotFound();
 
         Optional<Comment> comment =commentService.findCommentById(optionalReaction.get().getIdComment());
-
+        if (!comment.isPresent())
+            return ErroComment.erroCommentNotFound();
         try{
             reactionService.removeVotes(comment.get(), optionalReaction.get(),user.get());
             reactionService.removeReaction(id);
@@ -112,7 +113,7 @@ public class ComplaintController {
             commentService.saveComment(comment.get());
             return new ResponseEntity<>(optionalReaction.get(), HttpStatus.OK);
         }catch (Error e ){
-            return new ResponseEntity<CustomErrorType>(
+            return new ResponseEntity<>(
                     new CustomErrorType("Error, Complaint can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
 

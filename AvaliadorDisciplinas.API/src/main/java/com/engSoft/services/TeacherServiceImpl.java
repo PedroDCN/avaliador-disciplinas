@@ -20,12 +20,14 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
-    public void removeTeacher(Teacher teacher) {
-        this.teacherRepository.delete(teacher);
+    public void removeTeacher(Long id) {
+        this.teacherRepository.deleteById(id);
     }
     @Override
-    public Optional<Teacher> updateTeacher(Long id, Teacher teacher){
-        return null;
+    public Optional<Teacher> updateTeacher(Long id, String updatedAttribute){
+        Optional<Teacher> teacher = this.teacherRepository.findById(id);
+        teacher.get().setName(updatedAttribute);
+        return teacher;
     }
 
     @Override
