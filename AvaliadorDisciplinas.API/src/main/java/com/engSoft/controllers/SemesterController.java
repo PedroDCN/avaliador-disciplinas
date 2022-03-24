@@ -34,6 +34,16 @@ public class SemesterController {
         return new ResponseEntity<>(semesterService.getAll(), HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(value = "/semester/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getSemesterById(@PathVariable("id") long id) {
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(id);
+
+        if(!optionalSemester.isPresent()) {
+            return new ResponseEntity<>("Semester not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(optionalSemester.get(), HttpStatus.ACCEPTED);
+    }
+
     @RequestMapping(value = "semesterDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeSemester(@PathVariable ("id") Long id){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(id);
