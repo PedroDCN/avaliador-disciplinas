@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,12 +25,13 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public List<Comment> listComments() {
-        return this.commentRepository.findAll();
+        return (List<Comment>) this.commentRepository.findAll();
     }
 
     @Override
-    public List<Comment> listCommentByCourse(Long idCourse){
-        return this.commentRepository.findAllByIdCourse(idCourse);
+    public List<Comment> listCommentByCourse(Long idCourse, Integer page){
+        Pageable paging = PageRequest.of(page, 5, Sort.by("up").descending());
+        return this.commentRepository.findAllByIdCourse(idCourse, paging);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public Page<Comment> listCommentBySemesterAndCourse(Long idSemester, Long idCourse, Integer page) {
-        Pageable paging = PageRequest.of(page, 5);
+        Pageable paging = PageRequest.of(page, 5, Sort.by("up").descending());
         return this.commentRepository.findAllByIdSemesterAndIdCourse(idSemester, idCourse, paging);
     }
 
