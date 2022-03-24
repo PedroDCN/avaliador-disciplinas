@@ -14,6 +14,7 @@ import UserPage from "../UserPage";
 import UserComentarios from "../UserComentarios";
 import UserAvaliacoes from "../UserAvaliacoes";
 import LoginModal from "../../components/LoginModal";
+import UserDetails from "../UserDetails";
 
 function IndexPage() {
   const [selectedItem, setSelectedItem] = useState("");
@@ -89,6 +90,7 @@ function IndexPage() {
           <Route path="/user" element={<UserPage />} />
           <Route path="/userAvaliacoes" element={<UserAvaliacoes />} />
           <Route path="/userComentarios" element={<UserComentarios />} />
+          <Route path="/adm/user/:id" element={<UserDetails />} />
         </Routes>
       </div>
       <LoginModal show={show} handleClose={() => setShow(false)} />
