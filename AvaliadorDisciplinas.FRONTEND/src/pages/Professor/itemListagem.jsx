@@ -8,18 +8,27 @@ export function renderItem({ item, isAdmin, navigate }) {
 
   function handleClick() {
     if (isAdmin) {
-      navigate(`/disciplina/edicao/${item.id}`);
+      navigate(`/professor/edicao/${item.id}`);
     } else {
-      navigate(`/disciplina/${item.id}`);
+      debugger;
+      navigate(`/professor/${item.id}`);
     }
   }
 
   return (
     <div className={styles.itemContainer}>
-      <div className={styles.itemNota}>5/5</div>
+      <div className={styles.itemImg}>
+        <img
+          src={
+            "https://lh3.googleusercontent.com/a-/AOh14GgijOM5ExEEtBftF0_Kwx2aNVbWhkMyl1mvpqko"
+          }
+          height={64}
+          width={64}
+          alt="Professor icon"
+        />
+      </div>
       <div className={styles.itemConteudo}>
         <span>{item.name}</span>
-        <span>Professor: {item.nameTeacher}</span>
       </div>
       <div className={styles.itemButton}>
         <ButtonWithIcon icon={icon} onClick={handleClick} transparent="true" />

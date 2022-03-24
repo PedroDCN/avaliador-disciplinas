@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import styles from "./Disciplina.module.css";
-import DataList from "../../components/DataList";
-import { atributosDisciplina } from "../../services/DadosEstaticos";
-import useStore from "../../store/disciplinaIndexStore";
-import { renderItem } from "./itemListagem";
+import styles from "./Professor.module.css";
 import { useAuth } from "../../contexts/AuthContext";
+import DataList from "../../components/DataList";
+import { atributosProfessor } from "../../services/DadosEstaticos";
+import { renderItem } from "./itemListagem";
+import useStore from "../../store/professorIndexStore";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 
@@ -31,7 +31,7 @@ const customStyles = {
   }),
 };
 
-function DisciplinaIndex() {
+function ProfessorIndex() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -44,15 +44,16 @@ function DisciplinaIndex() {
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.header}>
-          <span>Lista de Disciplinas</span>
+          <span>Lista de Professores</span>
         </div>
+
         <div className={styles.filter}>
           <input
             className={styles.input}
             type="text"
             placeholder={
               "Procure por " +
-              atributosDisciplina()
+              atributosProfessor()
                 .find((item) => item.value === attribute.value)
                 .label.toLowerCase()
             }
@@ -65,13 +66,14 @@ function DisciplinaIndex() {
               className={styles.select}
               styles={customStyles}
               value={attribute}
-              options={atributosDisciplina()}
+              options={atributosProfessor()}
               onChange={setAttribute}
               placeholder={"Selecione um filtro"}
               isSearchable={false}
             />
           </div>
         </div>
+
         <div className={styles.indexContent}>
           <DataList
             data={data}
@@ -90,4 +92,4 @@ function DisciplinaIndex() {
   );
 }
 
-export default DisciplinaIndex;
+export default ProfessorIndex;

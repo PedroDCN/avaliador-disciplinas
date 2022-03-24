@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import styles from "./NavMenu.module.css";
 
-import { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate, useParams } from 'react-router-dom';
-import LoginModal from '../../components/LoginModal';
-import { getMenuItemsByUserMode, menuItems } from "../../services/DadosEstaticos";
+import { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate, useParams } from "react-router-dom";
+import LoginModal from "../../components/LoginModal";
+import {
+  getMenuItemsByUserMode,
+  menuItems,
+} from "../../services/DadosEstaticos";
 
 function NavMenu(props) {
-  const {selectedItem, setSelectedItem} = props;
+  const { selectedItem, setSelectedItem } = props;
   let [listItems, setListItems] = useState([]);
   const [show, setShow] = useState(false);
 
@@ -18,8 +21,8 @@ function NavMenu(props) {
 
   useEffect(() => {
     function setMenuItemByURLRoute() {
-      if (new RegExp("[a-z]+[\/][a-z]+[\/][0-9]+").test(params["*"])) {
-        setSelectedItem(params["*"].match(/[a-z]+/)[0]+'/cadastro');
+      if (new RegExp("[a-z]+[/][a-z]+[/][0-9]+").test(params["*"])) {
+        setSelectedItem(params["*"].match(/[a-z]+/)[0] + "/cadastro");
       } else {
         setSelectedItem(params["*"]);
       }
@@ -41,12 +44,12 @@ function NavMenu(props) {
   function handleItemMenuClick(item) {
     setSelectedItem(item);
     if (item === "login") {
-        setShow(true);
+      setShow(true);
     } else if (item === "logout") {
-        logout();
-        navigate('/');
+      logout();
+      navigate("/");
     } else {
-        navigate(`/${item}`);
+      navigate(`/${item}`);
     }
   }
 
