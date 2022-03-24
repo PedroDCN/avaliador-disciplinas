@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './LandingPage.module.css';
 import colors from '../../styles/colorsConfig.json';
 
@@ -10,6 +10,7 @@ import ButtonWithIcon from '../../components/ButtonWithIcon';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import LoginModal from '../../components/LoginModal';
+import { checkAuthToken } from '../../utils/tokenUtil';
 
 
 function LandingPage() {
@@ -30,10 +31,19 @@ function LandingPage() {
         navigate('/home');
     }
 
+    useEffect(() => {   
+        function redirectWhileValidToken() {
+            const token = checkAuthToken();
+            if (token) {
+                navigate('/home');
+            }
+        }
+        redirectWhileValidToken();
+    }, []);
 
     return (
         <>
-            <div className={`${styles.container} ${show ? styles.blur : ''}`}>
+            <div className={`${styles.container}`}>
                 <div className={styles.header}>
                     <div className={styles.logo}>
                         <img src={CadeiraIcon} alt="" />

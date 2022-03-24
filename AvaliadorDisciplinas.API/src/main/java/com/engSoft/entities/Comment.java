@@ -13,6 +13,7 @@ public class Comment {
     private Long id;
     private Long idCourse;
     private Long idStudent;
+    private Long idSemester;
     private String description;
     private Integer up;
     private Integer down;
@@ -20,6 +21,7 @@ public class Comment {
     public Comment(CommentDTO commentDTO) {
         this.idCourse = commentDTO.getIdCourse();
         this.idStudent = commentDTO.getIdStudent();
+        this.idSemester = commentDTO.getIdSemester();
         this.description = commentDTO.getDescription();
     }
 
@@ -33,6 +35,14 @@ public class Comment {
 
     public Long getIdCourse() {
         return idCourse;
+    }
+
+    public Long getIdSemester() {
+        return idSemester;
+    }
+
+    public void setIdSemester(Long idSemester) {
+        this.idSemester = idSemester;
     }
 
     public void setIdCourse(Long idCourse) {

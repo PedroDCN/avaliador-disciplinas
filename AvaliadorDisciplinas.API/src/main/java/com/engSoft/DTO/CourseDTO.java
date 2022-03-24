@@ -5,15 +5,11 @@ public class CourseDTO {
     private String name;
     private String code;
     private String nameTeacher;
-    private String initialTime;
-    private String finalTime;
 
-    public CourseDTO(String name, String code, String nameTeacher, String initialTime, String finalTime) {
+    public CourseDTO(String name, String code, String nameTeacher) {
         this.name = name;
         this.code = code;
         this.nameTeacher = nameTeacher;
-        this.initialTime = initialTime;
-        this.finalTime = finalTime;
     }
 
     public String getName() {
@@ -26,13 +22,5 @@ public class CourseDTO {
 
     public String getNameTeacher() {
         return nameTeacher;
-    }
-
-    public String getInitialTime() {
-        return initialTime;
-    }
-
-    public String getFinalTime() {
-        return finalTime;
     }
 }

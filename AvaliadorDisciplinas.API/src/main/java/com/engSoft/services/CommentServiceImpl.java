@@ -1,6 +1,7 @@
 package com.engSoft.services;
 
 import com.engSoft.entities.Comment;
+import com.engSoft.entities.User;
 import com.engSoft.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,16 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Optional<Comment> findCommentById(Long id) {
         return this.commentRepository.findById(id);
+    }
+
+    @Override
+    public List<Comment> listCommentBySemester(Long idSemester) {
+        return this.commentRepository.findAllByIdSemester(idSemester);
+    }
+
+    @Override
+    public void updateDeletedComments(User user) {
+        user.setDeletedComments(user.getDeletedComments()+1);
+
     }
 }
