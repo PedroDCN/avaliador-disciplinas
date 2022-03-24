@@ -1,6 +1,6 @@
 package com.engSoft.services;
 
-import com.engSoft.entities.AvarageFeedback;
+import com.engSoft.entities.AverageFeedback;
 import com.engSoft.entities.Feedback;
 import com.engSoft.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public AvarageFeedback avarageFeedbackByCourse(Long idCourse) {
+    public AverageFeedback averageFeedbackByCourse(Long idCourse) {
         List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourse(idCourse);
 
-        AvarageFeedback avarageFeedback = new AvarageFeedback();
+        AverageFeedback averageFeedback = new AverageFeedback();
 
         double organization = 0;
         double workload = 0;
@@ -54,14 +54,14 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         }
 
-        avarageFeedback.setAvarageOrganization(organization/quantityFeedbacks);
-        avarageFeedback.setAvarageWorkload(workload/quantityFeedbacks);
-        avarageFeedback.setAvarageDidactic(didatic/quantityFeedbacks);
-        avarageFeedback.setAvarageEvaluationSystem(evaluationSystem/quantityFeedbacks);
-        avarageFeedback.setAvarageCourseware(courseware/quantityFeedbacks);
+        averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
+        averageFeedback.setAverageWorkload(workload/quantityFeedbacks);
+        averageFeedback.setAverageDidactic(didatic/quantityFeedbacks);
+        averageFeedback.setAverageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+        averageFeedback.setAverageCourseware(courseware/quantityFeedbacks);
 
 
-        return avarageFeedback;
+        return averageFeedback;
     }
 
 
@@ -88,10 +88,10 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public AvarageFeedback avarageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
+    public AverageFeedback averageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
             List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
 
-            AvarageFeedback avarageFeedback = new AvarageFeedback();
+            AverageFeedback averageFeedback = new AverageFeedback();
 
             double organization = 0;
             double workload = 0;
@@ -111,16 +111,15 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         }
 
-            avarageFeedback.setAvarageOrganization((organization/quantityFeedbacks));
-            avarageFeedback.setAvarageWorkload(workload/quantityFeedbacks);
-            avarageFeedback.setAvarageDidactic(didatic/quantityFeedbacks);
-            avarageFeedback.setAvarageEvaluationSystem(evaluationSystem/quantityFeedbacks);
-            avarageFeedback.setAvarageCourseware(courseware/quantityFeedbacks);
+            averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
+            averageFeedback.setAverageWorkload(workload/quantityFeedbacks);
+            averageFeedback.setAverageDidactic(didatic/quantityFeedbacks);
+            averageFeedback.setAverageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+            averageFeedback.setAverageCourseware(courseware/quantityFeedbacks);
 
 
-            return avarageFeedback;
-
-    }
+            return averageFeedback;
+        }
 
     @Override
     public List<Feedback> findFeedbackByStudent(Long idStudent) {

@@ -88,15 +88,16 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/feedback/avarageByCourse/{idCourse}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAvarageFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
+    @RequestMapping(value = "/feedback/averageByCourse/{idCourse}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAverageFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        AvarageFeedback avarageFeedback = feedbackService.avarageFeedbackByCourse(idCourse);
-        return new ResponseEntity<>(avarageFeedback, HttpStatus.ACCEPTED);
+
+        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourse(idCourse);
+        return new ResponseEntity<>(averageFeedback, HttpStatus.FOUND);
 
     }
 
@@ -128,8 +129,8 @@ public class FeedbackController {
 
     }
 
-    @RequestMapping(value = "/feedback/avarageByCourseSemester", method = RequestMethod.GET)
-    public ResponseEntity<?> getAvarageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
+    @RequestMapping(value = "/feedback/averageByCourseSemester", method = RequestMethod.GET)
+    public ResponseEntity<?> getAverageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
@@ -139,8 +140,9 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        AvarageFeedback avarageFeedback = feedbackService.avarageFeedbackByCourseAndSemester(idCourse, idSemester);
-        return new ResponseEntity<>(avarageFeedback, HttpStatus.ACCEPTED);
+
+        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourseAndSemester(idCourse, idSemester);
+        return new ResponseEntity<>(averageFeedback, HttpStatus.FOUND);
 
     }
 
