@@ -54,7 +54,7 @@ public class TeacherController {
             return new ResponseEntity<>(new CustomErrorType("Empty teachers are not allowed!"),HttpStatus.NOT_ACCEPTABLE);
         }
         try {
-            Teacher updatedTeacher = this.teacherService.updateTeacher(teacherOptional.get(), teacherDTO);
+            Optional<Teacher> updatedTeacher = this.teacherService.updateTeacher(teacherOptional.get().getId(), teacherDTO);
 
             return new ResponseEntity<>(updatedTeacher, HttpStatus.OK);
 

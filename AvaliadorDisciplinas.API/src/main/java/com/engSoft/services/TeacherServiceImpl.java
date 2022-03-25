@@ -3,8 +3,10 @@ package com.engSoft.services;
 import com.engSoft.DTO.TeacherDTO;
 import com.engSoft.entities.Teacher;
 import com.engSoft.repositories.TeacherRepository;
+import com.engSoft.util.ErroTeacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +32,9 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
-    public Teacher updateTeacher(Teacher teacher, TeacherDTO teacherDTO){
+    public Optional<Teacher> updateTeacher(Long id, TeacherDTO teacherDTO) throws HttpClientErrorException.NotFound {
+
+        Teacher teacher = teacherRepository.getById(id);
 
         if(isNullOrEmpty(teacherDTO.getPhoto()) && !isNullOrEmpty(teacherDTO.getName()))
             teacher.setName(teacherDTO.getName());
@@ -41,7 +45,7 @@ public class TeacherServiceImpl implements TeacherService{
             teacher.setPhoto(teacherDTO.getPhoto());
         }
         this.teacherRepository.save(teacher);
-        return teacher;
+        return Optional.of(teacher);
     }
 
     @Override
