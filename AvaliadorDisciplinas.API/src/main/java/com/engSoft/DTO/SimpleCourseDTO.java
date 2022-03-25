@@ -2,10 +2,10 @@ package com.engSoft.DTO;
 
 public class SimpleCourseDTO {
 
-    private Long id;
-    private String name;
-    private Long idTeacher;
-    private double grade;
+    private final Long id;
+    private final String name;
+    private final Long idTeacher;
+    private final double grade;
 
     public SimpleCourseDTO(Long id, String name, Long idTeacher, double grade) {
         this.id = id;
