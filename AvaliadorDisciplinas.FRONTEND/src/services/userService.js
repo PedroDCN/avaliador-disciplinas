@@ -4,6 +4,11 @@ async function createUser(user) {
   return await api.post("/user", user);
 }
 
+async function changeBanUser(id, banned) {
+  const params = new URLSearchParams([["ban status", banned]]);
+  return await api.patch(`/admin/ban/${id}`, params);
+}
+
 async function getUserByEmail(email) {
   try {
     return (await api.get(`/users/email/${email}`)).data;
@@ -20,4 +25,4 @@ async function getUserById(id) {
   }
 }
 
-export { createUser, getUserByEmail, getUserById };
+export { createUser, changeBanUser, getUserByEmail, getUserById };

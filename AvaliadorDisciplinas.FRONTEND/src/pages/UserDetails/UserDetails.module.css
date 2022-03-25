@@ -2,9 +2,76 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.container .profile {
+  width: 60%;
+  height: 15%;
+  display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.container .profile .imgProfile {
+  width: 20%;
+  max-width: 120px;
+  height: 100%;
+  display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.container .profile .imgProfile img {
+  width: 100%;
+  border-radius: 50%;
+  border: 0.25rem solid var(--secondary);
+}
+
+.container .profile .infoProfile {
+  width: 60%;
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container .profile .infoProfile .nomeProfile {
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.container .profile .infoProfile .banned {
+  color: var(--red-400);
+}
+
+.container .profile .infoProfile .emailProfile {
+  font-size: x-large;
+}
+
+.container .profile .infoProfile span {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.container .profile .btnProfile {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.container .profile .btnProfile div {
+  width: 90%;
 }
 
 .container .content {

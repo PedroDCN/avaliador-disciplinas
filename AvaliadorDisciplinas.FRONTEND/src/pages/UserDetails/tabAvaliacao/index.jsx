@@ -28,9 +28,9 @@ const TabAvaliacao = (props) => {
       setAval(avaliacoes);
       setLoading(false);
     })();
-  }, [props.user.id]);
+  }, [props.user]);
 
-  return (
+  let content = (
     <div className={styles.content}>
       <DataList
         data={aval}
@@ -44,6 +44,8 @@ const TabAvaliacao = (props) => {
       />
     </div>
   );
+
+  return <>{props.show ? content : <></>}</>;
 };
 
 export default TabAvaliacao;
