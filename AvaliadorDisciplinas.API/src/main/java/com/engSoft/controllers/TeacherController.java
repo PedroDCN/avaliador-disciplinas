@@ -33,7 +33,7 @@ public class TeacherController {
         }
         try {
             this.teacherService.saveTeacher(teacherDTO);
-            return new ResponseEntity<>("Teacher succesfully created! \n" + auxTeacher, HttpStatus.CREATED);
+            return new ResponseEntity<>(auxTeacher, HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<>(new CustomErrorType("Error, this teacher can't be created!"),HttpStatus.BAD_REQUEST);
         }
@@ -70,7 +70,7 @@ public class TeacherController {
         return new ResponseEntity<>(teachers, HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/techers{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/teachers{name}", method = RequestMethod.GET)
     public ResponseEntity<?> getTeacherByName(@PathVariable ("name") String name){
 
         Optional<Teacher> teacher = this.teacherService.getTeacherByName(name);
@@ -100,6 +100,6 @@ public class TeacherController {
             return ErroTeacher.erroTeacherNotFound();
         }
         this.teacherService.removeTeacher(id);
-        return new ResponseEntity<String>("Teacher sucessfuly deleted" + "\n" + toBeDeletedTeacher, HttpStatus.OK);
+        return new ResponseEntity<>(toBeDeletedTeacher, HttpStatus.OK);
     }
 }
