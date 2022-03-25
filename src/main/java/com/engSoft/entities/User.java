@@ -17,6 +17,7 @@ public class User {
     private String name;
     private String email;
     private String nick;
+    private String photo_url;
     private Boolean isBanned;
     private Boolean isAdmin;
     private int deletedComments;
@@ -27,6 +28,7 @@ public class User {
     public User(UserDTO userDTO) {
         this.name = userDTO.getName();
         this.email = userDTO.getEmail();
+        this.photo_url = userDTO.getPhoto();
         this.isBanned = false;
         this.deletedComments = 0;
         this.nick = email.substring(0, email.indexOf('@'));
@@ -109,5 +111,13 @@ public class User {
                 ", deletedComments=" + deletedComments +
                 ", isAdmin=" + isAdmin +
                 '}';
+    }
+
+    public String getPhoto_url() {
+        return photo_url;
+    }
+
+    public void setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
     }
 }
