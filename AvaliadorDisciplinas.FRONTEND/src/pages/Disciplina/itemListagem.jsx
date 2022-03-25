@@ -2,11 +2,9 @@ import External from "../../assets/icons/external.svg";
 import EditIcon from "../../assets/icons/edit_icon.svg";
 import ButtonWithIcon from "../../components/ButtonWithIcon";
 import styles from "./Item.module.css";
-import { useNavigate } from "react-router-dom";
 
-export function RenderItem({ item, isAdmin }) {
+export function renderItem({ item, isAdmin, navigate }) {
   const icon = isAdmin ? EditIcon : External;
-  const navigate = useNavigate();
 
   function handleClick() {
     if (isAdmin) {
@@ -24,11 +22,7 @@ export function RenderItem({ item, isAdmin }) {
         <span>Professor: {item.nameTeacher}</span>
       </div>
       <div className={styles.itemButton}>
-        <ButtonWithIcon 
-          icon={icon}
-          onClick={handleClick} 
-          transparent="true" 
-        />
+        <ButtonWithIcon icon={icon} onClick={handleClick} transparent="true" />
       </div>
     </div>
   );

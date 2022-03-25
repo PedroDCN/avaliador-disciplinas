@@ -39,7 +39,7 @@ function SimularPeriodo() {
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            const data = await getAll();
+            const {data} = await getAll();
             setDisc(data);
             setOptionsDisc(data.map(disciplina => {
                 return {label: disciplina.name, value: disciplina.id};

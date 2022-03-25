@@ -1,13 +1,13 @@
 package com.engSoft.entities;
 
-import com.engSoft.DTO.StudentDTO;
+import com.engSoft.DTO.UserDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Student {
+public class User {
 
     @Id
     @GeneratedValue
@@ -16,17 +16,28 @@ public class Student {
     private String email;
     private String nick;
     private Boolean isBanned;
+    private Boolean isAdmin;
     private int deletedComments;
+    private int reportedComments;
 
-    public Student(){}
+    public User(){}
 
-    public Student(StudentDTO studentDTO) {
-        this.name = studentDTO.getName();
-        this.email = studentDTO.getEmail();
+    public User(UserDTO userDTO) {
+        this.name = userDTO.getName();
+        this.email = userDTO.getEmail();
         this.isBanned = false;
         this.deletedComments = 0;
         this.nick = email.substring(0, email.indexOf('@'));
+        this.isAdmin = false;
 
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public Long getId() {
@@ -77,15 +88,24 @@ public class Student {
         this.deletedComments = deletedComments;
     }
 
+    public int getReportedComments() {
+        return reportedComments;
+    }
+
+    public void setReportedComments(int reportedComments) {
+        this.reportedComments = reportedComments;
+    }
+
     @Override
     public String toString() {
-        return "Student{" +
+        return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", nick='" + nick + '\'' +
                 ", isBanned=" + isBanned +
                 ", deletedComments=" + deletedComments +
+                ", isAdmin=" + isAdmin +
                 '}';
     }
 }

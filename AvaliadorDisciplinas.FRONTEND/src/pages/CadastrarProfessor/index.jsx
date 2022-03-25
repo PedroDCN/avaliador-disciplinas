@@ -55,8 +55,9 @@ function CadastrarProf() {
             </div>
             <div className={styles.content}>
                 <img
-                    src={UserImageProf} 
+                    src={professor.photo === "" ? UserImageProf :  professor.photo } 
                     alt="Input for professor" 
+                    referrerPolicy='no-referrer'
                 />
                 <Input 
                     placeholderText='URL da imagem (opcional)' 

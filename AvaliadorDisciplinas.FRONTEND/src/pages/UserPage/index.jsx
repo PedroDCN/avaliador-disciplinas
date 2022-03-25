@@ -31,7 +31,9 @@ function UserPage() {
                             src={user === undefined ? UserImage : user.photo}
                             alt="User Logged"
                             height={96}
-                            width={96} />
+                            width={96} 
+                            referrerPolicy="no-referrer"
+                        />
                     </div>
 
                     <div className={styles.inputs}>

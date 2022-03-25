@@ -14,19 +14,21 @@ public class Feedback {
     private Long id;
     private Long idCourse;
     private Long idStudent;
-    private Integer workload;
-    private Integer methodology;
-    private Integer planning;
-    private Integer evaluationSystem;
-    private Integer courseware;
+    private Long idSemester;
+    private double workload;
+    private double didactic;
+    private double organization;
+    private double evaluationSystem;
+    private double courseware;
     private Util.ModalityEnum modality;
 
     public Feedback(FeedbackDTO feedbackDTO) {
         this.idCourse = feedbackDTO.getIdCourse();
         this.idStudent = feedbackDTO.getIdStudent();
+        this.idSemester = feedbackDTO.getIdSemester();
         this.workload = feedbackDTO.getWorkload();
-        this.methodology = feedbackDTO.getMethodology();
-        this.planning = feedbackDTO.getPlanning();
+        this.didactic = feedbackDTO.getDidactic();
+        this.organization = feedbackDTO.getOrganization();
         this.evaluationSystem = feedbackDTO.getEvaluationSystem();
         this.courseware = feedbackDTO.getCourseware();
         this.modality = feedbackDTO.getModality();
@@ -48,6 +50,14 @@ public class Feedback {
         this.idCourse = idCourse;
     }
 
+    public Long getIdSemester() {
+        return idSemester;
+    }
+
+    public void setIdSemester(Long idSemester) {
+        this.idSemester = idSemester;
+    }
+
     public Long getIdStudent() {
         return idStudent;
     }
@@ -56,43 +66,43 @@ public class Feedback {
         this.idStudent = idStudent;
     }
 
-    public Integer getWorkload() {
+    public double getWorkload() {
         return workload;
     }
 
-    public void setWorkload(Integer workload) {
+    public void setWorkload(double workload) {
         this.workload = workload;
     }
 
-    public Integer getMethodology() {
-        return methodology;
+    public double getDidactic() {
+        return didactic;
     }
 
-    public void setMethodology(Integer methodology) {
-        this.methodology = methodology;
+    public void setDidactic(double didactic) {
+        this.didactic = didactic;
     }
 
-    public Integer getPlanning() {
-        return planning;
+    public double getOrganization() {
+        return organization;
     }
 
-    public void setPlanning(Integer planning) {
-        this.planning = planning;
+    public void setOrganization(double organization) {
+        this.organization = organization;
     }
 
-    public Integer getEvaluationSystem() {
+    public double getEvaluationSystem() {
         return evaluationSystem;
     }
 
-    public void setEvaluationSystem(Integer evaluationSystem) {
+    public void setEvaluationSystem(double evaluationSystem) {
         this.evaluationSystem = evaluationSystem;
     }
 
-    public Integer getCourseware() {
+    public double getCourseware() {
         return courseware;
     }
 
-    public void setCourseware(Integer courseware) {
+    public void setCourseware(double courseware) {
         this.courseware = courseware;
     }
 
@@ -111,8 +121,8 @@ public class Feedback {
                 ", idCourse=" + idCourse +
                 ", idStudent=" + idStudent +
                 ", workload=" + workload +
-                ", methodology=" + methodology +
-                ", planning=" + planning +
+                ", didactic=" + didactic +
+                ", organization=" + organization +
                 ", evaluationSystem=" + evaluationSystem +
                 ", courseware=" + courseware +
                 ", modality=" + modality +

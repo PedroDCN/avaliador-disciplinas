@@ -8,8 +8,8 @@ function DataList(props) {
     <div className={styles.container}>
       {props.loading && 
         <Oval 
-          width={48}        
-          height={48}
+          width={40}        
+          height={40}
           color={colors.theme.terciary}
           secondaryColor={colors.theme.background}
           strokeWidth={5}

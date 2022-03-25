@@ -1,18 +1,11 @@
 import { api } from "./api";
 
-async function getAll(atributo, text) {
-  const response = await api.get('/courses');
-  if (atributo && text) {
-    return response.data.filter((disciplina) =>
-      disciplina[atributo].toString().toLowerCase().includes(text.toLowerCase())
-    );
-  } else {
-    return response.data;
-  }
+async function getAll() {
+  return await api.get("/courses");
 }
 
 async function createDisciplina(disciplina) {
-  await api.post('/admin/course', disciplina);
+  await api.post("/admin/course", disciplina);
 }
 
 async function getDisciplinaById(id) {
