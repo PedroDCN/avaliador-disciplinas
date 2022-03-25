@@ -3,36 +3,47 @@ import colors from '../../styles/colorsConfig.json';
 import UserImageProf from '../../assets/icons/user_image_prof.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import { createProfessor, getProfessorById } from '../../services/professorService';
+import { createProfessor, getProfessorById, updateProfessor } from '../../services/professorService';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { newProfessorRegister } from '../../services/DadosEstaticos';
+
 function CadastrarProf() {
-    const [professorName,setProfessorName] = useState('');
+    const [professor, setProfessor] = useState(newProfessorRegister());
     const params = useParams();
     const isEditing = params.id !== undefined;
 
+    const notifySucess = (message) => toast.success(message);
+    const notifyFailure = (message) => toast.error(message);
+
     function handleCadastrarButton() {
-        const professor = {name: professorName};
         createProfessor(professor).then(() => {
-            console.log('professor cadastrado');
-            setProfessorName('');
+            notifySucess("Professor criado com sucesso!");
+            setProfessor(newProfessorRegister());
         }).catch(e => {
-            console.log(e, 'erro no cadastro');
+            notifyFailure("Erro no cadastro");
         });
     }
 
     function handleSalvarButton() {
-        //
+        console.log(professor);
+        updateProfessor(params.id, professor).then(() => {
+            notifySucess("Professor editado com sucesso!");
+        }).catch(e => {
+            notifyFailure("Erro na edição");
+        })
     }
 
     useEffect(() => {
         (async() => {
             if (params.id) {
-                const { name } = await getProfessorById(params.id);
-                setProfessorName(name);
+                const professor = await getProfessorById(params.id);
+                setProfessor(professor);
             } else {
-                setProfessorName("");
+                setProfessor(newProfessorRegister());
             }
         })();
     },[params]);
@@ -44,13 +55,19 @@ function CadastrarProf() {
             </div>
             <div className={styles.content}>
                 <img
-                    src={UserImageProf} 
+                    src={professor.photo === "" ? UserImageProf :  professor.photo } 
                     alt="Input for professor" 
+                    referrerPolicy='no-referrer'
+                />
+                <Input 
+                    placeholderText='URL da imagem (opcional)' 
+                    text={professor.photo} 
+                    onTextChange={value => setProfessor({...professor, photo: value})}
                 />
                 <Input 
                     placeholderText='Nome do professor' 
-                    text={professorName} 
-                    onTextChange    ={setProfessorName}
+                    text={professor.name} 
+                    onTextChange={value => setProfessor({...professor, name: value})}
                 />
                 <Button 
                     buttontitle={`${isEditing ? 'SALVAR' : 'CADASTRAR'}`}
@@ -60,6 +77,18 @@ function CadastrarProf() {
                     color={colors.theme.white}
                     onClick={isEditing ? handleSalvarButton : handleCadastrarButton}
                 />
+                <ToastContainer 
+                    position="top-right"
+                    autoClose={1500}
+                    hideProgressBar={false}
+                    closeButton={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss                    
+                    draggable
+                    pauseOnHover={false}
+                />      
             </div>
         </div>
     );

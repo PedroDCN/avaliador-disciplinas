@@ -14,6 +14,7 @@ import UserPage from "../UserPage";
 import UserComentarios from "../UserComentarios";
 import UserAvaliacoes from "../UserAvaliacoes";
 import LoginModal from "../../components/LoginModal";
+import SimularPeriodo from "../SimularPeriodo";
 import UserDetails from "../UserDetails";
 
 function IndexPage() {
@@ -55,6 +56,7 @@ function IndexPage() {
             height={96}
             width={96}
             onClick={handleUserImageClick}
+            referrerPolicy="no-referrer"
           />
           <span>{user === undefined ? "Usuário Anônimo" : user.name}</span>
         </div>
@@ -73,7 +75,7 @@ function IndexPage() {
         <Routes>
           <Route path="/home" element={<HomePage />} />
           <Route path="/avaliar" element={<h1>Avaliar</h1>} />
-          <Route path="/simular" element={<h1>Simular</h1>} />
+          <Route path="/simular" element={<SimularPeriodo />} />
           <Route path="/disciplinas" element={<DisciplinaIndex />} />
           <Route path="/professores" element={<ProfessorIndex />} />
           <Route

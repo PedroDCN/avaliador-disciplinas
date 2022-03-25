@@ -1,0 +1,33 @@
+.container {
+    width: 100%;
+    background: var(--background-progress);
+    border-radius: 2rem;
+}
+
+.container .full {
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    overflow: hidden;
+}
+
+.container .full .progress {
+    border-radius: 2rem;
+    transition: width 0.5s;
+}
+
+.redProgress {
+    background: var(--progress-1);
+}
+
+.orangeProgress {
+    background: var(--progress-2);
+}
+
+.greenProgress {
+    background: var(--progress-3);
+}
+
+.blueProgress {
+    background: var(--progress-4);
+}

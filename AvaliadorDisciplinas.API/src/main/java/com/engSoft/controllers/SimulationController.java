@@ -25,7 +25,7 @@ public class SimulationController {
     FeedbackService feedbackService;
 
     @RequestMapping(value = "/simulation", method = RequestMethod.GET)
-    public ResponseEntity<?> getSimulation(@RequestBody List<Long> courses_id) {
+    public ResponseEntity<?> getSimulation(@RequestParam List<Long> courses_id) {
 
         Simulation simulation = new Simulation();
 

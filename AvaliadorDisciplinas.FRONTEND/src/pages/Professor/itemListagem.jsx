@@ -2,6 +2,7 @@ import External from "../../assets/icons/external.svg";
 import EditIcon from "../../assets/icons/edit_icon.svg";
 import ButtonWithIcon from "../../components/ButtonWithIcon";
 import styles from "./Item.module.css";
+import UserImageProf from '../../assets/icons/user_image_prof.svg';
 
 export function renderItem({ item, isAdmin, navigate }) {
   const icon = isAdmin ? EditIcon : External;
@@ -18,12 +19,11 @@ export function renderItem({ item, isAdmin, navigate }) {
     <div className={styles.itemContainer}>
       <div className={styles.itemImg}>
         <img
-          src={
-            "https://lh3.googleusercontent.com/a-/AOh14GgijOM5ExEEtBftF0_Kwx2aNVbWhkMyl1mvpqko"
-          }
+          src={ item.photo === "" ? UserImageProf : item.photo }
           height={64}
           width={64}
           alt="Professor icon"
+          referrerPolicy="no-referrer"
         />
       </div>
       <div className={styles.itemConteudo}>
