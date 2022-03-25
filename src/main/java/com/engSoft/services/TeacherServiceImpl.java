@@ -32,18 +32,14 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
-    public Optional<Teacher> updateTeacher(Long id, TeacherDTO teacherDTO) throws HttpClientErrorException.NotFound {
+    public Optional<Teacher> updateTeacher(Long id, TeacherDTO teacherDTO) {
 
         Teacher teacher = teacherRepository.getById(id);
 
-        if(isNullOrEmpty(teacherDTO.getPhoto()) && !isNullOrEmpty(teacherDTO.getName()))
-            teacher.setName(teacherDTO.getName());
-        else if(!isNullOrEmpty(teacherDTO.getPhoto()) && isNullOrEmpty(teacherDTO.getName()))
-            teacher.setPhoto(teacherDTO.getPhoto());
-        else {
-            teacher.setName(teacherDTO.getName());
-            teacher.setPhoto(teacherDTO.getPhoto());
-        }
+
+        teacher.setName(teacherDTO.getName());
+        teacher.setPhoto(teacherDTO.getPhoto());
+
         this.teacherRepository.save(teacher);
         return Optional.of(teacher);
     }
