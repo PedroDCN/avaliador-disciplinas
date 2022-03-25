@@ -108,7 +108,7 @@ public class UserController {
         return erroUserNotFound();
     }
 
-    @RequestMapping(value = "/admin/bans", method = RequestMethod.PATCH)
+    @RequestMapping(value = "/admin/bans", method = RequestMethod.GET)
     public ResponseEntity<?> listBans() {
         List<User> users = userService.listUsers();
         users.removeIf(User::getBanned);
