@@ -13,15 +13,15 @@ public class Teacher implements Comparable<Teacher> {
     private Long id;
     private String name;
 
+    private String photo;
+
 
     public Teacher() {
     }
+
     public Teacher(TeacherDTO teacherDTO){
         this.name = teacherDTO.getName();
-    }
-
-    public Teacher(String name) {
-        this.name = name;
+        this.photo = teacherDTO.getPhoto();
     }
 
     public Long getId() {
@@ -34,6 +34,14 @@ public class Teacher implements Comparable<Teacher> {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     @Override

@@ -11,4 +11,7 @@ public class Util {
     public enum ReactionTypeEnum {
         LIKE, DISLIKE, COMPLAINT
     }
+    public static boolean isNullOrEmpty(String s) {
+        return (s == null || s.trim().isEmpty());
+    }
 }
