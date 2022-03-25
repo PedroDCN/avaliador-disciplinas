@@ -12,4 +12,7 @@ public interface CommentRepository extends PagingAndSortingRepository<Comment, L
     Page<Comment> findAllByIdCourse(Long id, Pageable pageable);
     Page<Comment> findAllByIdStudent(Long idStudent, Pageable pageable);
     Page<Comment> findAllByIdSemesterAndIdCourse(Long idSemester, Long idCourse, Pageable pageable);
+    List<Comment> findAllByIdCourse(Long id);
+    List<Comment> findAllByIdStudent(Long idStudent);
+    List<Comment> findAllByIdSemesterAndIdCourse(Long idSemester, Long idCourse);
 }
