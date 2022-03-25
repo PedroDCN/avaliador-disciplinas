@@ -29,7 +29,6 @@ function CadastrarProf() {
     }
 
     function handleSalvarButton() {
-        console.log(professor);
         updateProfessor(params.id, professor).then(() => {
             notifySucess("Professor editado com sucesso!");
         }).catch(e => {
