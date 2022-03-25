@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.engSoft.util.Util.isNullOrEmpty;
+
 @Service
 public class TeacherServiceImpl implements TeacherService{
 
@@ -16,26 +18,29 @@ public class TeacherServiceImpl implements TeacherService{
     private TeacherRepository teacherRepository;
 
     @Override
-    public void saveTeacher(TeacherDTO teacherDTO) {
+    public Teacher saveTeacher(TeacherDTO teacherDTO) {
         Teacher teacher = new Teacher(teacherDTO);
         this.teacherRepository.save(teacher);
+        return teacher;
     }
 
     @Override
     public void removeTeacher(Long id) {
         this.teacherRepository.deleteById(id);
     }
-    @Override
-    public Optional<Teacher> updateTeacher(Long id, TeacherDTO teacherDTO){
-        Optional<Teacher> teacher = this.teacherRepository.findById(id);
 
-        if(teacherDTO.getPhoto().isEmpty() &&  !teacherDTO.getName().isEmpty()) teacher.get().setName(teacherDTO.getName());
-        else if(teacherDTO.getName().isEmpty() && !teacherDTO.getPhoto().isEmpty()) teacher.get().setPhoto(teacherDTO.getPhoto());
+    @Override
+    public Teacher updateTeacher(Teacher teacher, TeacherDTO teacherDTO){
+
+        if(isNullOrEmpty(teacherDTO.getPhoto()) && !isNullOrEmpty(teacherDTO.getName()))
+            teacher.setName(teacherDTO.getName());
+        else if(!isNullOrEmpty(teacherDTO.getPhoto()) && isNullOrEmpty(teacherDTO.getName()))
+            teacher.setPhoto(teacherDTO.getPhoto());
         else {
-            teacher.get().setName(teacherDTO.getName());
-            teacher.get().setPhoto(teacherDTO.getPhoto());
+            teacher.setName(teacherDTO.getName());
+            teacher.setPhoto(teacherDTO.getPhoto());
         }
-        this.teacherRepository.save(teacher.get());
+        this.teacherRepository.save(teacher);
         return teacher;
     }
 

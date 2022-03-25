@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.engSoft.util.Util.isNullOrEmpty;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
@@ -24,7 +26,7 @@ public class TeacherController {
     @RequestMapping(value = "/admin/teacher", method = RequestMethod.POST)
     public ResponseEntity<?> createTeacher(@RequestBody TeacherDTO teacherDTO){
 
-        if (teacherDTO.getPhoto().isEmpty() && teacherDTO.getName().isEmpty()){
+        if (isNullOrEmpty(teacherDTO.getPhoto()) && isNullOrEmpty(teacherDTO.getName())){
             return new ResponseEntity<>(new CustomErrorType("Empty teachers are not allowed!"),HttpStatus.NOT_ACCEPTABLE);
         }
         Optional<Teacher> auxTeacher = teacherService.getTeacherByName(teacherDTO.getName());
@@ -32,8 +34,8 @@ public class TeacherController {
             return ErroTeacher.erroTeacherAlreadyExist();
         }
         try {
-            this.teacherService.saveTeacher(teacherDTO);
-            return new ResponseEntity<>(auxTeacher, HttpStatus.CREATED);
+            Teacher teacher = this.teacherService.saveTeacher(teacherDTO);
+            return new ResponseEntity<>(teacher, HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<>(new CustomErrorType("Error, this teacher can't be created!"),HttpStatus.BAD_REQUEST);
         }
@@ -48,11 +50,11 @@ public class TeacherController {
         if (!teacherOptional.isPresent()){
             return ErroTeacher.erroTeacherNotFound();
         }
-        if (teacherDTO.getPhoto().isEmpty() && teacherDTO.getName().isEmpty()){
+        if (isNullOrEmpty(teacherDTO.getPhoto()) && isNullOrEmpty(teacherDTO.getName())){
             return new ResponseEntity<>(new CustomErrorType("Empty teachers are not allowed!"),HttpStatus.NOT_ACCEPTABLE);
         }
         try {
-            Optional<Teacher> updatedTeacher = this.teacherService.updateTeacher(id,teacherDTO);
+            Teacher updatedTeacher = this.teacherService.updateTeacher(teacherOptional.get(), teacherDTO);
 
             return new ResponseEntity<>(updatedTeacher, HttpStatus.OK);
 
