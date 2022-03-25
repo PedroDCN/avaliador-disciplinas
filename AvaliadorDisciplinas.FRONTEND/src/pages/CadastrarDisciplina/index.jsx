@@ -9,13 +9,16 @@ import Select from 'react-select';
 import { getAllProfessores } from '../../services/professorService';
 import { newDisciplina } from '../../services/DadosEstaticos';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const customStyles = {
     control: (provided, state) => ({
       ...provided,
       border: 0,
-      color: '#1e1e1e',
+      color: 'var(--black)',
       fontWeight: '500',
-      backgroundColor: '#e5e5e5',
+      backgroundColor: 'var(--gray-300)',
       height: '100%',
       width: '100%',
       borderRadius: '0.75rem',
@@ -34,6 +37,9 @@ function CadastrarDisciplina() {
     const isEditing = params.id !== undefined;
     const [options, setOptions] = useState([]);
 
+    const notifySucess = (message) => toast.success(message);
+    const notifyFailure = (message) => toast.error(message);
+
     function setAttributeDisciplina(attribute, value) {
         disciplina[attribute] = value;
         setDisciplina({...disciplina});
@@ -41,17 +47,19 @@ function CadastrarDisciplina() {
 
     function handleCadastrarButton() {
         createDisciplina(disciplina).then(() => {
-            console.log('disciplina criada!');
+            notifySucess("Disciplina criada com sucesso!");
             setDisciplina(newDisciplina());
         }).catch(e => {
-            console.log(e, 'erro ao cadastrar disciplina');
+            notifyFailure("Erro no cadastro");
         });
     }
 
     function handleSalvarButton() {
-        (async() => {
-            await updateDisciplina(params.id, disciplina);
-        })();
+        updateDisciplina(params.id, disciplina).then(() => {
+           notifySucess("Disciplina editada com sucesso!")     
+        }).catch(e => {
+            notifyFailure("Erro na edição");
+        });
     }
 
     function handleSelectChange(e) {
@@ -118,6 +126,18 @@ function CadastrarDisciplina() {
                     color={colors.theme.white}
                     onClick={isEditing ? handleSalvarButton : handleCadastrarButton}
                     fontSize={"large"}
+                />
+                <ToastContainer 
+                    position="top-right"
+                    autoClose={1500}
+                    hideProgressBar={false}
+                    closeButton={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss                    
+                    draggable
+                    pauseOnHover={false}
                 />
             </div>
         </div>
