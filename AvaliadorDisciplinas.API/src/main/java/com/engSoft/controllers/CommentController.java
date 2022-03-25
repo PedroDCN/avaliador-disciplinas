@@ -46,7 +46,7 @@ public class CommentController {
         if (!optionalStudent.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Comment newComment = new Comment(commentDTO);
+        Comment newComment = new Comment(commentDTO, optionalStudent.get().getName(), optionalStudent.get().getPhoto_url());
         try {
             commentService.saveComment(newComment);
             return new ResponseEntity<>(newComment, HttpStatus.CREATED);
@@ -68,7 +68,7 @@ public class CommentController {
             return ErroCourse.erroCourseNotFound();
         }
         Page<Comment> comments = commentService.pageCommentByCourse(idCourse, page);
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/comment/pageByStudent/{idStudent}/{page}", method = RequestMethod.GET)
@@ -79,7 +79,7 @@ public class CommentController {
             return ErroUser.erroUserNotFound();
         }
         Page<Comment> comments = commentService.pageCommentByStudent(idStudent, page);
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/comment/pageBySemesterAndCourse/{page}", method = RequestMethod.GET)
@@ -90,7 +90,7 @@ public class CommentController {
             return ErroSemester.erroSemesterNotFound();
         }
         Page<Comment> comments = commentService.pageCommentBySemesterAndCourse(idSemester, idCourse, page);
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
 
     }
 
