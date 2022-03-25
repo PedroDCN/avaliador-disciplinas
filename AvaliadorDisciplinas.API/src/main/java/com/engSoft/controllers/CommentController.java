@@ -147,11 +147,6 @@ public class CommentController {
         Optional<User> user = userService.getUserById(optionalComment.get().getIdStudent());
         if (!user.isPresent())
             return ErroUser.erroUserNotFound();
-        Long idAuthor = optionalComment.get().getIdStudent();
-        if (!user.get().getIsAdmin() || !user.get().getId().equals(idAuthor)){
-            return ErroComment.erroCommentNotAccessible();
-
-        }
 
         try{
             commentService.removeComment(id);
