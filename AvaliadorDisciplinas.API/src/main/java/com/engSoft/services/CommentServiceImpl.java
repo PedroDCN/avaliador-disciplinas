@@ -29,9 +29,14 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<Comment> listCommentByCourse(Long idCourse, Integer page){
+    public Page<Comment> listCommentByCourse(Long idCourse, Integer page){
         Pageable paging = PageRequest.of(page, 5, Sort.by("up").descending());
         return this.commentRepository.findAllByIdCourse(idCourse, paging);
+    }
+    @Override
+    public Page<Comment> listCommentByStudent(Long idCourse, Integer page){
+        Pageable paging = PageRequest.of(page, 5, Sort.by("up").descending());
+        return this.commentRepository.findAllByIdStudent(idCourse, paging);
     }
 
     @Override

@@ -10,7 +10,8 @@ import java.util.Optional;
 public interface CommentService {
     void saveComment(Comment comment);
     List<Comment> listComments();
-    List<Comment> listCommentByCourse(Long idCourse, Integer page);
+    Page<Comment> listCommentByCourse(Long idCourse, Integer page);
+    Page<Comment> listCommentByStudent(Long idStudent, Integer page);
     void removeComment(Long id);
     Optional<Comment> findCommentById(Long id);
     Page<Comment> listCommentBySemesterAndCourse(Long idSemester, Long idCourse, Integer page);

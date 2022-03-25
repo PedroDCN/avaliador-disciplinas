@@ -67,7 +67,18 @@ public class CommentController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        List<Comment> comments = commentService.listCommentByCourse(idCourse, page);
+        Page<Comment> comments = commentService.listCommentByCourse(idCourse, page);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+
+    }
+    @RequestMapping(value = "/comment/listByStudent/{page}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCommentsfromStudent(@RequestParam("idStudent") Long idStudent,@PathVariable("page") Integer page){
+        Optional<User> optinalUser = userService.getUserById(idStudent);
+
+        if (!optinalUser.isPresent()){
+            return ErroUser.erroUserNotFound();
+        }
+        Page<Comment> comments = commentService.listCommentByStudent(idStudent, page);
         return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
 
     }
