@@ -53,12 +53,14 @@ function SimularPeriodo() {
     },[]);
 
     async function requestSimulation(courses) {
-        // console.log(courses);
-        const { creditos, workload, avaliacao } = 
-            await getSimulacao(courses
-                .map(disciplina => disciplina.id));
-        // console.log(creditos,workload,avaliacao);
-        setProgress({credits: creditos, difficulty: workload, rating: avaliacao});
+        if (courses.length > 0) {
+            const { creditos, workload, avaliacao } = 
+                await getSimulacao(courses
+                    .map(disciplina => disciplina.id));
+            setProgress({credits: creditos, difficulty: workload, rating: avaliacao});
+        } else {
+            setProgress(newProgress());
+        }
     }
 
     function handleSelectChange(e) {

@@ -1,7 +1,9 @@
 import { api } from "./api";
 
 async function getSimulacao(disciplinasIds) {
-    return (await api.post('/simulation',disciplinasIds)).data;
+    const ids = disciplinasIds.map(id => `courses_id=${id}`).
+        join('&');
+    return (await api.get(`/simulation?${ids}`)).data;
 }
 
 export { getSimulacao };

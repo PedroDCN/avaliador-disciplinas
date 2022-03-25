@@ -67,6 +67,7 @@ function NavMenu(props) {
                   alt={`${menuItem.title} icon`}
                   height={18}
                   width={18}
+                  referrerPolicy="no-referrer"
                 />
                 <span>{menuItem.title}</span>
               </li>

@@ -21,6 +21,13 @@ export function newDisciplina() {
   };
 }
 
+export function newProfessorRegister() {
+  return {
+    name: '',
+    photo: ''
+  }
+}
+
 export function newProfessor() {
   return {
     name: 'Professor X',
