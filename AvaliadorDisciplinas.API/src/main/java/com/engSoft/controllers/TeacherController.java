@@ -24,28 +24,35 @@ public class TeacherController {
     @RequestMapping(value = "/admin/teacher", method = RequestMethod.POST)
     public ResponseEntity<?> createTeacher(@RequestBody TeacherDTO teacherDTO){
 
-        Teacher newTeacher = new Teacher(teacherDTO);
-        Optional<Teacher> auxTeacher = teacherService.getTeacherByName(newTeacher.getName());
+        if (teacherDTO.getPhoto().isEmpty() && teacherDTO.getName().isEmpty()){
+            return new ResponseEntity<>(new CustomErrorType("Empty teachers are not allowed!"),HttpStatus.NOT_ACCEPTABLE);
+        }
+        Optional<Teacher> auxTeacher = teacherService.getTeacherByName(teacherDTO.getName());
         if(auxTeacher.isPresent()){
             return ErroTeacher.erroTeacherAlreadyExist();
         }
         try {
-            this.teacherService.saveTeacher(newTeacher);
-            return new ResponseEntity<>(newTeacher, HttpStatus.CREATED);
+            this.teacherService.saveTeacher(teacherDTO);
+            return new ResponseEntity<>("Teacher succesfully created! \n" + auxTeacher, HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<>(new CustomErrorType("Error, this teacher can't be created!"),HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(value = "/admin/teacher{id}" , method = RequestMethod.PUT)
-    public ResponseEntity<?> updateTeacher(@PathVariable ("id") Long id, @RequestParam("name") String name){
+    public ResponseEntity<?> updateTeacher(@PathVariable ("id") Long id, @RequestBody TeacherDTO teacherDTO){
+
+
         Optional<Teacher> teacherOptional = this.teacherService.getTeacherById(id);
 
         if (!teacherOptional.isPresent()){
             return ErroTeacher.erroTeacherNotFound();
         }
+        if (teacherDTO.getPhoto().isEmpty() && teacherDTO.getName().isEmpty()){
+            return new ResponseEntity<>(new CustomErrorType("Empty teachers are not allowed!"),HttpStatus.NOT_ACCEPTABLE);
+        }
         try {
-            Optional<Teacher> updatedTeacher = this.teacherService.updateTeacher(id,name);
+            Optional<Teacher> updatedTeacher = this.teacherService.updateTeacher(id,teacherDTO);
 
             return new ResponseEntity<>(updatedTeacher, HttpStatus.OK);
 
@@ -93,6 +100,6 @@ public class TeacherController {
             return ErroTeacher.erroTeacherNotFound();
         }
         this.teacherService.removeTeacher(id);
-        return new ResponseEntity<>(toBeDeletedTeacher, HttpStatus.OK);
+        return new ResponseEntity<String>("Teacher sucessfuly deleted" + "\n" + toBeDeletedTeacher, HttpStatus.OK);
     }
 }
