@@ -6,7 +6,7 @@ public class AverageFeedback {
     private double averageOrganization;
     private double averageEvaluationSystem;
     private double averageCourseware;
-    private double averageTotal;
+
 
     public double getAverageWorkload() {
         return averageWorkload;
