@@ -34,34 +34,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public AverageFeedback averageFeedbackByCourse(Long idCourse) {
         List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourse(idCourse);
 
-        AverageFeedback averageFeedback = new AverageFeedback();
-
-        double organization = 0;
-        double workload = 0;
-        double didatic = 0;
-        double evaluationSystem = 0;
-        double courseware = 0;
-
-        double quantityFeedbacks = feedbacks.size();
-
-
-        for (Feedback feedback : feedbacks) {
-            organization += feedback.getOrganization();
-            workload += feedback.getWorkload();
-            didatic += feedback.getDidactic();
-            evaluationSystem += feedback.getEvaluationSystem();
-            courseware += feedback.getCourseware();
-
-        }
-
-        averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
-        averageFeedback.setAverageWorkload(workload/quantityFeedbacks);
-        averageFeedback.setAverageDidactic(didatic/quantityFeedbacks);
-        averageFeedback.setAverageEvaluationSystem(evaluationSystem/quantityFeedbacks);
-        averageFeedback.setAverageCourseware(courseware/quantityFeedbacks);
-
-
-        return averageFeedback;
+        return getAverageFeedbackFromList(feedbacks);
     }
 
 
@@ -89,17 +62,26 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public AverageFeedback averageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
-            List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
 
-            AverageFeedback averageFeedback = new AverageFeedback();
+        return getAverageFeedbackFromList(feedbacks);
+    }
 
-            double organization = 0;
-            double workload = 0;
-            double didatic = 0;
-            double evaluationSystem = 0;
-            double courseware = 0;
+    @Override
+    public List<Feedback> findFeedbackByStudent(Long idStudent) {
+        return this.feedbackRepository.findAllByIdStudent(idStudent);
+    }
 
-            double quantityFeedbacks = feedbacks.size();
+    private AverageFeedback getAverageFeedbackFromList(List<Feedback> feedbacks) {
+        AverageFeedback averageFeedback = new AverageFeedback();
+
+        double organization = 0;
+        double workload = 0;
+        double didatic = 0;
+        double evaluationSystem = 0;
+        double courseware = 0;
+
+        double quantityFeedbacks = Math.max(feedbacks.size(), 1);
 
 
         for (Feedback feedback : feedbacks) {
@@ -111,20 +93,14 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         }
 
-            averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
-            averageFeedback.setAverageWorkload(workload/quantityFeedbacks);
-            averageFeedback.setAverageDidactic(didatic/quantityFeedbacks);
-            averageFeedback.setAverageEvaluationSystem(evaluationSystem/quantityFeedbacks);
-            averageFeedback.setAverageCourseware(courseware/quantityFeedbacks);
+        averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
+        averageFeedback.setAverageWorkload(workload/quantityFeedbacks);
+        averageFeedback.setAverageDidactic(didatic/quantityFeedbacks);
+        averageFeedback.setAverageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+        averageFeedback.setAverageCourseware(courseware/quantityFeedbacks);
 
 
-            return averageFeedback;
-        }
-
-    @Override
-    public List<Feedback> findFeedbackByStudent(Long idStudent) {
-        return this.feedbackRepository.findAllByIdStudent(idStudent);
+        return averageFeedback;
     }
-
 
 }
