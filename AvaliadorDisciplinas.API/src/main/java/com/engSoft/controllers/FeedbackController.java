@@ -97,7 +97,7 @@ public class FeedbackController {
         }
 
         AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourse(idCourse);
-        return new ResponseEntity<>(averageFeedback, HttpStatus.FOUND);
+        return new ResponseEntity<>(averageFeedback, HttpStatus.ACCEPTED);
 
     }
 
@@ -142,7 +142,7 @@ public class FeedbackController {
         }
 
         AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourseAndSemester(idCourse, idSemester);
-        return new ResponseEntity<>(averageFeedback, HttpStatus.FOUND);
+        return new ResponseEntity<>(averageFeedback, HttpStatus.ACCEPTED);
 
     }
 
