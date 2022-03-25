@@ -4,13 +4,13 @@ public class SimpleCourseDTO {
 
     private Long id;
     private String name;
-    private String nameTeacher;
+    private Long idTeacher;
     private double grade;
 
-    public SimpleCourseDTO(Long id, String name, String nameTeacher, double grade) {
+    public SimpleCourseDTO(Long id, String name, Long idTeacher, double grade) {
         this.id = id;
         this.name = name;
-        this.nameTeacher = nameTeacher;
+        this.idTeacher = idTeacher;
         this.grade = grade;
     }
 
@@ -22,8 +22,8 @@ public class SimpleCourseDTO {
         return name;
     }
 
-    public String getNameTeacher() {
-        return nameTeacher;
+    public Long getIdTeacher() {
+        return idTeacher;
     }
 
     public double getGrade() {
