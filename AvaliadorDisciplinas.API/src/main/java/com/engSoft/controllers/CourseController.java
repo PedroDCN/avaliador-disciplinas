@@ -72,7 +72,7 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/coursesTeacher/{nameTeacher}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCoursesfromTeacher(@PathVariable("nameTeacher") String nameTeacher){
+    public ResponseEntity<?> getAllCoursesFromTeacher(@PathVariable("nameTeacher") String nameTeacher){
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(nameTeacher);
 
         if (optionalTeacher.isPresent()) {

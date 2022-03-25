@@ -1,7 +1,6 @@
 package com.engSoft.services;
 
 import com.engSoft.entities.Comment;
-import com.engSoft.entities.Feedback;
 import com.engSoft.entities.Reaction;
 import com.engSoft.entities.User;
 import com.engSoft.util.Util;
