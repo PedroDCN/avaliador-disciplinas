@@ -1,98 +1,99 @@
 .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
 }
 
 .container .navMenu {
-    height: 100%;
-    width: 20%;
-    min-width: 280px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+  height: 100%;
+  width: 20%;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
 }
 
 .container .userBox {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    background: var(--primary);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background: var(--primary);
 }
 
 .container .userBox img {
-    cursor: pointer;
-    border-radius: 50%;
-    border: 0.25rem solid var(--white);
+  cursor: pointer;
+  border-radius: 50%;
+  border: 0.25rem solid var(--white);
 }
 
 .container .userBox span {
-    color: var(--white);
-    font-weight: 400;
-    font-size: 1.15rem;
+  color: var(--white);
+  font-weight: 400;
+  font-size: 1.15rem;
 }
 
 .container .menuItems {
-    flex-grow: 6;
-    background: var(--secondary);
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  flex-grow: 6;
+  background: var(--secondary);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .container .menuItems .logo {
-    justify-self: flex-end;
-    display: flex;
-    justify-content: flex-start;
-    gap: 0.1rem;
-    align-items: center;
-    cursor: pointer;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.1rem;
+  align-items: center;
+  cursor: pointer;
 }
 
 .container .menuItems .logo h1 {
-    font-size: 1.225rem;
-    font-weight: 500;
-    color: var(--background);
+  font-size: 1.225rem;
+  font-weight: 500;
+  color: var(--background);
 }
 
 .container .menuItems .logo img {
-    width: 1.4rem;
-    height: auto;
-    filter: invert(100%) sepia(45%) saturate(1%) hue-rotate(2deg) brightness(106%) contrast(96%);
+  width: 1.4rem;
+  height: auto;
+  filter: invert(100%) sepia(45%) saturate(1%) hue-rotate(2deg) brightness(106%)
+    contrast(96%);
 }
 
 .container .content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container .content .welcomeBox {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: #F3F3F3;
-    border-radius: 2rem;
-    padding: 2rem;
-    gap: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--gray-100);
+  border-radius: 2rem;
+  padding: 2rem;
+  gap: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
 }
 
 .container .content .welcomeBox img {
-    width: 38rem;
+  width: 38rem;
 }
 
 .container .content .welcomeBox span {
-    width: 26rem;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 300;
-    user-select: none;
+  width: 26rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 300;
+  user-select: none;
 }

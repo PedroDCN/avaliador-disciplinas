@@ -9,6 +9,6 @@ public class Util {
         NAME, GRADE, TEACHER
     }
     public enum ReactionTypeEnum {
-        LIKE, DISLIKE
+        LIKE, DISLIKE, COMPLAINT
     }
 }

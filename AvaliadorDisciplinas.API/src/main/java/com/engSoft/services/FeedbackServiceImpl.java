@@ -1,5 +1,6 @@
 package com.engSoft.services;
 
+import com.engSoft.entities.AverageFeedback;
 import com.engSoft.entities.Feedback;
 import com.engSoft.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,41 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
+    public AverageFeedback averageFeedbackByCourse(Long idCourse) {
+        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourse(idCourse);
+
+        AverageFeedback averageFeedback = new AverageFeedback();
+
+        double organization = 0;
+        double workload = 0;
+        double didatic = 0;
+        double evaluationSystem = 0;
+        double courseware = 0;
+
+        double quantityFeedbacks = feedbacks.size();
+
+
+        for (Feedback feedback : feedbacks) {
+            organization += feedback.getOrganization();
+            workload += feedback.getWorkload();
+            didatic += feedback.getDidactic();
+            evaluationSystem += feedback.getEvaluationSystem();
+            courseware += feedback.getCourseware();
+
+        }
+
+        averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
+        averageFeedback.setAverageWorkload(workload/quantityFeedbacks);
+        averageFeedback.setAverageDidactic(didatic/quantityFeedbacks);
+        averageFeedback.setAverageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+        averageFeedback.setAverageCourseware(courseware/quantityFeedbacks);
+
+
+        return averageFeedback;
+    }
+
+
+    @Override
     public void removeFeedback(Long idFeedback) {
         this.feedbackRepository.deleteById(idFeedback);
     }
@@ -46,7 +82,49 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Override
     public List<Feedback> findFeedbakByCourseAndSemester(Long idCourse, Long idSemester) {
+
+
         return this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
     }
+
+    @Override
+    public AverageFeedback averageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
+            List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+
+            AverageFeedback averageFeedback = new AverageFeedback();
+
+            double organization = 0;
+            double workload = 0;
+            double didatic = 0;
+            double evaluationSystem = 0;
+            double courseware = 0;
+
+            double quantityFeedbacks = feedbacks.size();
+
+
+        for (Feedback feedback : feedbacks) {
+            organization += feedback.getOrganization();
+            workload += feedback.getWorkload();
+            didatic += feedback.getDidactic();
+            evaluationSystem += feedback.getEvaluationSystem();
+            courseware += feedback.getCourseware();
+
+        }
+
+            averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
+            averageFeedback.setAverageWorkload(workload/quantityFeedbacks);
+            averageFeedback.setAverageDidactic(didatic/quantityFeedbacks);
+            averageFeedback.setAverageEvaluationSystem(evaluationSystem/quantityFeedbacks);
+            averageFeedback.setAverageCourseware(courseware/quantityFeedbacks);
+
+
+            return averageFeedback;
+        }
+
+    @Override
+    public List<Feedback> findFeedbackByStudent(Long idStudent) {
+        return this.feedbackRepository.findAllByIdStudent(idStudent);
+    }
+
 
 }

@@ -10,7 +10,7 @@ public class ErroFeedback {
 
 
     public static ResponseEntity<CustomErrorType> erroFeedbackNotFound() {
-        return new ResponseEntity<CustomErrorType>(
+        return new ResponseEntity<>(
                 new CustomErrorType(ErroFeedback.FEEDBACK_NOT_FOUND), HttpStatus.NOT_FOUND);
     }
 

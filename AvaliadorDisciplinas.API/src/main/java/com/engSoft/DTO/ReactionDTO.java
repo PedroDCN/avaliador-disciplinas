@@ -18,4 +18,16 @@ public class ReactionDTO {
     public Util.ReactionTypeEnum getReactionTypeEnum() {
         return reactionTypeEnum;
     }
+
+    public void setIdComment(Long idComment) {
+        this.idComment = idComment;
+    }
+
+    public void setIdStudent(Long idStudent) {
+        this.idStudent = idStudent;
+    }
+
+    public void setReactionTypeEnum(Util.ReactionTypeEnum reactionTypeEnum) {
+        this.reactionTypeEnum = reactionTypeEnum;
+    }
 }
