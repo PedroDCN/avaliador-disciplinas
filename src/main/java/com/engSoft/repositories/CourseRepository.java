@@ -1,7 +1,6 @@
 package com.engSoft.repositories;
 
 import com.engSoft.entities.Course;
-import com.engSoft.entities.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

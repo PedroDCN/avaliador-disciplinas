@@ -61,7 +61,7 @@ public class CommentController {
         return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
     }
     @RequestMapping(value = "/comment/pageByCourse/{idCourse}", method = RequestMethod.GET)
-    public ResponseEntity<?> getPageAllCommentsfromCourse(@PathVariable("idCourse") Long idCourse,@RequestParam("page") Integer page){
+    public ResponseEntity<?> getPageAllCommentsFromCourse(@PathVariable("idCourse") Long idCourse,@RequestParam("page") Integer page){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
         if (!optionalCourse.isPresent()){
@@ -72,7 +72,7 @@ public class CommentController {
 
     }
     @RequestMapping(value = "/comment/pageByStudent/{idStudent}", method = RequestMethod.GET)
-    public ResponseEntity<?> getPageAllCommentsfromStudent(@PathVariable("idStudent") Long idStudent,@RequestParam("page") Integer page){
+    public ResponseEntity<?> getPageAllCommentsFromStudent(@PathVariable("idStudent") Long idStudent,@RequestParam("page") Integer page){
         Optional<User> optinalUser = userService.getUserById(idStudent);
 
         if (!optinalUser.isPresent()){
@@ -83,7 +83,7 @@ public class CommentController {
 
     }
     @RequestMapping(value = "/comment/pageBySemesterAndCourse/{idCourse}", method = RequestMethod.GET)
-    public ResponseEntity<?> getPageAllCommentsfromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse, @RequestParam("page") Integer page){
+    public ResponseEntity<?> getPageAllCommentsFromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse, @RequestParam("page") Integer page){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
         if (!optionalSemester.isPresent()){
@@ -95,7 +95,7 @@ public class CommentController {
     }
 
     @RequestMapping(value = "/comment/listByCourse/{idCourse}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromCourse(@PathVariable("idCourse") Long idCourse){
+    public ResponseEntity<?> getAllCommentsFromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
         if (!optionalCourse.isPresent()){
@@ -106,7 +106,7 @@ public class CommentController {
 
     }
     @RequestMapping(value = "/comment/listByStudent/{idStudent}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromStudent(@PathVariable("idStudent") Long idStudent){
+    public ResponseEntity<?> getAllCommentsFromStudent(@PathVariable("idStudent") Long idStudent){
         Optional<User> optinalUser = userService.getUserById(idStudent);
 
         if (!optinalUser.isPresent()){
@@ -117,7 +117,7 @@ public class CommentController {
 
     }
     @RequestMapping(value = "/comment/listBySemesterAndCourse/{idCourse}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse){
+    public ResponseEntity<?> getAllCommentsFromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
         if (!optionalSemester.isPresent()){
