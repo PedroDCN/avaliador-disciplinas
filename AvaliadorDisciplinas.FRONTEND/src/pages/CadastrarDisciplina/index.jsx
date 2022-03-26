@@ -46,12 +46,17 @@ function CadastrarDisciplina() {
     }
 
     function handleCadastrarButton() {
-        createDisciplina(disciplina).then(() => {
-            notifySucess("Disciplina criada com sucesso!");
-            setDisciplina(newDisciplina());
-        }).catch(e => {
-            notifyFailure("Erro no cadastro");
-        });
+        if (disciplina.code === '' || disciplina.name === '' 
+            || disciplina.nameTeacher === '') {
+            notifyFailure("Preencha os campos obrigatórios!");
+        } else {
+            createDisciplina(disciplina).then(() => {
+                notifySucess("Disciplina criada com sucesso!");
+                setDisciplina(newDisciplina());
+            }).catch(e => {
+                notifyFailure("Erro no cadastro");
+            });
+        }
     }
 
     function handleSalvarButton() {

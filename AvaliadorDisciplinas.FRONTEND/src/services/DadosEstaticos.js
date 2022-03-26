@@ -62,7 +62,7 @@ export function newProgress() {
 }
 
 export function getGoogleClientId() {
-  return "89493011611-gevim53h29otjcjuhrljf99hkamlk7rs.apps.googleusercontent.com";
+  return process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 }
 
 export function menuItems() {

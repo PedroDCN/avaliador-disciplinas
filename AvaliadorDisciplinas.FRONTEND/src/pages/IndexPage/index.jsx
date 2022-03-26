@@ -15,6 +15,8 @@ import UserComentarios from '../UserComentarios';
 import UserAvaliacoes from '../UserAvaliacoes';
 import LoginModal from '../../components/LoginModal';
 import SimularPeriodo from '../SimularPeriodo';
+import ProtectedRoute from '../../components/ProtectedRoute';
+import ErrorPage from '../ErrorPage';
 
 function IndexPage() {
   const [selectedItem, setSelectedItem] = useState("");
@@ -79,18 +81,41 @@ function IndexPage() {
           <Route path="/professores" element={<ProfessorIndex />} />
           <Route
             path="/disciplina/cadastro"
-            element={<CadastrarDisciplina />}
+            element={
+              <ProtectedRoute>
+                <CadastrarDisciplina />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/professor/cadastro" element={<CadastrarProf />} />
-          <Route
-            path="/disciplina/edicao/:id"
-            element={<CadastrarDisciplina />}
+          <Route 
+            path="/professor/cadastro" 
+            element={
+              <ProtectedRoute>
+                <CadastrarProf />
+              </ProtectedRoute>
+            }
           />
-          <Route path="/professor/edicao/:id" element={<CadastrarProf />} />
+          <Route 
+            path="/disciplina/edicao/:id" 
+            element={
+              <ProtectedRoute>
+                <CadastrarDisciplina />
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/professor/edicao/:id" 
+            element={
+              <ProtectedRoute>
+                <CadastrarProf />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/denuncias" element={<h1>Denúncias</h1>} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/userAvaliacoes" element={<UserAvaliacoes />} />
           <Route path="/userComentarios" element={<UserComentarios />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
       <LoginModal show={show} handleClose={() => setShow(false)} />
