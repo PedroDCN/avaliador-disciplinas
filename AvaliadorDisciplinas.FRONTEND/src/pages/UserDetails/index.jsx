@@ -11,6 +11,7 @@ import colors from "../../styles/colorsConfig.json";
 import anonimous from "../../assets/icons/user_anonimous.svg";
 import cancel from "../../assets/icons/cancel.svg";
 import check from "../../assets/icons/check.svg";
+import { LineWave, Oval } from "react-loader-spinner";
 
 function UserDetails() {
   const { user } = useAuth();
@@ -36,7 +37,7 @@ function UserDetails() {
   const handleCloseModal = () => {
     setShow(false);
   };
-  debugger;
+
   const handleConfirmModal = async () => {
     const response = await changeBanUser(userDetails.id, !userDetails.banned);
     setUserDetails(response.data);
@@ -57,14 +58,20 @@ function UserDetails() {
           />
         </div>
         <div className={styles.infoProfile}>
-          <span
-            className={`${styles.nomeProfile} ${banned ? styles.banned : ""}`}
-          >
-            {userDetails ? userDetails.name : "Carregando kkk"}
-          </span>
-          <span className={styles.emailProfile}>
-            {userDetails ? userDetails.email : "Carregando kkk"}
-          </span>
+          {userDetails ? (
+            <>
+              <span
+                className={`${styles.nomeProfile} ${
+                  banned ? styles.banned : ""
+                }`}
+              >
+                {userDetails.name}
+              </span>
+              <span className={styles.emailProfile}>{userDetails.email}</span>
+            </>
+          ) : (
+            <LineWave color={colors.theme.secondary} />
+          )}
         </div>
         <div className={styles.btnProfile}>
           <Button
@@ -96,7 +103,13 @@ function UserDetails() {
           </ul>
           <div className={styles.tabsContent}>
             {loading ? (
-              <>carregando kkkk</>
+              <Oval
+                width={40}
+                height={40}
+                color={colors.theme.terciary}
+                secondaryColor={colors.theme.background}
+                strokeWidth={5}
+              />
             ) : (
               <>
                 <TabAvaliacao user={userDetails} show={activeTab === 1} />
@@ -123,7 +136,7 @@ function UserDetails() {
       />
     </div>
   );
-  return <>{user && !user.isAdmin && content}</>;
+  return <>{user && user.isAdmin && content}</>;
 }
 
 export default UserDetails;

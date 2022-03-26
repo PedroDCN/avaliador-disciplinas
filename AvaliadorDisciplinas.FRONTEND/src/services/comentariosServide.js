@@ -1,7 +1,11 @@
 import { api } from "./api";
 
-async function updateDisciplina(id, page) {
-  await api.patch(`/comment/listByStudent/${page}`, id);
+async function getComentariosByUser(id) {
+  return await api.get(`/comment/listByStudent/${id}`);
 }
 
-export { updateDisciplina };
+async function deleteComentarioById(id) {
+  return await api.delete(`/admin/comment/${id}`);
+}
+
+export { getComentariosByUser, deleteComentarioById };

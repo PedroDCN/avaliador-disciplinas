@@ -16,8 +16,14 @@
   font-size: 1.25rem;
 }
 
-.itemContainer .itemConteudo .nomeDisciplina {
-  font-weight: bold;
+.itemContainer .itemConteudo .itemComentario {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.itemContainer .itemConteudo .itemDisciplina {
+  font-weight: lighter;
 }
 
 .itemContainer .itemButton {
