@@ -25,6 +25,13 @@ export function newDisciplina() {
   };
 }
 
+export function newProfessorRegister() {
+  return {
+    name: '',
+    photo: ''
+  }
+}
+
 export function newProfessor() {
   return {
     name: "Professor X",
@@ -44,6 +51,14 @@ export function newProfessor() {
       },
     ],
   };
+}
+
+export function newProgress() {
+  return {
+      credits: 0.0,
+      difficulty: 0.0,
+      rating: 0.0
+  }
 }
 
 export function getGoogleClientId() {

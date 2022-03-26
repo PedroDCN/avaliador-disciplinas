@@ -19,6 +19,11 @@
   --red-400: #f15e5e;
   --green-500: #8bc34a;
   --background-input: #e5e5e5;
+  --background-progress: #CECECE;
+  --progress-1: #FF7043;
+  --progress-2: #FFA726;
+  --progress-3: #8BC34A;
+  --progress-4: #4DD0E1;
 }
 
 body,

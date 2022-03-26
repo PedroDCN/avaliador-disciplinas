@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
-import styles from "./IndexPage.module.css";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import CadeiraIcon from "../../assets/icons/chair_icon.svg";
-import UserImage from "../../assets/icons/user_anonimous.svg";
-import NavMenu from "../../components/NavMenu";
-import { useAuth } from "../../contexts/AuthContext";
-import DisciplinaIndex from "../Disciplina";
-import ProfessorIndex from "../Professor";
-import HomePage from "../HomePage";
-import CadastrarDisciplina from "../CadastrarDisciplina";
-import CadastrarProf from "../CadastrarProfessor";
-import UserPage from "../UserPage";
-import UserComentarios from "../UserComentarios";
-import UserAvaliacoes from "../UserAvaliacoes";
-import LoginModal from "../../components/LoginModal";
+import React, { useEffect, useState } from 'react';
+import styles from './IndexPage.module.css';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import CadeiraIcon from '../../assets/icons/chair_icon.svg';
+import UserImage from '../../assets/icons/user_anonimous.svg';
+import NavMenu from '../../components/NavMenu';
+import { useAuth } from '../../contexts/AuthContext';
+import DisciplinaIndex from '../Disciplina';
+import ProfessorIndex from '../Professor';
+import HomePage from '../HomePage';
+import CadastrarDisciplina from '../CadastrarDisciplina';
+import CadastrarProf from '../CadastrarProfessor';
+import UserPage from '../UserPage';
+import UserComentarios from '../UserComentarios';
+import UserAvaliacoes from '../UserAvaliacoes';
+import LoginModal from '../../components/LoginModal';
+import SimularPeriodo from '../SimularPeriodo';
 
 function IndexPage() {
   const [selectedItem, setSelectedItem] = useState("");
@@ -54,6 +55,7 @@ function IndexPage() {
             height={96}
             width={96}
             onClick={handleUserImageClick}
+            referrerPolicy="no-referrer"
           />
           <span>{user === undefined ? "Usuário Anônimo" : user.name}</span>
         </div>
@@ -72,7 +74,7 @@ function IndexPage() {
         <Routes>
           <Route path="/home" element={<HomePage />} />
           <Route path="/avaliar" element={<h1>Avaliar</h1>} />
-          <Route path="/simular" element={<h1>Simular</h1>} />
+          <Route path="/simular" element={<SimularPeriodo />} />
           <Route path="/disciplinas" element={<DisciplinaIndex />} />
           <Route path="/professores" element={<ProfessorIndex />} />
           <Route

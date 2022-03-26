@@ -3,7 +3,6 @@ package com.engSoft.services;
 import com.engSoft.DTO.SimpleCourseDTO;
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
-import com.engSoft.entities.Teacher;
 import com.engSoft.repositories.CourseRepository;
 import com.engSoft.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,21 +39,21 @@ public class CourseServiceImpl implements CourseService {
             Collections.reverse(list);
             return list;
         } else {
-            return toSimpleCourse(courseRepository.findAll(Sort.by("teacher")));
+            return toSimpleCourse(courseRepository.findAll(Sort.by("idTeacher")));
         }
     }
 
     private List<SimpleCourseDTO> toSimpleCourse(List<Course> list) {
         List<SimpleCourseDTO> simpleList = new ArrayList<>();
         for(Course course : list) {
-            simpleList.add(new SimpleCourseDTO(course.getId(), course.getName(), course.getTeacher().getName(), course.getGrade()));
+            simpleList.add(new SimpleCourseDTO(course.getId(), course.getName(), course.getIdTeacher(), course.getGrade()));
         }
         return simpleList;
     }
 
     @Override
-    public List<Course> listCoursesTeacher(Teacher teacher) {
-        return courseRepository.findAllByTeacher(teacher);
+    public List<Course> listCoursesTeacher(Long idTeacher) {
+        return courseRepository.findAllByIdTeacher(idTeacher);
     }
 
     @Override
