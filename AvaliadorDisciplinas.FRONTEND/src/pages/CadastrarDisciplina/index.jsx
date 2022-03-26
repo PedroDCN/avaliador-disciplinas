@@ -16,9 +16,9 @@ const customStyles = {
     control: (provided, state) => ({
       ...provided,
       border: 0,
-      color: '#1e1e1e',
+      color: 'var(--black)',
       fontWeight: '500',
-      backgroundColor: '#e5e5e5',
+      backgroundColor: 'var(--gray-300)',
       height: '100%',
       width: '100%',
       borderRadius: '0.75rem',

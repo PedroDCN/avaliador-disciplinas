@@ -25,13 +25,13 @@ export function AuthContextProvider(props) {
     }
 
     async function onSuccessGoogleLogin(response) {
-        const {name, email} = response.profileObj;
+        const {name, email, imageUrl} = response.profileObj;
         let success = false;
         const userAlreadyExists = (await getUserByEmail(email)) !== '';
 
         if (checkEmailComputacao(email)) {
             if (!userAlreadyExists) {
-                createUser({email,name}).then(() => {
+                createUser({email, name, photo: imageUrl}).then(() => {
                     console.log('user created!');
                 }).catch(e => {
                     console.log('error on user created');

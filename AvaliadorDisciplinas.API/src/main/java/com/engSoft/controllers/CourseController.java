@@ -33,7 +33,7 @@ public class CourseController {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
 
         if (optionalTeacher.isPresent()) {
-            Course newCourse = new Course(courseDTO, optionalTeacher.get());
+            Course newCourse = new Course(courseDTO, optionalTeacher.get().getId());
             courseService.saveCourse(newCourse);
 
             return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
@@ -51,7 +51,7 @@ public class CourseController {
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
         if(optionalCourse.isPresent()) {
-            optionalCourse.get().update(courseDTO, optionalTeacher.get());
+            optionalCourse.get().update(courseDTO, optionalTeacher.get().getId());
             courseService.saveCourse(optionalCourse.get());
 
             return new ResponseEntity<>(optionalCourse, HttpStatus.OK);
@@ -72,11 +72,11 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/coursesTeacher/{nameTeacher}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCoursesfromTeacher(@PathVariable("nameTeacher") String nameTeacher){
+    public ResponseEntity<?> getAllCoursesFromTeacher(@PathVariable("nameTeacher") String nameTeacher){
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(nameTeacher);
 
         if (optionalTeacher.isPresent()) {
-            List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get());
+            List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get().getId());
             return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
         } else
             return ErroTeacher.erroTeacherNotFound();

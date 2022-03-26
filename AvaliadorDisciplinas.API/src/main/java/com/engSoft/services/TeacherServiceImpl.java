@@ -3,15 +3,11 @@ package com.engSoft.services;
 import com.engSoft.DTO.TeacherDTO;
 import com.engSoft.entities.Teacher;
 import com.engSoft.repositories.TeacherRepository;
-import com.engSoft.util.ErroTeacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.Optional;
-
-import static com.engSoft.util.Util.isNullOrEmpty;
 
 @Service
 public class TeacherServiceImpl implements TeacherService{

@@ -13,9 +13,9 @@ const customStyles = {
     control: (provided, state) => ({
       ...provided,
       border: 0,
-      color: '#1e1e1e',
+      color: 'var(--black)',
       fontWeight: '500',
-      backgroundColor: '#fafafa',
+      backgroundColor: 'var(--background)',
       height: '100%',
       width: '100%',
       borderRadius: '0.75rem',
@@ -23,7 +23,7 @@ const customStyles = {
     }),
     placeholder: (provided,state) => ({
         ...provided,
-        color: '#6a6a6a',
+        color: 'var(--gray-700)',
         fontWeight: '500'
     })
 }
