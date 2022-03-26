@@ -19,4 +19,5 @@ public interface CommentService {
     void removeComment(Long id);
     Optional<Comment> findCommentById(Long id);
     void updateDeletedComments(User user);
+    List<Comment> listCommentWithComplaints();
 }
