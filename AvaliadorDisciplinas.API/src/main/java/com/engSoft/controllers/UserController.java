@@ -94,4 +94,23 @@ public class UserController {
         }
         return erroUserNotFound();
     }
+
+    @RequestMapping(value = "/admin/ban/{id}", method = RequestMethod.PATCH)
+    public ResponseEntity<?> changeBanUser(@PathVariable ("id") Long id, @RequestParam("ban status") Boolean banStatus){
+
+        Optional<User> user = this.userService.getUserById(id);
+        if (user.isPresent()) {
+            user.get().setBanned(banStatus);
+            userService.saveUser(user.get());
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return erroUserNotFound();
+    }
+
+    @RequestMapping(value = "/admin/bans", method = RequestMethod.GET)
+    public ResponseEntity<?> listBans() {
+        List<User> users = userService.listUsers();
+        users.removeIf(User::getBanned);
+        return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
+    }
 }

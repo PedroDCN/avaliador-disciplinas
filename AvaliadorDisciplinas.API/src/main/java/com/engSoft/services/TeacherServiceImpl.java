@@ -1,5 +1,6 @@
 package com.engSoft.services;
 
+import com.engSoft.DTO.TeacherDTO;
 import com.engSoft.entities.Teacher;
 import com.engSoft.repositories.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +16,26 @@ public class TeacherServiceImpl implements TeacherService{
     private TeacherRepository teacherRepository;
 
     @Override
-    public void saveTeacher(Teacher teacher) {
+    public Teacher saveTeacher(TeacherDTO teacherDTO) {
+        Teacher teacher = new Teacher(teacherDTO);
         this.teacherRepository.save(teacher);
+        return teacher;
     }
 
     @Override
     public void removeTeacher(Long id) {
         this.teacherRepository.deleteById(id);
     }
+
     @Override
-    public Optional<Teacher> updateTeacher(Long id, String updatedAttribute){
-        Optional<Teacher> teacher = this.teacherRepository.findById(id);
-        teacher.get().setName(updatedAttribute);
-        return teacher;
+    public Optional<Teacher> updateTeacher(Long id, TeacherDTO teacherDTO) {
+
+        Teacher teacher = teacherRepository.getById(id);
+
+        teacher.setName(teacherDTO.getName());
+        teacher.setPhoto(teacherDTO.getPhoto());
+        this.teacherRepository.save(teacher);
+        return Optional.of(teacher);
     }
 
     @Override

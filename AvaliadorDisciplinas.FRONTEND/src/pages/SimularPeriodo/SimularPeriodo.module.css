@@ -1,0 +1,108 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.container .titleBar {
+    width: 70%;
+    color: var(--white);
+    background: var(--secondary);
+    border-radius: 0 0 1rem 1rem;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 0.75rem 0;
+}
+
+.container .content {
+    max-height: 85%;
+    width: 70%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 3rem;
+    gap: 1rem;
+}
+
+.container .content .coursesContainer {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.container .content .coursesContainer .searchBar {
+    min-height: 2.75rem;
+    width: 100%;
+    border: 0.15rem solid var(--gray-300);
+    border-radius: 0.5rem;
+}
+
+.container .content .coursesContainer .coursesSelected {
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    background: var(--background);
+    border: 0.15rem solid var(--gray-300);
+    border-radius: 1rem;
+    padding: 0.5rem;
+}
+
+.container .content .coursesContainer .coursesSelected .list{
+    flex: 1;
+}
+
+.container .content .resultContainer {
+    width: 40%;
+    min-height: 100%;
+    height: 100%;
+    display: flex;  
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+} 
+
+.container .content .resultContainer .headerResult {
+    width: 100%;
+    min-height: 2.75rem;
+    background: var(--secondary);
+    color: var(--white);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .content .resultContainer .resultContent {
+    height: 100%;
+    width: 100%;
+    border: 0.15rem solid var(--gray-300);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1.5rem;
+    gap: 2rem;
+}
+
+.container .content .resultContainer .resultContent .metric {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--black);
+    font-weight: 500;
+}

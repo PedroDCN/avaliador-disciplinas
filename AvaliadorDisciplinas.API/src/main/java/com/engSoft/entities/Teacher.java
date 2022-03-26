@@ -5,6 +5,7 @@ import com.engSoft.DTO.TeacherDTO;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Teacher implements Comparable<Teacher> {
@@ -13,15 +14,15 @@ public class Teacher implements Comparable<Teacher> {
     private Long id;
     private String name;
 
+    private String photo;
+
 
     public Teacher() {
     }
+
     public Teacher(TeacherDTO teacherDTO){
         this.name = teacherDTO.getName();
-    }
-
-    public Teacher(String name) {
-        this.name = name;
+        this.photo = teacherDTO.getPhoto();
     }
 
     public Long getId() {
@@ -36,6 +37,14 @@ public class Teacher implements Comparable<Teacher> {
         this.name = name;
     }
 
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
@@ -45,5 +54,18 @@ public class Teacher implements Comparable<Teacher> {
     @Override
     public int compareTo(Teacher o) {
         return this.name.compareTo(o.getName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teacher teacher = (Teacher) o;
+        return name.equals(teacher.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
