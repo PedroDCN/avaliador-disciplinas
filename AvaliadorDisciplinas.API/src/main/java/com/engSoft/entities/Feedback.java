@@ -13,8 +13,10 @@ public class Feedback {
     @GeneratedValue
     private Long id;
     private Long idCourse;
+    private String nomeCourse;
     private Long idStudent;
     private Long idSemester;
+    private String nomeSemester;
     private double workload;
     private double didactic;
     private double organization;
@@ -22,7 +24,7 @@ public class Feedback {
     private double courseware;
     private Util.ModalityEnum modality;
 
-    public Feedback(FeedbackDTO feedbackDTO) {
+    public Feedback(FeedbackDTO feedbackDTO, String nomeCourse, String nomeSemester) {
         this.idCourse = feedbackDTO.getIdCourse();
         this.idStudent = feedbackDTO.getIdStudent();
         this.idSemester = feedbackDTO.getIdSemester();
@@ -32,6 +34,8 @@ public class Feedback {
         this.evaluationSystem = feedbackDTO.getEvaluationSystem();
         this.courseware = feedbackDTO.getCourseware();
         this.modality = feedbackDTO.getModality();
+        this.nomeCourse = nomeCourse;
+        this.nomeSemester = nomeSemester;
     }
 
     public Feedback() {
@@ -127,5 +131,21 @@ public class Feedback {
                 ", courseware=" + courseware +
                 ", modality=" + modality +
                 '}';
+    }
+
+    public String getNomeCourse() {
+        return nomeCourse;
+    }
+
+    public void setNomeCourse(String nomeCourse) {
+        this.nomeCourse = nomeCourse;
+    }
+
+    public String getNomeSemester() {
+        return nomeSemester;
+    }
+
+    public void setNomeSemester(String nomeSemester) {
+        this.nomeSemester = nomeSemester;
     }
 }
