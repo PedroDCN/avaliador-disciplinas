@@ -127,7 +127,6 @@ function CourseProfile() {
     useEffect(() => {
         (async function getLastAverage() {
             if( semester && typeof semester !== 'undefined') {
-                console.log('testes')
                 const response = await getAverageByCourseSemester(semester[0].value, id);
                 setLastAverage(response.averageTotal);
             } else {
@@ -142,9 +141,9 @@ function CourseProfile() {
 
                 {loading ? <span>Carregando...</span> // discutir carregamento
                 :
-                <div className={styles.MYmain}>
+                <div className={styles.content}>
 
-                    <div className={styles.MYheaderMain}>
+                    <div className={styles.headersContent}>
                         <ButtonWithIcon
                             buttontitle="" 
                             icon={LeftIcon} 
@@ -153,7 +152,7 @@ function CourseProfile() {
                             hasTitle={false}
                             onClick={handleGoBackButton}
                         />
-                        <p className={styles.MYclassTitle}>{course.name}</p>
+                        <p className={styles.courseName}>{course.name}</p>
                         <Button 
                             buttontitle="AVALIAR"
                             backgroundcolor={colors.theme.secondary} 
@@ -164,9 +163,9 @@ function CourseProfile() {
                         />
                     </div>
 
-                    <hr className={styles.MYDivisor}/>
+                    <hr className={styles.divisor}/>
 
-                    <div className={styles.MYCourseContent}>
+                    <div className={styles.courseContent}>
                         <div className={styles.MYCourseContentDetails}>
 
                             <Select
@@ -220,7 +219,7 @@ function CourseProfile() {
                         }
                     </div>
 
-                    <hr className={styles.MYDivisor}/>
+                    <hr className={styles.divisor}/>
 
                     <div className={styles.MYCommentContent}>
                         <textarea 

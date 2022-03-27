@@ -7,7 +7,7 @@
     flex-direction: column;
 }
 
-.MYmain {
+.content {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -20,7 +20,7 @@
     overflow-y: scroll;
 }
 
-.MYmain .MYheaderMain {
+.content .headersContent {
     display: flex;
     flex-direction: row;
     padding: 1rem;
@@ -29,19 +29,19 @@
     box-shadow: none;
 }
 
-.MYheaderMain .MYclassTitle {
+.headersContent .courseName {
     font-size: 2rem;
     font-weight: 300;
     font-size: 36px;
     margin-left: 2rem;
 }
 
-.MYDivisor {
+.divisor {
     background-color: var(--gray-500);
     width: 100%;    
 }
 
-.MYCourseContent{
+.courseContent{
     width: 100%;
     margin: 0.5rem 0rem 1rem 0rem;
     background: var(--gray-200);
@@ -53,14 +53,14 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
 }
 
-.MYCourseContent .MYdetailedScore {
+.courseContent .MYdetailedScore {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
 }
 
-.MYcontent .MYmain .MYCourseContent .MYdetailedScore, .MYmainScore {
+.courseContent .MYdetailedScore, .MYmainScore {
     border-color: var(--gray-700);
     border-style: solid;
     border-radius: 1rem;
@@ -69,7 +69,7 @@
     padding: 0.5rem;
 }
 
-.MYCourseContent .MYmainScore {
+.courseContent .MYmainScore {
     height: 140px;
     width: 140px;
     border-radius: 50%;
@@ -151,16 +151,16 @@
     margin-bottom: 1rem;
 }
 
-.MYmain::-webkit-scrollbar {
+.content::-webkit-scrollbar {
     width: 10px;
     height: 10px;
 }
   
-.MYmain::-webkit-scrollbar-track {
+.content::-webkit-scrollbar-track {
     background: transparent;
 }
   
-.MYmain::-webkit-scrollbar-thumb {
+.content::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
 }

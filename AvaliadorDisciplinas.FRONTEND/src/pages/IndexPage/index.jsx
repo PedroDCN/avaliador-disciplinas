@@ -16,6 +16,7 @@ import UserAvaliacoes from '../UserAvaliacoes';
 import LoginModal from '../../components/LoginModal';
 import CourseProfile from '../CourseProfile';
 import SimularPeriodo from '../SimularPeriodo';
+import ReportsList from '../ReportsList';
 
 function IndexPage() {
   const [selectedItem, setSelectedItem] = useState("");
@@ -88,7 +89,7 @@ function IndexPage() {
             element={<CadastrarDisciplina />}
           />
           <Route path="/professor/edicao/:id" element={<CadastrarProf />} />
-          <Route path="/denuncias" element={<h1>Denúncias</h1>} />
+          <Route path="/denuncias" element={<ReportsList />} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/userAvaliacoes" element={<UserAvaliacoes />} />
           <Route path="/userComentarios" element={<UserComentarios />} />

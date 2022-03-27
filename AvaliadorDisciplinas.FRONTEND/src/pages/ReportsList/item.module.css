@@ -1,0 +1,50 @@
+.itemContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--gray-100);
+    border-radius: 2rem;
+    padding: 0.7rem;
+}
+
+.itemContainer .itemPhoto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemContainer .itemPhoto img {                 /* coloco ou n? */
+    border-radius: 50%;
+    border: 0.25rem solid var(--secondary);
+    margin-right: 1rem;
+}
+
+.itemContainer .itemContent {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemContainer .itemContent span, .itemReports span {
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 300;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.itemReports {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.itemContainer .itemButton {
+    width: 10%;
+    margin-right: 0.5rem;
+}
