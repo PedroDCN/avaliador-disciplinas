@@ -51,7 +51,9 @@ public class CourseController {
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
         if(optionalCourse.isPresent()) {
-            optionalCourse.get().update(courseDTO, optionalTeacher.get().getId());
+            optionalCourse.get().setName(courseDTO.getName());
+            optionalCourse.get().setCode(courseDTO.getCode());
+            optionalCourse.get().setIdTeacher(optionalTeacher.get().getId());
             courseService.saveCourse(optionalCourse.get());
 
             return new ResponseEntity<>(optionalCourse, HttpStatus.OK);

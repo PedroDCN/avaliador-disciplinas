@@ -27,12 +27,6 @@ public class Course {
         grade = 0;
     }
 
-    public void update(CourseDTO courseDTO, Long idTeacher) {
-        this.name = courseDTO.getName();
-        this.code = courseDTO.getCode();
-        this.idTeacher = idTeacher;
-    }
-
     public void updateGrade(List<Feedback> feedbacks) {
         int soma = 0;
         int count = 0;
@@ -57,6 +51,18 @@ public class Course {
 
     public Long getIdTeacher() {
         return idTeacher;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setIdTeacher(Long idTeacher) {
+        this.idTeacher = idTeacher;
     }
 
     public double getGrade() { return grade; }
