@@ -40,13 +40,19 @@ public class FeedbackController {
 
         Optional<User> optionalStudent = userService.getUserById(feedbackDTO.getIdStudent());
 
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(feedbackDTO.getIdSemester());
+
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
         if (!optionalStudent.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Feedback newFeedback = new Feedback(feedbackDTO);
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+
+        Feedback newFeedback = new Feedback(feedbackDTO, optionalCourse.get().getName(), optionalSemester.get().getName());
         try {
             feedbackService.saveFeedback(newFeedback);
             courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
