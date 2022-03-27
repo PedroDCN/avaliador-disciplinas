@@ -137,6 +137,12 @@ public class CommentController {
         return new ResponseEntity<>(optionalComment, HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(value = "/comment/complaints", method = RequestMethod.GET)
+    public ResponseEntity<?> getCommentWithComplaints(){
+
+        return new ResponseEntity<>(commentService.listCommentWithComplaints(), HttpStatus.ACCEPTED);
+    }
+
     @RequestMapping(value = "/admin/comment/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeComment(@PathVariable ("id") Long id){
         Optional<Comment> optionalComment = commentService.findCommentById(id);
