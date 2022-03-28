@@ -2,25 +2,30 @@ import React, { useEffect, useState } from "react";
 import styles from "./UserComentarios.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 import DataList from "../../components/DataList";
-import { getAll } from "../../services/comentariosService";
+import { getAllUser } from "../../services/comentService";
 import { renderItem } from "./comentariosListagem";
 import { useNavigate } from "react-router-dom";
 
 function UserComentarios() {
     const { user } = useAuth();
-    const [disc, setDisc] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const [disc, setDisc] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
-            setLoading(true);
-            const data = await getAll();
-            setDisc(data);
-            setLoading(false);
+            if (user) {
+                setLoading(true);
+                const data = (await getAllUser(user.id)).data;
+                setDisc(data);
+                setLoading(false);
+            }
+
         }
 
         fetchData();
-    }, []);
+    }, [user]);
 
     return (
         <div className={styles.container}>

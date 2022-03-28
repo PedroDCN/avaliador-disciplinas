@@ -1,4 +1,4 @@
-import External from "../../assets/icons/external.svg";
+import EditIcon from "../../assets/icons/edit_icon.svg";
 import ButtonWithIcon from "../../components/ButtonWithIcon";
 import styles from "./comentariosListagem.module.css";
 
@@ -6,11 +6,11 @@ export function renderItem(item) {
     return (
         <div className={styles.itemContainer}>
             <div className={styles.itemConteudo}>
-                <span className={styles.comentario}>{item.comentario}</span>
-                <span>{item.nome}</span>
+                <span className={styles.comentario}>{item.description}</span>
+                <span>{item.nomeCourse}</span>
             </div>
             <div className={styles.itemButton}>
-                <ButtonWithIcon icon={External} onClick={() => { }} transparent="true" />
+                <ButtonWithIcon icon={EditIcon} onClick={() => { }} transparent="true" />
             </div>
         </div>
     );

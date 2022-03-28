@@ -3,24 +3,35 @@ import { useAuth } from '../../contexts/AuthContext';
 import styles from './UserAvaliacoes.module.css';
 import { useNavigate } from 'react-router-dom';
 import { renderItem } from "./avaliacaoListagem";
-import { getAll } from "../../services/disciplinaService";
+import { getAllUser } from "../../services/userAvaliacoesService";
 import DataList from '../../components/DataList';
 
 function UserAvaliacoes() {
     const { user } = useAuth();
-    const [disc, setDisc] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const [disc, setDisc] = useState([]);
+    const [per, setPer] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
-            setLoading(true);
-            const data = await getAll();
-            setDisc(data);
-            setLoading(false);
+            if (user) {
+                setLoading(true);
+                const data = (await getAllUser(user.id)).data;
+                setDisc(data);
+                setLoading(false);
+            }
+
         }
 
         fetchData();
-    }, []);
+    }, [user]);
+
+    // grade: 0
+    // id: 10
+    // idTeacher: 5
+    // name: "Laboratório de programação 2"
 
     return (
         <div className={styles.container}>
