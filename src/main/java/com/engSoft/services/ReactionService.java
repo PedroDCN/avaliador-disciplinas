@@ -19,4 +19,5 @@ public interface ReactionService {
     List<Reaction> findReactionByComment(Long idComment);
     List<Reaction> findAllByIdCommentAndReactionTypeEnum(Long idComment, Util.ReactionTypeEnum reactionTypeEnum);
     List<Reaction> findAllByReactionTypeEnum(Util.ReactionTypeEnum reactionTypeEnum);
+    List<Reaction> findAllByStudent(Long id);
 }

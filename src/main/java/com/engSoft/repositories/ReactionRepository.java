@@ -12,4 +12,5 @@ public interface ReactionRepository extends JpaRepository<Reaction, Long> {
     List<Reaction> findReactionByIdComment(Long idComment);
     List<Reaction> findAllByIdCommentAndReactionTypeEnum(Long idComment, Util.ReactionTypeEnum reactionTypeEnum);
     List<Reaction> findAllByReactionTypeEnum(Util.ReactionTypeEnum reaction);
+    List<Reaction> findAllByIdStudent(Long id);
 }
