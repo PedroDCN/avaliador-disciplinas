@@ -46,7 +46,7 @@ public class CommentController {
         if (!optionalStudent.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Comment newComment = new Comment(commentDTO, optionalStudent.get().getName(), optionalStudent.get().getPhoto_url());
+        Comment newComment = new Comment(commentDTO, optionalCourse.get().getName(), optionalStudent.get().getName(), optionalStudent.get().getPhoto_url());
         try {
             commentService.saveComment(newComment);
             return new ResponseEntity<>(newComment, HttpStatus.CREATED);
@@ -135,6 +135,12 @@ public class CommentController {
             return ErroComment.erroCommentNotFound();
 
         return new ResponseEntity<>(optionalComment, HttpStatus.ACCEPTED);
+    }
+
+    @RequestMapping(value = "/comment/complaints", method = RequestMethod.GET)
+    public ResponseEntity<?> getCommentWithComplaints(){
+
+        return new ResponseEntity<>(commentService.listCommentWithComplaints(), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/admin/comment/{id}", method = RequestMethod.DELETE)

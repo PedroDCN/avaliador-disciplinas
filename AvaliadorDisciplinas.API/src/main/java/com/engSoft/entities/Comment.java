@@ -12,6 +12,7 @@ public class Comment {
     @GeneratedValue
     private Long id;
     private Long idCourse;
+    private String nomeCourse;
     private Long idStudent;
     private String nameStudent;
     private String photoStudent;
@@ -21,11 +22,12 @@ public class Comment {
     private Integer down;
     private Integer complaints;
 
-    public Comment(CommentDTO commentDTO, String nameStudent, String photoStudent) {
+    public Comment(CommentDTO commentDTO, String nomeCourse, String nameStudent, String photoStudent) {
         this.idCourse = commentDTO.getIdCourse();
         this.idStudent = commentDTO.getIdStudent();
         this.idSemester = commentDTO.getIdSemester();
         this.description = commentDTO.getDescription();
+        this.nomeCourse = nomeCourse;
         this.nameStudent = nameStudent;
         this.photoStudent = photoStudent;
         this.up = 0;
@@ -123,5 +125,13 @@ public class Comment {
 
     public void setPhotoStudent(String photoStudent) {
         this.photoStudent = photoStudent;
+    }
+
+    public String getNomeCourse() {
+        return nomeCourse;
+    }
+
+    public void setNomeCourse(String nomeCourse) {
+        this.nomeCourse = nomeCourse;
     }
 }

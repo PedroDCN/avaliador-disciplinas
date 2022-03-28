@@ -2,9 +2,13 @@ package com.engSoft.controllers;
 
 import com.engSoft.DTO.CourseDTO;
 import com.engSoft.DTO.SimpleCourseDTO;
+import com.engSoft.entities.Comment;
 import com.engSoft.entities.Course;
+import com.engSoft.entities.Feedback;
 import com.engSoft.entities.Teacher;
+import com.engSoft.services.CommentService;
 import com.engSoft.services.CourseService;
+import com.engSoft.services.FeedbackService;
 import com.engSoft.services.TeacherService;
 import com.engSoft.util.ErroCourse;
 import com.engSoft.util.ErroTeacher;
@@ -27,6 +31,12 @@ public class CourseController {
 
     @Autowired
     TeacherService teacherService;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
+    FeedbackService feedbackService;
 
     @RequestMapping(value = "/admin/course", method = RequestMethod.POST)
     public ResponseEntity<?> createCourse(@RequestBody CourseDTO courseDTO) {
@@ -51,7 +61,9 @@ public class CourseController {
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
         if(optionalCourse.isPresent()) {
-            optionalCourse.get().update(courseDTO, optionalTeacher.get().getId());
+            optionalCourse.get().setName(courseDTO.getName());
+            optionalCourse.get().setCode(courseDTO.getCode());
+            optionalCourse.get().setIdTeacher(optionalTeacher.get().getId());
             courseService.saveCourse(optionalCourse.get());
 
             return new ResponseEntity<>(optionalCourse, HttpStatus.OK);
@@ -101,5 +113,19 @@ public class CourseController {
             return new ResponseEntity<>(optionalCourse.get(), HttpStatus.OK);
         } else
             return ErroCourse.erroCourseNotFound();
+    }
+
+    public void atualizaDependentes(Course course){
+        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(course.getId());
+        for (Feedback f: feedbacks) {
+            f.setNomeCourse(course.getName());
+            feedbackService.saveFeedback(f);
+        }
+
+        List<Comment> comments = commentService.listCommentByCourse(course.getId());
+        for (Comment c: comments) {
+            c.setNomeCourse(course.getName());
+            commentService.saveComment(c);
+        }
     }
 }
