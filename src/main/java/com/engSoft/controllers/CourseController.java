@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,14 +75,24 @@ public class CourseController {
 
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCourses(){
-        List<SimpleCourseDTO> courses = this.courseService.listCourses();
-        return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
+        List<Course> courses = this.courseService.listCourses();
+        return new ResponseEntity<>(toSimpleCourse(courses), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/courses/{filter}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesFilter(@PathVariable("filter") Util.FilterEnum filter){
-        List<SimpleCourseDTO> courses = this.courseService.listCoursesFilter(filter);
-        return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
+        List<Course> courses = this.courseService.listCoursesFilter(filter);
+        return new ResponseEntity<>(toSimpleCourse(courses), HttpStatus.ACCEPTED);
+    }
+
+    private List<SimpleCourseDTO> toSimpleCourse(List<Course> list) {
+        List<SimpleCourseDTO> simpleList = new ArrayList<>();
+        String nameTeacher;
+        for(Course course : list) {
+            nameTeacher = teacherService.getTeacherById(course.getIdTeacher()).get().getName();
+            simpleList.add(new SimpleCourseDTO(course.getId(), course.getName(), nameTeacher, course.getGrade()));
+        }
+        return simpleList;
     }
 
     @RequestMapping(value = "/coursesTeacher/{nameTeacher}", method = RequestMethod.GET)
