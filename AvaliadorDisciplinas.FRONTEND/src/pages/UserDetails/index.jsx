@@ -50,10 +50,11 @@ function UserDetails() {
         <div className={styles.imgProfile}>
           <img
             src={
-              userDetails && userDetails.picture
-                ? userDetails.picture
+              userDetails && userDetails.photo_url
+                ? userDetails.photo_url
                 : anonimous
             }
+            referrerPolicy="no-referrer"
             alt="User icon"
           />
         </div>
@@ -80,9 +81,9 @@ function UserDetails() {
             color={colors.theme.white}
             onClick={() => setShow(true)}
           />
-          <spam>
+          <span>
             Denúncias: {userDetails ? userDetails.reportedComments : 0}
-          </spam>
+          </span>
         </div>
       </div>
       <div className={styles.content}>

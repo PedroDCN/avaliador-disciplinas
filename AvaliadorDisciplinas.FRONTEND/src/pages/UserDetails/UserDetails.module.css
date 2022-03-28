@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  gap: 2rem;
 }
 
 .container .profile {
