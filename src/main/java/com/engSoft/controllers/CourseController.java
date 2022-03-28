@@ -123,9 +123,9 @@ public class CourseController {
         }
 
         List<Comment> comments = commentService.listCommentByCourse(course.getId());
-        for (Feedback f: feedbacks) {
-            f.setNomeCourse(course.getName());
-            feedbackService.saveFeedback(f);
+        for (Comment c: comments) {
+            c.setNomeCourse(course.getName());
+            commentService.saveComment(c);
         }
     }
 }
