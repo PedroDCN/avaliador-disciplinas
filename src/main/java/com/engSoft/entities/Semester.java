@@ -26,6 +26,10 @@ public class Semester implements Comparable<Semester> {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public int compareTo(Semester o) {
         String numbersString1 = name.substring(0, 6);
