@@ -84,7 +84,7 @@ public class SemesterController {
     }
 
     public void atualizaDependentes(Semester semester){
-        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(semester.getId());
+        List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(semester.getId());
         for (Feedback f: feedbacks) {
             f.setNomeSemester(semester.getName());
             feedbackService.saveFeedback(f);
