@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import { checkAuthToken, parseAuthToken, removeAuthToken, setAuthToken } from "../utils/tokenUtil";
+import { checkAuthToken, parseAuthToken, removeAuthToken, removeUserToken, setAuthToken, setUserToken } from "../utils/tokenUtil";
 import { createUser, getUserByEmail } from '../services/userService';
 import { checkEmailComputacao } from '../utils/loginUtil';
 
@@ -16,6 +16,7 @@ export function AuthContextProvider(props) {
             const { name, picture, email } = parseAuthToken(token);
             getUserByEmail(email).then((res) => {
                 loginSetUser({name, photo:picture, isAdmin: res.isAdmin});
+                setUserToken({name, photo:picture, isAdmin: res.isAdmin});
             });
         } else if (token === 'invalid') {
             logout();
@@ -31,7 +32,7 @@ export function AuthContextProvider(props) {
 
         if (checkEmailComputacao(email)) {
             if (!userAlreadyExists) {
-                createUser({email, name, photo: imageUrl}).then(() => {
+                createUser({email,name, photo: imageUrl}).then(() => {
                     console.log('user created!');
                 }).catch(e => {
                     console.log('error on user created');
@@ -57,6 +58,7 @@ export function AuthContextProvider(props) {
         setUser(undefined);
         setLogged(false);
         removeAuthToken();
+        removeUserToken();
     }
 
     return (

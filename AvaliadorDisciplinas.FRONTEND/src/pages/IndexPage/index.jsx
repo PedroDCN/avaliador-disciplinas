@@ -15,8 +15,9 @@ import UserComentarios from '../UserComentarios';
 import UserAvaliacoes from '../UserAvaliacoes';
 import LoginModal from '../../components/LoginModal';
 import SimularPeriodo from '../SimularPeriodo';
-import ProtectedRoute from '../../components/ProtectedRoute';
+import AdminRoute from '../../components/AdminRoute';
 import ErrorPage from '../ErrorPage';
+import AuthenticatedRoute from '../../components/AuthenticatedRoute';
 
 function IndexPage() {
   const [selectedItem, setSelectedItem] = useState("");
@@ -82,39 +83,63 @@ function IndexPage() {
           <Route
             path="/disciplina/cadastro"
             element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <CadastrarDisciplina />
-              </ProtectedRoute>
+              </AdminRoute>
             }
           />
           <Route 
             path="/professor/cadastro" 
             element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <CadastrarProf />
-              </ProtectedRoute>
+              </AdminRoute>
             }
           />
           <Route 
             path="/disciplina/edicao/:id" 
             element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <CadastrarDisciplina />
-              </ProtectedRoute>
+              </AdminRoute>
             }
           />
           <Route 
             path="/professor/edicao/:id" 
             element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <CadastrarProf />
-              </ProtectedRoute>
+              </AdminRoute>
             }
           />
           <Route path="/denuncias" element={<h1>Denúncias</h1>} />
-          <Route path="/user" element={<UserPage />} />
+          {/* <Route path="/user" element={<UserPage />} />
           <Route path="/userAvaliacoes" element={<UserAvaliacoes />} />
-          <Route path="/userComentarios" element={<UserComentarios />} />
+          <Route path="/userComentarios" element={<UserComentarios />} /> */}
+          <Route
+            path="/user" 
+            element={
+              <AuthenticatedRoute>
+                <UserPage />
+              </AuthenticatedRoute>
+            } 
+          />
+          <Route
+            path="/userAvaliacoes" 
+            element={
+              <AuthenticatedRoute>
+                <UserAvaliacoes />
+              </AuthenticatedRoute>
+            } 
+          />
+          <Route
+            path="/userComentarios" 
+            element={
+              <AuthenticatedRoute>
+                <UserComentarios />
+              </AuthenticatedRoute>
+            } 
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
