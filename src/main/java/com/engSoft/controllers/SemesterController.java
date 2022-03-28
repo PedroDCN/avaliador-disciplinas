@@ -57,7 +57,7 @@ public class SemesterController {
         return new ResponseEntity<>(optionalSemester.get(), HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "semesterDelete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/semesterDelete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeSemester(@PathVariable ("id") Long id){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(id);
 
@@ -68,8 +68,8 @@ public class SemesterController {
             return new ResponseEntity<>("Semester not found", HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/admin/courseUpdate/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateCourse(@PathVariable("id") Long id, @RequestParam("newName") String name) {
+    @RequestMapping(value = "/admin/semesterUpdate/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateSemester(@PathVariable("id") Long id, @RequestParam("newName") String name) {
         Optional<Semester> optionalSemester = semesterService.findSemesterById(id);
 
         if(!optionalSemester.isPresent())
