@@ -11,9 +11,9 @@ public class ReturnReactionDTO {
     private final Util.ReactionTypeEnum reactionTypeEnum;
 
     public ReturnReactionDTO(Reaction reaction) {
-        this.id = id;
-        this.idComment = idComment;
-        this.idStudent = idStudent;
-        this.reactionTypeEnum = reactionTypeEnum;
+        this.id = reaction.getId();
+        this.idComment = reaction.getComment().getId();
+        this.idStudent = reaction.getStudent().getId();
+        this.reactionTypeEnum = reaction.getReactionTypeEnum();
     }
 }

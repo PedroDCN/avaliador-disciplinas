@@ -19,17 +19,17 @@ public class ReturnFeedbackDTO {
     private final Util.ModalityEnum modality;
 
     public ReturnFeedbackDTO(Feedback feedback) {
-        this.id = id;
-        this.idCourse = idCourse;
-        this.nomeCourse = nomeCourse;
-        this.idStudent = idStudent;
-        this.idSemester = idSemester;
-        this.nomeSemester = nomeSemester;
-        this.workload = workload;
-        this.didactic = didactic;
-        this.organization = organization;
-        this.evaluationSystem = evaluationSystem;
-        this.courseware = courseware;
-        this.modality = modality;
+        this.id = feedback.getId();
+        this.idCourse = feedback.getCourse().getId();
+        this.nomeCourse = feedback.getCourse().getName();
+        this.idStudent = feedback.getStudent().getId();
+        this.idSemester = feedback.getSemester().getId();
+        this.nomeSemester = feedback.getSemester().getName();
+        this.workload = feedback.getWorkload();
+        this.didactic = feedback.getDidactic();
+        this.organization = feedback.getOrganization();
+        this.evaluationSystem = feedback.getEvaluationSystem();
+        this.courseware = feedback.getCourseware();
+        this.modality = feedback.getModality();
     }
 }
