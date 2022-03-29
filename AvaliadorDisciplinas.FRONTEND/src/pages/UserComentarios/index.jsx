@@ -2,25 +2,59 @@ import React, { useEffect, useState } from "react";
 import styles from "./UserComentarios.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 import DataList from "../../components/DataList";
-import { getAll } from "../../services/comentariosService";
 import { renderItem } from "./comentariosListagem";
 import { useNavigate } from "react-router-dom";
+import {
+    deleteComentarioById,
+    getComentariosByUser,
+} from "../../services/comentariosServide";
+import { getDisciplinaById } from "../../services/disciplinaService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function UserComentarios() {
+
+function UserComentarios(props) {
     const { user } = useAuth();
-    const [disc, setDisc] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [coments, setComents] = useState([]);
+
     const navigate = useNavigate();
+    const notifySucess = (message) => toast.success(message);
+
     useEffect(() => {
         async function fetchData() {
-            setLoading(true);
-            const data = await getAll();
-            setDisc(data);
-            setLoading(false);
+            if (user) {
+                setLoading(true);
+                const response = (await getComentariosByUser(user.id)).data;
+                await Promise.all(
+                    response.map(async (item) => {
+                        item.disciplina = await getDisciplinaById(item.idCourse);
+                        return item;
+                    })
+                );
+
+                setComents(response);
+
+                setLoading(false);
+            }
         }
 
         fetchData();
-    }, []);
+    }, [user]);
+    const removeComent = async (id) => {
+        setLoading(true);
+
+        const response = await deleteComentarioById(id);
+        setComents(
+            coments.filter((item) => {
+                return item.id !== id;
+            }));
+        notifySucess("comentario apagado com sucesso!");
+
+        setLoading(false);
+
+    };
+
 
     return (
         <div className={styles.container}>
@@ -37,10 +71,25 @@ function UserComentarios() {
                 </div>
 
                 <div className={styles.itens}>
-                    <DataList data={disc} loading={loading} render={renderItem} />
+                    <DataList data={coments} loading={loading} render={(item) => renderItem(item, removeComent)}
+                    />
                 </div>
+                <div>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={1500}
+                        hideProgressBar={false}
+                        closeButton={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover={false}
+                    /> </div>
             </div>
         </div>
+
     );
 }
 
