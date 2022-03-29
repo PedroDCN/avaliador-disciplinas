@@ -18,12 +18,15 @@ import SimularPeriodo from '../SimularPeriodo';
 import AdminRoute from '../../components/AdminRoute';
 import ErrorPage from '../ErrorPage';
 import AuthenticatedRoute from '../../components/AuthenticatedRoute';
+import BannedModal from '../../components/BannedModal';
+import { getUserToken } from '../../utils/tokenUtil';
 
 function IndexPage() {
   const [selectedItem, setSelectedItem] = useState("");
-  const { user, loadUser } = useAuth();
+  const { user, loadUser, logout } = useAuth();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [showBanned, setShowBanned] = useState(false);
 
   useEffect(() => {
     function checkTokenInvalid() {
@@ -31,8 +34,18 @@ function IndexPage() {
       if (tokenInvalid) {
         navigate("/");
       }
+      
     }
+
+    function checkBanned() {
+      const user = getUserToken();
+      if (user && user.banned) {
+        setShowBanned(true);
+      }
+    }
+
     checkTokenInvalid();
+    checkBanned();
   }, []);
 
   function handleLogoClick() {
@@ -140,6 +153,14 @@ function IndexPage() {
         </Routes>
       </div>
       <LoginModal show={show} handleClose={() => setShow(false)} />
+      <BannedModal 
+        show={showBanned}
+        handleClose={() => {
+          setShowBanned(false);
+          logout();
+          window.location.reload();
+        }}
+      />
     </div>
   );
 }
