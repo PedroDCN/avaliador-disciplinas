@@ -32,4 +32,52 @@ public class ReturnFeedbackDTO {
         this.courseware = feedback.getCourseware();
         this.modality = feedback.getModality();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getIdCourse() {
+        return idCourse;
+    }
+
+    public String getNomeCourse() {
+        return nomeCourse;
+    }
+
+    public Long getIdStudent() {
+        return idStudent;
+    }
+
+    public Long getIdSemester() {
+        return idSemester;
+    }
+
+    public String getNomeSemester() {
+        return nomeSemester;
+    }
+
+    public double getWorkload() {
+        return workload;
+    }
+
+    public double getDidactic() {
+        return didactic;
+    }
+
+    public double getOrganization() {
+        return organization;
+    }
+
+    public double getEvaluationSystem() {
+        return evaluationSystem;
+    }
+
+    public double getCourseware() {
+        return courseware;
+    }
+
+    public Util.ModalityEnum getModality() {
+        return modality;
+    }
 }

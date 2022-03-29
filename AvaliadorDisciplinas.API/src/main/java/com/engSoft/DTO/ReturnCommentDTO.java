@@ -29,4 +29,48 @@ public class ReturnCommentDTO {
         this.down = comment.getDown();
         this.complaints = comment.getComplaints();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getIdCourse() {
+        return idCourse;
+    }
+
+    public String getNomeCourse() {
+        return nomeCourse;
+    }
+
+    public Long getIdStudent() {
+        return idStudent;
+    }
+
+    public String getNameStudent() {
+        return nameStudent;
+    }
+
+    public String getPhotoStudent() {
+        return photoStudent;
+    }
+
+    public Long getIdSemester() {
+        return idSemester;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getUp() {
+        return up;
+    }
+
+    public Integer getDown() {
+        return down;
+    }
+
+    public Integer getComplaints() {
+        return complaints;
+    }
 }

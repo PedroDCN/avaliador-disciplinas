@@ -16,4 +16,20 @@ public class ReturnReactionDTO {
         this.idStudent = reaction.getStudent().getId();
         this.reactionTypeEnum = reaction.getReactionTypeEnum();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getIdComment() {
+        return idComment;
+    }
+
+    public Long getIdStudent() {
+        return idStudent;
+    }
+
+    public Util.ReactionTypeEnum getReactionTypeEnum() {
+        return reactionTypeEnum;
+    }
 }
