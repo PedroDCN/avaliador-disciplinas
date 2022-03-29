@@ -2,6 +2,7 @@ package com.engSoft.controllers;
 
 
 import com.engSoft.DTO.ReactionDTO;
+import com.engSoft.DTO.ReturnCourseDTO;
 import com.engSoft.entities.*;
 import com.engSoft.services.*;
 import com.engSoft.util.*;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @RestController
@@ -42,7 +44,7 @@ public class ReactionController {
         if (!user.isPresent()) {
             return ErroUser.erroUserNotFound();
         }
-        Reaction newReaction = new Reaction(reactionDTO);
+        Reaction newReaction = new Reaction(optionalComment.get(), user.get(), reactionDTO.getReactionTypeEnum());
         try {
             reactionService.saveReaction(newReaction);
             reactionService.updateVotes(optionalComment.get(), newReaction, user.get());
@@ -106,23 +108,19 @@ public class ReactionController {
 
         if (!optionalReaction.isPresent())
             return ErroReaction.erroReactionNotFound();
-        Optional<User> user = userService.getUserById(idUser);
-
-        Optional<Comment> comment = commentService.findCommentById(optionalReaction.get().getIdComment());
 
         if (optionalReaction.get().getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT)
             return ErroReaction.erroInvalidTypeForOperation(optionalReaction.get().getReactionTypeEnum().toString(), "Like/dislike");
 
-        if (!user.isPresent())
-            return ErroUser.erroUserNotFound();
-        if (!comment.isPresent())
-            return ErroComment.erroCommentNotFound();
+        User user = optionalReaction.get().getStudent();
+
+        Comment comment = optionalReaction.get().getComment();
 
         try {
-            reactionService.removeVotes(comment.get(), optionalReaction.get(), user.get());
+            reactionService.removeVotes(comment, optionalReaction.get(), user);
             reactionService.removeReaction(id);
-            userService.saveUser(user.get());
-            commentService.saveComment(comment.get());
+            userService.saveUser(user);
+            commentService.saveComment(comment);
             return new ResponseEntity<>(optionalReaction, HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(
@@ -145,20 +143,15 @@ public class ReactionController {
             return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be Updated"), HttpStatus.BAD_REQUEST);
 
-        Optional<Comment> comment = commentService.findCommentById(oldReaction.getIdComment());
-        Optional<User> user = userService.getUserById(oldReaction.getIdStudent());
+        Comment comment = oldReaction.getComment();
+        User user = oldReaction.getStudent();
 
-        if (!user.isPresent())
-            return ErroUser.erroUserNotFound();
-        if (!comment.isPresent())
-            return ErroComment.erroCommentNotFound();
-
-        reactionService.removeVotes(comment.get(), oldReaction, user.get());
+        reactionService.removeVotes(comment, oldReaction, user);
         oldReaction.setReactionTypeEnum(reactionType);
-        reactionService.updateVotes(comment.get(), oldReaction, user.get());
+        reactionService.updateVotes(comment, oldReaction, user);
         reactionService.saveReaction(oldReaction);
-        userService.saveUser(user.get());
-        commentService.saveComment(comment.get());
+        userService.saveUser(user);
+        commentService.saveComment(comment);
         return new ResponseEntity<>(oldReaction, HttpStatus.OK);
     }
 }
