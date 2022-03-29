@@ -48,11 +48,12 @@ public class ComplaintController {
         }
 
         Optional<User> user = userService.getUserById(reactionDTO.getIdStudent());
+
         if (!user.isPresent()){
             return ErroUser.erroUserNotFound();
         }
 
-        Reaction newReaction = new Reaction(reactionDTO);
+        Reaction newReaction = new Reaction(optionalComment.get(), user.get(), reactionDTO.getReactionTypeEnum());
 
         try {
             reactionService.saveReaction(newReaction);
@@ -104,18 +105,14 @@ public class ComplaintController {
         if(optionalReaction.get().getReactionTypeEnum() != Util.ReactionTypeEnum.COMPLAINT)
             return ErroReaction.erroInvalidTypeForOperation(optionalReaction.get().getReactionTypeEnum().toString(), "Complaint");
 
-        Optional<User> user = userService.getUserById(idUser);
-        if(!user.isPresent())
-            return ErroUser.erroUserNotFound();
+        Comment comment = optionalReaction.get().getComment();
+        User user = optionalReaction.get().getStudent();
 
-        Optional<Comment> comment =commentService.findCommentById(optionalReaction.get().getIdComment());
-        if (!comment.isPresent())
-            return ErroComment.erroCommentNotFound();
         try{
-            reactionService.removeVotes(comment.get(), optionalReaction.get(),user.get());
+            reactionService.removeVotes(comment, optionalReaction.get(), user);
             reactionService.removeReaction(id);
-            userService.saveUser(user.get());
-            commentService.saveComment(comment.get());
+            userService.saveUser(user);
+            commentService.saveComment(comment);
             return new ResponseEntity<>(optionalReaction.get(), HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(
