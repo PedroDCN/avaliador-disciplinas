@@ -46,7 +46,7 @@ public class CommentController {
         if (!optionalStudent.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Comment newComment = new Comment(commentDTO, optionalStudent.get().getNick(), optionalStudent.get().getPhoto_url());
+        Comment newComment = new Comment(commentDTO, optionalCourse.get().getName(), optionalStudent.get().getNick(), optionalStudent.get().getPhoto_url());
         try {
             commentService.saveComment(newComment);
             return new ResponseEntity<>(newComment, HttpStatus.CREATED);
