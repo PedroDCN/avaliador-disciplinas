@@ -113,3 +113,23 @@ export function getMenuItemsByUserMode(mode) {
   }
   return menuItems;
 }
+
+export const marks = {
+  0: 0,
+  2: 2,
+  4: 4,
+  6: 6,
+  8: 8,
+  10: 10
+}
+
+export function newFeedback() {
+  return {
+      "workload": 5,
+      "didactic": 5,
+      "organization": 5,
+      "evaluationSystem": 5,
+      "courseware": 5,
+      "modality": "PRESENTIAL",
+  }
+}

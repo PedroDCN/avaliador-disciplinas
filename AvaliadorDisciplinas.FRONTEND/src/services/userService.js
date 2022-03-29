@@ -25,4 +25,15 @@ async function getUserById(id) {
   }
 }
 
-export { createUser, changeBanUser, getUserByEmail, getUserById };
+async function updateNickUser(email, nick) {
+  return await api.patch(`user/${email}?nick=${nick}`);
+
+}
+async function getUserForNick(id) {
+  return await api.get(`/users/${id}`);
+}
+
+
+
+
+export { createUser, changeBanUser, getUserByEmail, getUserById, updateNickUser, getUserForNick };
