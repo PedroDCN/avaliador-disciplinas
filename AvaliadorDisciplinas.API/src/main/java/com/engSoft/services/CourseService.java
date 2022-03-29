@@ -1,6 +1,5 @@
 package com.engSoft.services;
 
-import com.engSoft.DTO.SimpleCourseDTO;
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
 import com.engSoft.entities.Teacher;

@@ -1,10 +1,8 @@
 package com.engSoft.controllers;
 
 import com.engSoft.DTO.CourseDTO;
-import com.engSoft.DTO.SimpleCourseDTO;
-import com.engSoft.entities.Comment;
+import com.engSoft.DTO.ReturnCourseDTO;
 import com.engSoft.entities.Course;
-import com.engSoft.entities.Feedback;
 import com.engSoft.entities.Teacher;
 import com.engSoft.services.CommentService;
 import com.engSoft.services.CourseService;
@@ -47,7 +45,7 @@ public class CourseController {
             Course newCourse = new Course(courseDTO, optionalTeacher.get());
             courseService.saveCourse(newCourse);
 
-            return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
+            return new ResponseEntity<>(new ReturnCourseDTO(newCourse), HttpStatus.CREATED);
         } else
             return ErroTeacher.erroTeacherNotFound();
     }
@@ -67,7 +65,7 @@ public class CourseController {
             optionalCourse.get().setTeacher(optionalTeacher.get());
             courseService.saveCourse(optionalCourse.get());
 
-            return new ResponseEntity<>(optionalCourse, HttpStatus.OK);
+            return new ResponseEntity<>(new ReturnCourseDTO(optionalCourse.get()), HttpStatus.OK);
         } else
             return ErroCourse.erroCourseNotFound();
     }
@@ -75,23 +73,13 @@ public class CourseController {
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCourses(){
         List<Course> courses = this.courseService.listCourses();
-        return new ResponseEntity<>(toSimpleCourse(courses), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(listToReturnCourse(courses), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/courses/{filter}", method = RequestMethod.GET)
     public ResponseEntity<?> getAllCoursesFilter(@PathVariable("filter") Util.FilterEnum filter){
         List<Course> courses = this.courseService.listCoursesFilter(filter);
-        return new ResponseEntity<>(toSimpleCourse(courses), HttpStatus.ACCEPTED);
-    }
-
-    private List<SimpleCourseDTO> toSimpleCourse(List<Course> list) {
-        List<SimpleCourseDTO> simpleList = new ArrayList<>();
-        String nameTeacher;
-        for(Course course : list) {
-            nameTeacher = course.getTeacher().getName();
-            simpleList.add(new SimpleCourseDTO(course.getId(), course.getName(), nameTeacher, course.getGrade()));
-        }
-        return simpleList;
+        return new ResponseEntity<>(listToReturnCourse(courses), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/coursesTeacher/{nameTeacher}", method = RequestMethod.GET)
@@ -110,7 +98,7 @@ public class CourseController {
         Optional<Course> optionalCourse = courseService.findCourseById(id);
 
         if(optionalCourse.isPresent())
-            return new ResponseEntity<>(optionalCourse.get(), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(new ReturnCourseDTO(optionalCourse.get()), HttpStatus.ACCEPTED);
         else
             return ErroCourse.erroCourseNotFound();
     }
@@ -121,22 +109,16 @@ public class CourseController {
 
         if(optionalCourse.isPresent()) {
             courseService.removeCourse(optionalCourse.get());
-            return new ResponseEntity<>(optionalCourse.get(), HttpStatus.OK);
+            return new ResponseEntity<>(new ReturnCourseDTO(optionalCourse.get()), HttpStatus.OK);
         } else
             return ErroCourse.erroCourseNotFound();
     }
 
-    public void atualizaDependentes(Course course){
-        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(course.getId());
-        for (Feedback f: feedbacks) {
-            f.setNomeCourse(course.getName());
-            feedbackService.saveFeedback(f);
+    private List<ReturnCourseDTO> listToReturnCourse(List<Course> list) {
+        List<ReturnCourseDTO> returnList = new ArrayList<>();
+        for(Course course : list) {
+            returnList.add(new ReturnCourseDTO(course));
         }
-
-        List<Comment> comments = commentService.listCommentByCourse(course.getId());
-        for (Comment c: comments) {
-            c.setNomeCourse(course.getName());
-            commentService.saveComment(c);
-        }
+        return returnList;
     }
 }
