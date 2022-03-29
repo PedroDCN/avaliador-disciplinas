@@ -18,8 +18,12 @@
 }
 
 .MYCommentListItem .MYCommentTextArea p {
-    width: 80%;
     font-weight: 300;
+    width: 600px;
+    font-size: 0.85em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .ReactContainer {
@@ -33,4 +37,9 @@
     margin: 0;
     margin-left: 0.3rem;
     cursor: pointer;
+}
+
+.buttonContainer {
+    height: 100%;
+    width: 15%;
 }

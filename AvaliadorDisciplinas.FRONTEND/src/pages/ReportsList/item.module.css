@@ -36,6 +36,15 @@
     overflow: hidden;
 }
 
+.itemContent span p {
+    width: 325px;
+    font-size: 0.85em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 .itemReports {
     display: flex;
     flex-direction: column;

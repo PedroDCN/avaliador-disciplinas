@@ -1,0 +1,92 @@
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(0.1rem);
+}
+
+.show {
+    display: flex;
+}
+
+.hide {
+    display: none;
+}
+
+.container {
+    position: fixed;
+    width: 50%;
+    max-width: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--background);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.header img {
+    border-radius: 50%;
+    border: 0.25rem solid var(--secondary);
+    margin-right: 1rem;
+}
+
+.header .userData {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header .button {
+}
+
+.divisor {
+    background-color: var(--gray-500);
+    width: 97%; 
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.textArea {
+    width: 100%;
+    max-height: 10rem;
+    margin-left:1rem;
+    margin-right:1rem;
+    background-color: var(--gray-300);
+    padding: 1rem;
+    border-radius: 1rem;
+
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.textArea::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+  
+.textArea::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+.textArea::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}

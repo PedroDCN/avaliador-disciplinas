@@ -13,6 +13,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 import { getAllPeriodos, getDisciplinaById, getAverageFeedbacksfromCourse, getAverageByCourseSemester, getAllCommentsfromCourse, createComment } from "../../services/disciplinaService";
 import { getProfessorById } from "../../services/professorService";
+import { reportComentario } from "../../services/comentariosServide";
 
 import colors from '../../styles/colorsConfig.json';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -58,6 +59,14 @@ function CourseProfile() {
     const [localComment, setLocalComment] = useState("");
     const [comments, setComments] = useState();
     const [lastAverage, setLastAverage] = useState(0);
+
+    const reportComent = async (id) => {
+        await reportComentario(id, user.id);
+      };
+
+      const updatReaction = async () => {
+        updateComments();
+      };
     
     function newComment() {
         return {
@@ -242,7 +251,7 @@ function CourseProfile() {
                                 data={comments}
                                 loading={loading}
                                 render={(item) =>
-                                renderItem({ item })
+                                renderItem({ item, loading, reportComent, updatReaction})
                                 }
                             />
                         :

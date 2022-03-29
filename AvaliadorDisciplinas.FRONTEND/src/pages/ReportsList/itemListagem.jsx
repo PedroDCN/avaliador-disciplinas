@@ -3,10 +3,11 @@ import ButtonWithIcon from "../../components/ButtonWithIcon";
 import UserImage from '../../assets/icons/user_anonimous.svg';
 import styles from "./item.module.css";
 
-export function renderItem({ item, navigate }) {
+export function renderItem({ item, showModal }) {
 
-  function handleClick() {
-      navigate(`/disciplina/8`);
+
+  async function openModal() {
+    await showModal(item);
   }
 
   return (
@@ -23,7 +24,7 @@ export function renderItem({ item, navigate }) {
 
       <div className={styles.itemContent}>
         <h3>{item.nameStudent}</h3>
-        <span>{item.description}</span>
+        <span><p>{item.description}</p></span>
       </div>
 
       <div className={styles.itemReports}>
@@ -34,7 +35,7 @@ export function renderItem({ item, navigate }) {
       <div className={styles.itemButton}>
         <ButtonWithIcon 
           icon={External} 
-          onClick={handleClick}
+          onClick={openModal}
           boxshadow="none"
           transparent="true"
         />
