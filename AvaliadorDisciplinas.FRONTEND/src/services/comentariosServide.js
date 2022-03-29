@@ -1,5 +1,9 @@
 import { api } from "./api";
 
+async function getComentariosById(id) {
+  return await api.get(`/comment/${id}`);
+}
+
 async function getComentariosByUser(id) {
   return await api.get(`/comment/listByStudent/${id}`);
 }
@@ -13,4 +17,4 @@ async function reportComentario(idComment, idStudent) {
   await api.post(`/complaint?idComment=${idComment}&idStudent=${idStudent}`);
 }
 
-export { getComentariosByUser, deleteComentarioById, reportComentario };
+export { getComentariosById, getComentariosByUser, deleteComentarioById, reportComentario };

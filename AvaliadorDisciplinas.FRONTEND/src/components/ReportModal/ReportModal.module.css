@@ -54,9 +54,6 @@
     justify-content: center;
 }
 
-.header .button {
-}
-
 .divisor {
     background-color: var(--gray-500);
     width: 97%; 
@@ -66,7 +63,7 @@
 
 .textArea {
     width: 100%;
-    max-height: 10rem;
+    height: 10rem;
     margin-left:1rem;
     margin-right:1rem;
     background-color: var(--gray-300);

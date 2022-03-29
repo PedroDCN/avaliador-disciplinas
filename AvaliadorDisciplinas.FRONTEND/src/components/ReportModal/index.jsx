@@ -57,7 +57,7 @@ function ReportModal({
                 <hr className={styles.divisor}/>
 
                 <div className={styles.textArea}>
-                    <p>{modalContent.description}{modalContent.description}{modalContent.description}{modalContent.description}{modalContent.description}{modalContent.description}{modalContent.description}</p>
+                    <p>{modalContent.description}</p>
                 </div>
             </div>
         </div>
