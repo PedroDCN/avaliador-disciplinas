@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import colors from '../../styles/colorsConfig.json';
 import Button from '../../components/Button';

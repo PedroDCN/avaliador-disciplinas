@@ -28,11 +28,6 @@ function UserAvaliacoes() {
         fetchData();
     }, [user]);
 
-    // grade: 0
-    // id: 10
-    // idTeacher: 5
-    // name: "Laboratório de programação 2"
-
     return (
         <div className={styles.container}>
             <div className={styles.content}>

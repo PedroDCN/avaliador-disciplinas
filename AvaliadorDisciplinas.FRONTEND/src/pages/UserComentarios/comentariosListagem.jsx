@@ -1,4 +1,4 @@
-import EditIcon from "../../assets/icons/edit_icon.svg";
+import Three_points_icon from "../../assets/icons/three_points_icon.svg";
 import ButtonWithIcon from "../../components/ButtonWithIcon";
 import styles from "./comentariosListagem.module.css";
 
@@ -10,7 +10,7 @@ export function renderItem(item) {
                 <span>{item.nomeCourse}</span>
             </div>
             <div className={styles.itemButton}>
-                <ButtonWithIcon icon={EditIcon} onClick={() => { }} transparent="true" />
+                <ButtonWithIcon icon={Three_points_icon} onClick={() => { }} transparent="true" />
             </div>
         </div>
     );
