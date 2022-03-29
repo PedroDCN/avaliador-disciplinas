@@ -1,9 +1,7 @@
 package com.engSoft.services;
 
-import com.engSoft.DTO.SimpleCourseDTO;
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
-import com.engSoft.entities.Teacher;
 import com.engSoft.repositories.CourseRepository;
 import com.engSoft.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,34 +25,26 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<SimpleCourseDTO> listCourses() {
-        return toSimpleCourse(courseRepository.findAll());
+    public List<Course> listCourses() {
+        return courseRepository.findAll();
     }
 
     @Override
-    public List<SimpleCourseDTO> listCoursesFilter(Util.FilterEnum filter) {
+    public List<Course> listCoursesFilter(Util.FilterEnum filter) {
         if(filter == Util.FilterEnum.NAME) {
-            return toSimpleCourse(courseRepository.findAll(Sort.by("name")));
+            return courseRepository.findAll(Sort.by("name"));
         } else if(filter == Util.FilterEnum.GRADE) {
-            List<SimpleCourseDTO> list = toSimpleCourse(courseRepository.findAll(Sort.by("grade")));
+            List<Course> list = courseRepository.findAll(Sort.by("grade"));
             Collections.reverse(list);
             return list;
         } else {
-            return toSimpleCourse(courseRepository.findAll(Sort.by("teacher")));
+            return courseRepository.findAll(Sort.by("idTeacher"));
         }
-    }
-
-    private List<SimpleCourseDTO> toSimpleCourse(List<Course> list) {
-        List<SimpleCourseDTO> simpleList = new ArrayList<>();
-        for(Course course : list) {
-            simpleList.add(new SimpleCourseDTO(course.getId(), course.getName(), course.getTeacher().getName(), course.getGrade()));
-        }
-        return simpleList;
     }
 
     @Override
-    public List<Course> listCoursesTeacher(Teacher teacher) {
-        return courseRepository.findAllByTeacher(teacher);
+    public List<Course> listCoursesTeacher(Long idTeacher) {
+        return courseRepository.findAllByIdTeacher(idTeacher);
     }
 
     @Override

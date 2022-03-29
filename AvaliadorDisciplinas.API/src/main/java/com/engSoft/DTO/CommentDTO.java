@@ -19,4 +19,20 @@ public class CommentDTO {
     public String getDescription() {
         return description;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setIdCourse(Long idCourse) {
+        this.idCourse = idCourse;
+    }
+
+    public void setIdSemester(Long idSemester) {
+        this.idSemester = idSemester;
+    }
+
+    public void setIdStudent(Long idStudent) {
+        this.idStudent = idStudent;
+    }
 }

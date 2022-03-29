@@ -34,22 +34,9 @@ export function newProfessorRegister() {
 
 export function newProfessor() {
   return {
-    name: "Professor X",
-    profGrade: 3.0,
-    courses: [
-      {
-        id: 1,
-        nome: "Disciplina 1",
-        nota: 2.0,
-        periodo: "2020",
-      },
-      {
-        id: 2,
-        nome: "Disciplina 2",
-        nota: 4.0,
-        periodo: "2021",
-      },
-    ],
+    name: "",
+    photo: "",
+    courses: [],
   };
 }
 
@@ -103,4 +90,24 @@ export function getMenuItemsByUserMode(mode) {
     ];
   }
   return menuItems;
+}
+
+export const marks = {
+  0: 0,
+  2: 2,
+  4: 4,
+  6: 6,
+  8: 8,
+  10: 10
+}
+
+export function newFeedback() {
+  return {
+      "workload": 5,
+      "didactic": 5,
+      "organization": 5,
+      "evaluationSystem": 5,
+      "courseware": 5,
+      "modality": "PRESENTIAL",
+  }
 }

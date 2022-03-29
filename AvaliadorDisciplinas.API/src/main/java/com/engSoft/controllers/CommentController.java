@@ -46,7 +46,7 @@ public class CommentController {
         if (!optionalStudent.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Comment newComment = new Comment(commentDTO);
+        Comment newComment = new Comment(commentDTO, optionalCourse.get().getName(), optionalStudent.get().getName(), optionalStudent.get().getPhoto_url());
         try {
             commentService.saveComment(newComment);
             return new ResponseEntity<>(newComment, HttpStatus.CREATED);
@@ -60,36 +60,70 @@ public class CommentController {
         List<Comment> comments = this.commentService.listComments();
         return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
     }
-    @RequestMapping(value = "/comment/listByCourse/{page}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromCourse(@RequestParam("idCourse") Long idCourse,@PathVariable("page") Integer page){
+    @RequestMapping(value = "/comment/pageByCourse/{idCourse}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPageAllCommentsFromCourse(@PathVariable("idCourse") Long idCourse,@RequestParam("page") Integer page){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        Page<Comment> comments = commentService.listCommentByCourse(idCourse, page);
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        Page<Comment> comments = commentService.pageCommentByCourse(idCourse, page);
+        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
 
     }
-    @RequestMapping(value = "/comment/listByStudent/{page}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromStudent(@RequestParam("idStudent") Long idStudent,@PathVariable("page") Integer page){
+    @RequestMapping(value = "/comment/pageByStudent/{idStudent}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPageAllCommentsFromStudent(@PathVariable("idStudent") Long idStudent,@RequestParam("page") Integer page){
         Optional<User> optinalUser = userService.getUserById(idStudent);
 
         if (!optinalUser.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Page<Comment> comments = commentService.listCommentByStudent(idStudent, page);
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        Page<Comment> comments = commentService.pageCommentByStudent(idStudent, page);
+        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
 
     }
-    @RequestMapping(value = "/comment/listBySemesterAndCourse/{page}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllCommentsfromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse, @PathVariable("page") Integer page){
+    @RequestMapping(value = "/comment/pageBySemesterAndCourse/{idCourse}", method = RequestMethod.GET)
+    public ResponseEntity<?> getPageAllCommentsFromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse, @RequestParam("page") Integer page){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
         if (!optionalSemester.isPresent()){
             return ErroSemester.erroSemesterNotFound();
         }
-        Page<Comment> comments = commentService.listCommentBySemesterAndCourse(idSemester, idCourse, page);
+        Page<Comment> comments = commentService.pageCommentBySemesterAndCourse(idSemester, idCourse, page);
+        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
+
+    }
+
+    @RequestMapping(value = "/comment/listByCourse/{idCourse}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCommentsFromCourse(@PathVariable("idCourse") Long idCourse){
+        Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
+
+        if (!optionalCourse.isPresent()){
+            return ErroCourse.erroCourseNotFound();
+        }
+        List<Comment> comments = commentService.listCommentByCourse(idCourse);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+
+    }
+    @RequestMapping(value = "/comment/listByStudent/{idStudent}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCommentsFromStudent(@PathVariable("idStudent") Long idStudent){
+        Optional<User> optinalUser = userService.getUserById(idStudent);
+
+        if (!optinalUser.isPresent()){
+            return ErroUser.erroUserNotFound();
+        }
+        List<Comment> comments = commentService.listCommentByStudent(idStudent);
+        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+
+    }
+    @RequestMapping(value = "/comment/listBySemesterAndCourse/{idCourse}", method = RequestMethod.GET)
+    public ResponseEntity<?> getAllCommentsFromSemesterAndCourse(@RequestParam("idSemester") Long idSemester, @PathVariable("idCourse") Long idCourse){
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
+
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+        List<Comment> comments = commentService.listCommentBySemesterAndCourse(idSemester, idCourse);
         return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
 
     }
@@ -103,6 +137,12 @@ public class CommentController {
         return new ResponseEntity<>(optionalComment, HttpStatus.ACCEPTED);
     }
 
+    @RequestMapping(value = "/comment/complaints", method = RequestMethod.GET)
+    public ResponseEntity<?> getCommentWithComplaints(){
+
+        return new ResponseEntity<>(commentService.listCommentWithComplaints(), HttpStatus.ACCEPTED);
+    }
+
     @RequestMapping(value = "/admin/comment/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeComment(@PathVariable ("id") Long id){
         Optional<Comment> optionalComment = commentService.findCommentById(id);
@@ -113,11 +153,6 @@ public class CommentController {
         Optional<User> user = userService.getUserById(optionalComment.get().getIdStudent());
         if (!user.isPresent())
             return ErroUser.erroUserNotFound();
-        Long idAuthor = optionalComment.get().getIdStudent();
-        if (!user.get().getIsAdmin() || !user.get().getId().equals(idAuthor)){
-            return ErroComment.erroCommentNotAccessible();
-
-        }
 
         try{
             commentService.removeComment(id);

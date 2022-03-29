@@ -37,8 +37,6 @@ function CadastrarDisciplina() {
     const params = useParams();
     const isEditing = params.id !== undefined;
     const [options, setOptions] = useState([]);
-    const { user } = useAuth();
-    const navigate = useNavigate();
 
     const notifySucess = (message) => toast.success(message);
     const notifyFailure = (message) => toast.error(message);

@@ -15,23 +15,16 @@ public class Course {
     private Long id;
     private String name;
     private String code;
-    @ManyToOne
-    private Teacher teacher;
+    private Long idTeacher;
     private double grade;
 
     public Course() {}
 
-    public Course(CourseDTO courseDTO, Teacher teacher) {
+    public Course(CourseDTO courseDTO, Long idTeacher) {
         this.name = courseDTO.getName();
         this.code = courseDTO.getCode();
-        this.teacher = teacher;
+        this.idTeacher = idTeacher;
         grade = 0;
-    }
-
-    public void update(CourseDTO courseDTO, Teacher teacher) {
-        this.name = courseDTO.getName();
-        this.code = courseDTO.getCode();
-        this.teacher = teacher;
     }
 
     public void updateGrade(List<Feedback> feedbacks) {
@@ -56,8 +49,20 @@ public class Course {
         return code;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    public Long getIdTeacher() {
+        return idTeacher;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setIdTeacher(Long idTeacher) {
+        this.idTeacher = idTeacher;
     }
 
     public double getGrade() { return grade; }
@@ -68,7 +73,7 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
-                ", teacher=" + teacher +
+                ", teacher=" + idTeacher +
                 ", grade=" + grade +
                 '}';
     }

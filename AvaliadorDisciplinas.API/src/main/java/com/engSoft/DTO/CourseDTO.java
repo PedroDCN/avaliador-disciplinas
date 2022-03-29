@@ -2,9 +2,9 @@ package com.engSoft.DTO;
 
 public class CourseDTO {
 
-    private String name;
-    private String code;
-    private String nameTeacher;
+    private final String name;
+    private final String code;
+    private final String nameTeacher;
 
     public CourseDTO(String name, String code, String nameTeacher) {
         this.name = name;

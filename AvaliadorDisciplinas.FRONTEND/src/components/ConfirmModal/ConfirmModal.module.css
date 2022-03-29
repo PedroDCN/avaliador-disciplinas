@@ -1,0 +1,75 @@
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(0.1rem);
+}
+
+.show {
+  display: flex;
+}
+
+.hide {
+  display: none;
+}
+
+.container {
+  position: fixed;
+  width: 50%;
+  max-width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--background);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.container .header img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.container .header span {
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+.container .content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.container .content .buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.container .content .buttons div {
+  width: 40%;
+  margin-left: 5%;
+  margin-right: 5%;
+}

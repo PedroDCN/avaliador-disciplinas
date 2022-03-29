@@ -34,6 +34,45 @@ public class FeedbackServiceImpl implements FeedbackService {
     public AverageFeedback averageFeedbackByCourse(Long idCourse) {
         List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourse(idCourse);
 
+        return getAverageFeedbackFromList(feedbacks);
+    }
+
+
+    @Override
+    public void removeFeedback(Long idFeedback) {
+        this.feedbackRepository.deleteById(idFeedback);
+    }
+
+    @Override
+    public Optional<Feedback> findFeedbackById(Long id) {
+        return this.feedbackRepository.findById(id);
+    }
+
+    @Override
+    public List<Feedback> findFeedbackBySemester(Long idSemester) {
+        return this.feedbackRepository.findAllByIdSemester(idSemester);
+    }
+
+    @Override
+    public List<Feedback> findFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
+
+
+        return this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+    }
+
+    @Override
+    public AverageFeedback averageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
+        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+
+        return getAverageFeedbackFromList(feedbacks);
+    }
+
+    @Override
+    public List<Feedback> findFeedbackByStudent(Long idStudent) {
+        return this.feedbackRepository.findAllByIdStudent(idStudent);
+    }
+
+    private AverageFeedback getAverageFeedbackFromList(List<Feedback> feedbacks) {
         AverageFeedback averageFeedback = new AverageFeedback();
 
         double organization = 0;
@@ -42,7 +81,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         double evaluationSystem = 0;
         double courseware = 0;
 
-        double quantityFeedbacks = feedbacks.size();
+        double quantityFeedbacks = Math.max(feedbacks.size(), 1);
 
 
         for (Feedback feedback : feedbacks) {
@@ -63,68 +102,5 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         return averageFeedback;
     }
-
-
-    @Override
-    public void removeFeedback(Long idFeedback) {
-        this.feedbackRepository.deleteById(idFeedback);
-    }
-
-    @Override
-    public Optional<Feedback> findFeedbackById(Long id) {
-        return this.feedbackRepository.findById(id);
-    }
-
-    @Override
-    public List<Feedback> findFeedbackBySemester(Long idSemester) {
-        return this.feedbackRepository.findAllByIdSemester(idSemester);
-    }
-
-    @Override
-    public List<Feedback> findFeedbakByCourseAndSemester(Long idCourse, Long idSemester) {
-
-
-        return this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
-    }
-
-    @Override
-    public AverageFeedback averageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
-            List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
-
-            AverageFeedback averageFeedback = new AverageFeedback();
-
-            double organization = 0;
-            double workload = 0;
-            double didatic = 0;
-            double evaluationSystem = 0;
-            double courseware = 0;
-
-            double quantityFeedbacks = feedbacks.size();
-
-
-        for (Feedback feedback : feedbacks) {
-            organization += feedback.getOrganization();
-            workload += feedback.getWorkload();
-            didatic += feedback.getDidactic();
-            evaluationSystem += feedback.getEvaluationSystem();
-            courseware += feedback.getCourseware();
-
-        }
-
-            averageFeedback.setAverageOrganization(organization/quantityFeedbacks);
-            averageFeedback.setAverageWorkload(workload/quantityFeedbacks);
-            averageFeedback.setAverageDidactic(didatic/quantityFeedbacks);
-            averageFeedback.setAverageEvaluationSystem(evaluationSystem/quantityFeedbacks);
-            averageFeedback.setAverageCourseware(courseware/quantityFeedbacks);
-
-
-            return averageFeedback;
-        }
-
-    @Override
-    public List<Feedback> findFeedbackByStudent(Long idStudent) {
-        return this.feedbackRepository.findAllByIdStudent(idStudent);
-    }
-
 
 }

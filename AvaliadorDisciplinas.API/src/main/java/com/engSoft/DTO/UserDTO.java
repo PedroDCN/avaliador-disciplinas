@@ -1,21 +1,10 @@
 package com.engSoft.DTO;
 
-import com.engSoft.entities.User;
-
 public class UserDTO {
 
     private String name;
     private String email;
-
-    public UserDTO(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
-
-    public UserDTO(User user) {
-        this.name = user.getName();
-        this.email = user.getEmail();
-    }
+    private String photo;
 
     public String getName() {
         return name;
@@ -31,5 +20,13 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

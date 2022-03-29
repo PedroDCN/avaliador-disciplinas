@@ -40,13 +40,19 @@ public class FeedbackController {
 
         Optional<User> optionalStudent = userService.getUserById(feedbackDTO.getIdStudent());
 
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(feedbackDTO.getIdSemester());
+
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
         if (!optionalStudent.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Feedback newFeedback = new Feedback(feedbackDTO);
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+
+        Feedback newFeedback = new Feedback(feedbackDTO, optionalCourse.get().getName(), optionalSemester.get().getName());
         try {
             feedbackService.saveFeedback(newFeedback);
             courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
@@ -64,7 +70,7 @@ public class FeedbackController {
     }
 
     @RequestMapping(value = "/feedback/listByUser/{idUser}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllFeedbacksfromUser(@PathVariable("idUser") Long idUser){
+    public ResponseEntity<?> getAllFeedbacksFromUser(@PathVariable("idUser") Long idUser){
         Optional<User> optionalUser = userService.getUserById(idUser);
 
 
@@ -77,7 +83,7 @@ public class FeedbackController {
     }
 
     @RequestMapping(value = "/feedback/listByCourse/{idCourse}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
+    public ResponseEntity<?> getAllFeedbacksFromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
         if (!optionalCourse.isPresent()){
@@ -89,7 +95,7 @@ public class FeedbackController {
     }
 
     @RequestMapping(value = "/feedback/averageByCourse/{idCourse}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAverageFeedbacksfromCourse(@PathVariable("idCourse") Long idCourse){
+    public ResponseEntity<?> getAverageFeedbacksFromCourse(@PathVariable("idCourse") Long idCourse){
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
         if (!optionalCourse.isPresent()){
@@ -102,7 +108,7 @@ public class FeedbackController {
     }
 
     @RequestMapping(value = "/feedback/listBySemester/{idSemester}", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllFeedbacksfromSemester(@PathVariable("idSemester") Long idSemester){
+    public ResponseEntity<?> getAllFeedbacksFromSemester(@PathVariable("idSemester") Long idSemester){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
 
         if (!optionalSemester.isPresent()){
@@ -114,7 +120,7 @@ public class FeedbackController {
     }
 
     @RequestMapping(value = "/feedback/listByCourseSemester/", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam Long idCourse){
+    public ResponseEntity<?> getAllFeedbacksFromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 
@@ -124,13 +130,13 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.findFeedbakByCourseAndSemester(idCourse, idSemester);
+        List<Feedback> feedbacks = feedbackService.findFeedbackByCourseAndSemester(idCourse, idSemester);
         return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
 
     }
 
     @RequestMapping(value = "/feedback/averageByCourseSemester", method = RequestMethod.GET)
-    public ResponseEntity<?> getAverageFeedbacksfromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
+    public ResponseEntity<?> getAverageFeedbacksFromCourseAndSemester(@RequestParam("idSemester") Long idSemester, @RequestParam("idCourse") Long idCourse){
         Optional<Semester> optionalSemester = semesterService.findSemesterById(idSemester);
         Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
 

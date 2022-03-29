@@ -21,4 +21,9 @@ async function updateDisciplina(id, disciplina) {
   await api.patch(`/admin/courseUpdate/${id}`, disciplina);
 }
 
-export { getAll, createDisciplina, getDisciplinaById, updateDisciplina };
+async function getCourseByNameTeacher(nameTeacher) {
+  return (await api.get(`/coursesTeacher/${nameTeacher}`)).data;
+}
+
+export { getAll, createDisciplina, getDisciplinaById, 
+  updateDisciplina, getCourseByNameTeacher };

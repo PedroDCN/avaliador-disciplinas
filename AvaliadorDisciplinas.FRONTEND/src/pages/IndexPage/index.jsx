@@ -19,6 +19,7 @@ import AdminRoute from '../../components/AdminRoute';
 import ErrorPage from '../ErrorPage';
 import AuthenticatedRoute from '../../components/AuthenticatedRoute';
 import BannedModal from '../../components/BannedModal';
+import UserDetails from '../UserDetails';
 import { getUserToken } from '../../utils/tokenUtil';
 
 function IndexPage() {
@@ -148,6 +149,14 @@ function IndexPage() {
                 <UserComentarios />
               </AuthenticatedRoute>
             } 
+          />
+          <Route 
+            path="/adm/user/:id" 
+            element={
+              <AdminRoute>
+                <UserDetails />
+              </AdminRoute>
+            }
           />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
