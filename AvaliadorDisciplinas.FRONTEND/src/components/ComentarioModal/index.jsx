@@ -1,4 +1,4 @@
-import styles from "./DenunciaModal.module.css";
+import styles from "./ComentarioModal.module.css";
 import icon from "../../assets/icons/user_image_prof.svg";
 import { useEffect, useState } from "react";
 import { newProfessor } from "../../services/DadosEstaticos";
@@ -8,7 +8,7 @@ import { Oval } from "react-loader-spinner";
 import colors from "../../styles/colorsConfig.json";
 import { useNavigate } from "react-router-dom";
 
-function DenunciaModal({ show, handleClose, handleDelete, idDenuncia }) {
+function ComentarioModal({ show, handleClose, handleDelete, idComentario }) {
   const displayClassname = show ? styles.show : styles.hide;
 
   const navigate = useNavigate();
@@ -30,12 +30,12 @@ function DenunciaModal({ show, handleClose, handleDelete, idDenuncia }) {
     (async () => {
       setLoading(true);
 
-      const { data } = await getComentariosById(idDenuncia);
+      const { data } = await getComentariosById(idComentario);
       setComentario(data);
 
       setLoading(false);
     })();
-  }, [idDenuncia]);
+  }, [idComentario]);
 
   return (
     <div
@@ -68,7 +68,7 @@ function DenunciaModal({ show, handleClose, handleDelete, idDenuncia }) {
             </div>
             <div className={styles.btnContainer}>
               <Button
-                onClick={handleDelete}
+                onClick={() => handleDelete(idComentario)}
                 buttontitle={"DELETAR COMENTÁRIO"}
                 backgroundcolor={colors.theme["red-400"]}
                 width="12rem"
@@ -87,4 +87,4 @@ function DenunciaModal({ show, handleClose, handleDelete, idDenuncia }) {
   );
 }
 
-export default DenunciaModal;
+export default ComentarioModal;
