@@ -76,4 +76,9 @@ public class CommentServiceImpl implements CommentService{
         user.setDeletedComments(user.getDeletedComments()+1);
 
     }
+
+    @Override
+    public List<Comment> listCommentWithComplaints() {
+        return commentRepository.findAllByComplaintsGreaterThan(0);
+    }
 }

@@ -1,7 +1,9 @@
 package com.engSoft.controllers;
 
 import com.engSoft.DTO.UserDTO;
+import com.engSoft.entities.Comment;
 import com.engSoft.entities.User;
+import com.engSoft.services.CommentService;
 import com.engSoft.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CommentService commentService;
+
+
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO){
 
@@ -41,6 +47,7 @@ public class UserController {
         if (user.isPresent()) {
             user.get().setNick(nick);
             userService.saveUser(user.get());
+            atualizaDependentes(user.get());
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return erroUserNotFound();
@@ -113,4 +120,13 @@ public class UserController {
         users.removeIf(User::getBanned);
         return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
     }
+
+    public void atualizaDependentes(User user){
+        List<Comment> comments = commentService.listCommentByStudent(user.getId());
+        for (Comment c : comments) {
+            c.setNameStudent(user.getNick());
+            commentService.saveComment(c);
+        }
+    }
+
 }
