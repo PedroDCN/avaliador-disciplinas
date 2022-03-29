@@ -10,5 +10,7 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     List<Feedback> findAllByIdSemester(Long idSemester);
     List<Feedback> findAllByIdCourseAndIdSemester(Long idCourse, Long idSemester);
     List<Feedback> findAllByIdStudent(Long idStudent);
+
+    List<Feedback> findAllByIdStudentAndIdCourseAndIdSemester(Long idStudent, Long idCourse, Long idSemester);
 }
 

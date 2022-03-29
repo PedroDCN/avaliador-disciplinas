@@ -72,6 +72,11 @@ public class FeedbackServiceImpl implements FeedbackService {
         return this.feedbackRepository.findAllByIdStudent(idStudent);
     }
 
+    @Override
+    public List<Feedback> findFeedbackByStudentCourseAndSemester(Long idStudent, Long idCourse, Long idSemester) {
+        return feedbackRepository.findAllByIdStudentAndIdCourseAndIdSemester(idStudent, idCourse, idSemester);
+    }
+
     private AverageFeedback getAverageFeedbackFromList(List<Feedback> feedbacks) {
         AverageFeedback averageFeedback = new AverageFeedback();
 
