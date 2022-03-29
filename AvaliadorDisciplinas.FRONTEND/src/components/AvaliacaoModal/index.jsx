@@ -24,7 +24,7 @@ function AvaliacaoModal({handleClose, show, idStudent, idCourse, idSemester}) {
     }
 
     function handleAvaliarModal() {
-        createFeedback({...feedback, idCourse: 8, idSemester: 1, idStudent: 22})
+        createFeedback({...feedback, idCourse, idSemester, idStudent})
             .then(() => {
                 notifySucess("Avaliação enviada com sucesso!");
             }).catch(() => {

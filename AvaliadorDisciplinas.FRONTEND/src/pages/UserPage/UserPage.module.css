@@ -53,6 +53,12 @@
         transform: scale(1.075);
     }
     
+    .container .content .userPhot img{
+        cursor: pointer;
+        border-radius: 50%;
+        border: 0.25rem solid var(--secondary);
+      
+    }
     .container .content  .inputs{
         display: flex;
         flex-direction: column;
