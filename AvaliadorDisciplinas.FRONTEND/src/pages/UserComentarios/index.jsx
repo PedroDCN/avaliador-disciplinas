@@ -17,7 +17,6 @@ function UserComentarios(props) {
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const [coments, setComents] = useState([]);
-    const [response, setResponse] = useState([]);
 
     const navigate = useNavigate();
     const notifySucess = (message) => toast.success(message);
