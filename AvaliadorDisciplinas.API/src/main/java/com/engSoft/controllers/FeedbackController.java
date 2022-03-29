@@ -56,7 +56,7 @@ public class FeedbackController {
             return ErroFeedback.erroFeedbackAlreadyExists();
         }
 
-        Feedback newFeedback = new Feedback(feedbackDTO, optionalCourse.get().getName(), optionalSemester.get().getName());
+        Feedback newFeedback = new Feedback(feedbackDTO, optionalCourse.get(), optionalStudent.get(), optionalSemester.get());
         try {
             feedbackService.saveFeedback(newFeedback);
             courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
@@ -175,8 +175,8 @@ public class FeedbackController {
 
         try{
             feedbackService.removeFeedback(id);
-            Optional<Course> optionalCourse = courseService.findCourseById(optionalFeedback.get().getIdCourse());
-            optionalCourse.ifPresent(course -> courseService.updateGrade(course, feedbackService.listFeedbackByCourse(course.getId())));
+            Course course = optionalFeedback.get().getCourse();
+            courseService.updateGrade(course, feedbackService.listFeedbackByCourse(course.getId()));
             return new ResponseEntity<>(optionalFeedback, HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(

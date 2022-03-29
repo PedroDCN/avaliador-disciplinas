@@ -31,7 +31,7 @@ public class Comment {
     private Integer down;
     private Integer complaints;
 
-    public Comment(Course course, String description, User student, Semester semester) {
+    public Comment(Course course, User student, Semester semester, String description) {
         this.course = course;
         this.student = student;
         this.semester = semester;
