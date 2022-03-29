@@ -52,6 +52,9 @@ public class FeedbackController {
             return ErroSemester.erroSemesterNotFound();
         }
 
+        if (!feedbackService.findFeedbackByStudentCourseAndSemester(feedbackDTO.getIdStudent(), feedbackDTO.getIdCourse(), feedbackDTO.getIdSemester()).isEmpty()){
+            return ErroFeedback.erroFeedbackAlreadyExists();
+        }
         Feedback newFeedback = new Feedback(feedbackDTO, optionalCourse.get().getName(), optionalSemester.get().getName());
         try {
             feedbackService.saveFeedback(newFeedback);

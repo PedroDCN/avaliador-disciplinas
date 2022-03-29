@@ -17,5 +17,5 @@ public interface FeedbackService {
     List<Feedback> findFeedbackByCourseAndSemester(Long idCourse, Long idSemester);
     AverageFeedback averageFeedbackByCourseAndSemester(Long idCourse, Long idSemester);
     List<Feedback> findFeedbackByStudent(Long idStudent);
-
+    List<Feedback> findFeedbackByStudentCourseAndSemester(Long idStudent, Long idCourse, Long idSemester);
 }
