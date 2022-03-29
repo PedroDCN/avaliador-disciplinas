@@ -2,7 +2,11 @@ import External from "../../assets/icons/external.svg";
 import ButtonWithIcon from "../../components/ButtonWithIcon";
 import styles from "./avaliacaoListagem.module.css";
 
-export function renderItem(item) {
+export function renderItem(item, navigate) {
+    function handleClick() {
+        navigate(`/disciplina/${item.id}`);
+    }
+
     return (
         <div className={styles.itemContainer}>
             <div className={styles.itemConteudo}>
@@ -10,7 +14,7 @@ export function renderItem(item) {
                 <span>Periodo: {item.nomeSemester}</span>
             </div>
             <div className={styles.itemButton}>
-                <ButtonWithIcon icon={External} onClick={() => { }} transparent="true" />
+                <ButtonWithIcon icon={External} onClick={handleClick} transparent="true" />
             </div>
         </div>
     );

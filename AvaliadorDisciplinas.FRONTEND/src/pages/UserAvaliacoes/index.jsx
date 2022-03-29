@@ -43,7 +43,12 @@ function UserAvaliacoes() {
                 </div>
 
                 <div className={styles.itens}>
-                    <DataList data={disc} loading={loading} render={renderItem} />
+                    <DataList
+                        data={disc}
+                        loading={loading}
+                        render={(item) => renderItem(item, navigate)
+                        }
+                    />
                 </div>
             </div>
         </div>
