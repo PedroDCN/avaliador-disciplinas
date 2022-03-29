@@ -35,9 +35,8 @@ function ReportList() {
 
     return(
         <div className={styles.container}>
-        {user && user.isAdmin === true ?
             <div className={styles.listContainer}>
-                <Header headerTitle="Lista de denúncias" />
+                <Header headertitle="Lista de denúncias" />
                     <div className={styles.listContent}>
                         { reports ?
                                 <DataList
@@ -55,9 +54,6 @@ function ReportList() {
                         }
                     </div>
             </div>
-            :
-            <></>
-        } 
         </div>
     );
 }

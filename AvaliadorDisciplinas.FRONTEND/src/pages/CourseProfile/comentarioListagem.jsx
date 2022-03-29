@@ -59,9 +59,10 @@ export function renderItem({ item }) {
                 <ButtonWithIcon
                     buttontitle="" 
                     icon={PointsIcon} 
-                    boxShadow="none"
-                    alignItems="center"
-                    hasTitle={false}
+                    boxshadow="none"
+                    alignitems="center"
+                    hastitle={false}
+                    transparent="true"
                     /* onClick={handleReportButton} */
                 />
             </div>

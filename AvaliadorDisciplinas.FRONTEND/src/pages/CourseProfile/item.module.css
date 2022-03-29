@@ -29,11 +29,8 @@
     align-items: center;
 }
 
-.ReactContainer span{
-    
-}
-
 .ReactContainer span img {
+    margin: 0;
     margin-left: 0.3rem;
     cursor: pointer;
 }

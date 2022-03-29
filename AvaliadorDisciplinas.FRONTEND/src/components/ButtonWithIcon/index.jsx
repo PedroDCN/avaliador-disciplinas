@@ -9,12 +9,12 @@ function ButtonWithIcon(props) {
             style={{
                 backgroundColor: props.backgroundcolor, 
                 color: props.color,
-                boxShadow: props.boxShadow,
-                justifySelf: props.alignItems,
+                boxshadow: props.boxShadow,
+                justifySelf: props.alignitems,
             }}
             {...props}
         >
-            {props.hasTitle ? <p>{props.buttontitle}</p> : <></>}
+            {props.hastitle ? <p>{props.buttontitle}</p> : <></>}
             <img 
                 src={props.icon} 
                 alt={`${props.title} icon`} 
