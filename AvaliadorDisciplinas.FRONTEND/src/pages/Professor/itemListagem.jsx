@@ -11,7 +11,6 @@ export function renderItem({ item, isAdmin, navigate }) {
     if (isAdmin) {
       navigate(`/professor/edicao/${item.id}`);
     } else {
-      debugger;
       navigate(`/professor/${item.id}`);
     }
   }
