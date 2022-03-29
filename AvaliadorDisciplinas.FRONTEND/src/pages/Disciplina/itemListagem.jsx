@@ -16,7 +16,7 @@ export function renderItem({ item, isAdmin, navigate }) {
 
   return (
     <div className={styles.itemContainer}>
-      <div className={styles.itemNota}>5/5</div>
+      <div className={styles.itemNota}>{item.grade.toFixed(1)}</div>
       <div className={styles.itemConteudo}>
         <span>{item.name}</span>
         <span>Professor: {item.nameTeacher}</span>
