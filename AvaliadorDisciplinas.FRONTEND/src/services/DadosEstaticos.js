@@ -1,4 +1,4 @@
-import AvaliarIcon from "../assets/icons/star_icon.svg";
+// import AvaliarIcon from "../assets/icons/star_icon.svg";
 import SimularIcon from "../assets/icons/analysis_icon.svg";
 import DisciplinasIcon from "../assets/icons/books_icon.svg";
 import ProfessorIcon from "../assets/icons/professor_icon.svg";
@@ -67,7 +67,7 @@ export function getGoogleClientId() {
 
 export function menuItems() {
   return {
-    avaliar: { title: "Avaliar cadeiras", icon: AvaliarIcon },
+    // avaliar: { title: "Avaliar cadeiras", icon: AvaliarIcon },
     simular: { title: "Simular período", icon: SimularIcon },
     disciplinas: { title: "Disciplinas", icon: DisciplinasIcon },
     professores: { title: "Professores", icon: ProfessorIcon },
@@ -91,7 +91,7 @@ export function getMenuItemsByUserMode(mode) {
   if (mode === "anonimous") {
     menuItems = ["disciplinas", "simular", "professores", "login"];
   } else if (mode === "user") {
-    menuItems = ["avaliar", "simular", "disciplinas", "professores", "logout"];
+    menuItems = ["disciplinas", "simular", "professores", "logout"];
   } else if (mode === "admin") {
     menuItems = [
       "disciplinas",

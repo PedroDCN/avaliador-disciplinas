@@ -76,7 +76,6 @@ function IndexPage() {
       <div className={styles.content}>
         <Routes>
           <Route path="/home" element={<HomePage />} />
-          <Route path="/avaliar" element={<h1>Avaliar</h1>} />
           <Route path="/simular" element={<SimularPeriodo />} />
           <Route path="/disciplinas" element={<DisciplinaIndex />} />
           <Route path="/professores" element={<ProfessorIndex />} />
@@ -113,9 +112,6 @@ function IndexPage() {
             }
           />
           <Route path="/denuncias" element={<h1>Denúncias</h1>} />
-          {/* <Route path="/user" element={<UserPage />} />
-          <Route path="/userAvaliacoes" element={<UserAvaliacoes />} />
-          <Route path="/userComentarios" element={<UserComentarios />} /> */}
           <Route
             path="/user" 
             element={
