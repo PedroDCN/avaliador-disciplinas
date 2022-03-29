@@ -28,6 +28,7 @@ export function renderItem({ item }) {
                     height={40} 
                     width={40}
                     alt="User's comment"
+                    referrerPolicy="no-referrer"
                 />
                 <div className={styles.MYCommentTextArea}>
                     <h4>{item.nameStudent}</h4> {/* ERA PRA SER NOME */}

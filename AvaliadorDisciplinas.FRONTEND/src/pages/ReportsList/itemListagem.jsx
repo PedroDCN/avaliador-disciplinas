@@ -17,6 +17,7 @@ export function renderItem({ item, navigate }) {
             height={64}
             width={64}
             alt="userPhoto"
+            referrerPolicy="no-referrer"
         />
       </div>
 
