@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public interface CourseService {
     void saveCourse(Course course);
-    List<SimpleCourseDTO> listCourses();
-    List<SimpleCourseDTO> listCoursesFilter(Util.FilterEnum filter);
+    List<Course> listCourses();
+    List<Course> listCoursesFilter(Util.FilterEnum filter);
     List<Course> listCoursesTeacher(Long idTeacher);
     void removeCourse(Course course);
     void updateGrade(Course course, List<Feedback> feedback);
