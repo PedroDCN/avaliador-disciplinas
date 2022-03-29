@@ -20,13 +20,13 @@ public class ReturnCommentDTO {
         this.id = comment.getId();
         this.idCourse = comment.getCourse().getId();
         this.nomeCourse = comment.getCourse().getName();
-        this.idStudent = idStudent;
-        this.nameStudent = nameStudent;
-        this.photoStudent = photoStudent;
-        this.idSemester = idSemester;
-        this.description = description;
-        this.up = up;
-        this.down = down;
-        this.complaints = complaints;
+        this.idStudent = comment.getStudent().getId();
+        this.nameStudent = comment.getStudent().getName();
+        this.photoStudent = comment.getStudent().getPhoto_url();
+        this.idSemester = comment.getSemester().getId();
+        this.description = comment.getDescription();
+        this.up = comment.getUp();
+        this.down = comment.getDown();
+        this.complaints = comment.getComplaints();
     }
 }
