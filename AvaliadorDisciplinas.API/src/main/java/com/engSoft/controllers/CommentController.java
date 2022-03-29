@@ -2,6 +2,8 @@ package com.engSoft.controllers;
 
 
 import com.engSoft.DTO.CommentDTO;
+import com.engSoft.DTO.ReturnCommentDTO;
+import com.engSoft.DTO.ReturnReactionDTO;
 import com.engSoft.entities.*;
 import com.engSoft.services.CommentService;
 import com.engSoft.services.CourseService;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +60,7 @@ public class CommentController {
         Comment newComment = new Comment(optionalCourse.get(), optionalStudent.get(), optionalSemester.get(), commentDTO.getDescription());
         try {
             commentService.saveComment(newComment);
-            return new ResponseEntity<>(newComment, HttpStatus.CREATED);
+            return new ResponseEntity<>(new ReturnCommentDTO(newComment), HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<>(
                     new CustomErrorType("Error, comment can´t be created"), HttpStatus.BAD_REQUEST);
@@ -66,7 +69,7 @@ public class CommentController {
     @RequestMapping(value = "/comment", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComment(){
         List<Comment> comments = this.commentService.listComments();
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnCommentDTO(comments), HttpStatus.ACCEPTED);
     }
     @RequestMapping(value = "/comment/pageByCourse/{idCourse}", method = RequestMethod.GET)
     public ResponseEntity<?> getPageAllCommentsFromCourse(@PathVariable("idCourse") Long idCourse,@RequestParam("page") Integer page){
@@ -76,7 +79,7 @@ public class CommentController {
             return ErroCourse.erroCourseNotFound();
         }
         Page<Comment> comments = commentService.pageCommentByCourse(idCourse, page);
-        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnCommentDTO(comments.getContent()), HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/comment/pageByStudent/{idStudent}", method = RequestMethod.GET)
@@ -87,7 +90,7 @@ public class CommentController {
             return ErroUser.erroUserNotFound();
         }
         Page<Comment> comments = commentService.pageCommentByStudent(idStudent, page);
-        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnCommentDTO(comments.getContent()), HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/comment/pageBySemesterAndCourse/{idCourse}", method = RequestMethod.GET)
@@ -98,7 +101,7 @@ public class CommentController {
             return ErroSemester.erroSemesterNotFound();
         }
         Page<Comment> comments = commentService.pageCommentBySemesterAndCourse(idSemester, idCourse, page);
-        return new ResponseEntity<>(comments.getContent(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnCommentDTO(comments.getContent()), HttpStatus.ACCEPTED);
 
     }
 
@@ -110,7 +113,7 @@ public class CommentController {
             return ErroCourse.erroCourseNotFound();
         }
         List<Comment> comments = commentService.listCommentByCourse(idCourse);
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnCommentDTO(comments), HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/comment/listByStudent/{idStudent}", method = RequestMethod.GET)
@@ -121,7 +124,7 @@ public class CommentController {
             return ErroUser.erroUserNotFound();
         }
         List<Comment> comments = commentService.listCommentByStudent(idStudent);
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnCommentDTO(comments), HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/comment/listBySemesterAndCourse/{idCourse}", method = RequestMethod.GET)
@@ -132,7 +135,7 @@ public class CommentController {
             return ErroSemester.erroSemesterNotFound();
         }
         List<Comment> comments = commentService.listCommentBySemesterAndCourse(idSemester, idCourse);
-        return new ResponseEntity<>(comments, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnCommentDTO(comments), HttpStatus.ACCEPTED);
 
     }
     @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
@@ -142,13 +145,13 @@ public class CommentController {
         if(!optionalComment.isPresent())
             return ErroComment.erroCommentNotFound();
 
-        return new ResponseEntity<>(optionalComment, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(new ReturnCommentDTO(optionalComment.get()), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/comment/complaints", method = RequestMethod.GET)
     public ResponseEntity<?> getCommentWithComplaints(){
 
-        return new ResponseEntity<>(commentService.listCommentWithComplaints(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnCommentDTO(commentService.listCommentWithComplaints()), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/admin/comment/{id}", method = RequestMethod.DELETE)
@@ -162,11 +165,17 @@ public class CommentController {
         try{
             commentService.removeComment(id);
             commentService.updateDeletedComments(user);
-            return new ResponseEntity<>(optionalComment, HttpStatus.OK);
+            return new ResponseEntity<>(new ReturnCommentDTO(optionalComment.get()), HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(
                     new CustomErrorType("Error, comment can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
+    }
 
+    private List<ReturnCommentDTO> toListReturnCommentDTO(List<Comment> list) {
+        List<ReturnCommentDTO> returnList = new ArrayList<>();
+        for(Comment comment : list) {
+            returnList.add(new ReturnCommentDTO(comment));
+        } return returnList;
     }
 }
