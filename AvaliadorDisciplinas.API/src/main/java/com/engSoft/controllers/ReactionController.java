@@ -1,8 +1,7 @@
 package com.engSoft.controllers;
 
-
 import com.engSoft.DTO.ReactionDTO;
-import com.engSoft.DTO.ReturnCourseDTO;
+import com.engSoft.DTO.ReturnReactionDTO;
 import com.engSoft.entities.*;
 import com.engSoft.services.*;
 import com.engSoft.util.*;
@@ -50,19 +49,18 @@ public class ReactionController {
             reactionService.updateVotes(optionalComment.get(), newReaction, user.get());
             userService.saveUser(user.get());
             commentService.saveComment(optionalComment.get());
-            return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
+            return new ResponseEntity<>(new ReturnReactionDTO(newReaction), HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be created"), HttpStatus.BAD_REQUEST);
         }
     }
 
-
     @RequestMapping(value = "/reactions", method = RequestMethod.GET)
     public ResponseEntity<?> getAllReactions() {
         List<Reaction> reactions = this.reactionService.listReactions();
         reactions.removeIf(r -> r.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnReactionDTO(reactions), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/reaction/listByComment/{idComment}", method = RequestMethod.GET)
@@ -73,8 +71,8 @@ public class ReactionController {
             return ErroComment.erroCommentNotFound();
         }
         List<Reaction> reactions = reactionService.findReactionByComment(idComment);
-        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
-
+        reactions.removeIf(r -> r.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT);
+        return new ResponseEntity<>(toListReturnReactionDTO(reactions), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/reaction/listByStudentAndComment/", method = RequestMethod.GET)
@@ -88,8 +86,8 @@ public class ReactionController {
         if (!optionalUser.isPresent())
             return  ErroUser.erroUserNotFound();
         List<Reaction> reactions = reactionService.findReactionByStudentAndComment(idStudent, idComment);
-        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
-
+        reactions.removeIf(r -> r.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT);
+        return new ResponseEntity<>(toListReturnReactionDTO(reactions), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/reaction/{id}", method = RequestMethod.GET)
@@ -98,8 +96,10 @@ public class ReactionController {
 
         if (!optionalReaction.isPresent())
             return ErroReaction.erroReactionNotFound();
-
-        return new ResponseEntity<>(optionalReaction, HttpStatus.ACCEPTED);
+        if(optionalReaction.get().getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT) {
+            return ErroReaction.erroInvalidTypeForOperation("Complaint", "Reaction");
+        }
+        return new ResponseEntity<>(new ReturnReactionDTO(optionalReaction.get()), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/reaction/{id}", method = RequestMethod.DELETE)
@@ -121,7 +121,7 @@ public class ReactionController {
             reactionService.removeReaction(id);
             userService.saveUser(user);
             commentService.saveComment(comment);
-            return new ResponseEntity<>(optionalReaction, HttpStatus.OK);
+            return new ResponseEntity<>(new ReturnReactionDTO(optionalReaction.get()), HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be deleted"), HttpStatus.BAD_REQUEST);
@@ -152,6 +152,13 @@ public class ReactionController {
         reactionService.saveReaction(oldReaction);
         userService.saveUser(user);
         commentService.saveComment(comment);
-        return new ResponseEntity<>(oldReaction, HttpStatus.OK);
+        return new ResponseEntity<>(new ReturnReactionDTO(oldReaction), HttpStatus.OK);
+    }
+
+    private List<ReturnReactionDTO> toListReturnReactionDTO(List<Reaction> list) {
+        List<ReturnReactionDTO> returnList = new ArrayList<>();
+        for(Reaction reaction : list) {
+            returnList.add(new ReturnReactionDTO(reaction));
+        } return returnList;
     }
 }
