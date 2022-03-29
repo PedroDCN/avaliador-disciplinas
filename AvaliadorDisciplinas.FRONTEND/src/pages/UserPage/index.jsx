@@ -5,7 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import UserImage from '../../assets/icons/user_anonimous.svg';
 import styles from './UserPage.module.css';
 import { useNavigate } from 'react-router-dom';
-import { getUser, updateNickUser } from '../../services/userAvaliacoesService';
+import { getUserForNick, updateNickUser } from '../../services/userService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,7 +24,7 @@ function UserPage() {
         async function fetchData() {
             if (user) {
                 setLoading(true);
-                const data = (await getUser(user.id)).data;
+                const data = (await getUserForNick(user.id)).data;
 
                 setEstudent(data);
                 setNick(data.nick);

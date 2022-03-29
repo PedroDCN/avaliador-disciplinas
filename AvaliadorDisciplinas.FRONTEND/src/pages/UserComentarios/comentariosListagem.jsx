@@ -1,4 +1,3 @@
-import Three_points_icon from "../../assets/icons/three_points_icon.svg";
 import ButtonWithIcon from "../../components/ButtonWithIcon";
 import styles from "./comentariosListagem.module.css";
 import Menu, { Item as MenuItem } from "rc-menu";

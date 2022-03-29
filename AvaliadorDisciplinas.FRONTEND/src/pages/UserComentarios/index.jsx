@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./UserComentarios.module.css";
 import { useAuth } from "../../contexts/AuthContext";
 import DataList from "../../components/DataList";
-import { getAllUser } from "../../services/comentService";
 import { renderItem } from "./comentariosListagem";
 import { useNavigate } from "react-router-dom";
 import {

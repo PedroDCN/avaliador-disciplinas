@@ -3,7 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import styles from './UserAvaliacoes.module.css';
 import { useNavigate } from 'react-router-dom';
 import { renderItem } from "./avaliacaoListagem";
-import { getAllUser } from "../../services/userAvaliacoesService";
+import { getComentariosUser } from "../../services/avaliacoesService";
 import DataList from '../../components/DataList';
 
 function UserAvaliacoes() {
@@ -17,7 +17,7 @@ function UserAvaliacoes() {
         async function fetchData() {
             if (user) {
                 setLoading(true);
-                const data = (await getAllUser(user.id)).data;
+                const data = (await getComentariosUser(user.id)).data;
                 setDisc(data);
                 setLoading(false);
             }
