@@ -47,7 +47,6 @@ public class UserController {
         if (user.isPresent()) {
             user.get().setNick(nick);
             userService.saveUser(user.get());
-            atualizaDependentes(user.get());
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return erroUserNotFound();
@@ -119,14 +118,6 @@ public class UserController {
         List<User> users = userService.listUsers();
         users.removeIf(User::getBanned);
         return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
-    }
-
-    public void atualizaDependentes(User user){
-        List<Comment> comments = commentService.listCommentByStudent(user.getId());
-        for (Comment c : comments) {
-            c.setNameStudent(user.getNick());
-            commentService.saveComment(c);
-        }
     }
 
 }
