@@ -17,6 +17,7 @@ export function renderItem({ item, navigate }) {
             height={64}
             width={64}
             alt="userPhoto"
+            referrerPolicy="no-referrer"
         />
       </div>
 
@@ -34,17 +35,10 @@ export function renderItem({ item, navigate }) {
         <ButtonWithIcon 
           icon={External} 
           onClick={handleClick}
-          boxShadow="none"
+          boxshadow="none"
+          transparent="true"
         />
       </div>
     </div>
   );
 }
-
-/* {
-    'photo':"",
-    'nome': "Rodrigo",
-    'comment': "comentario feio q n pode",
-    'numDenuncias': 2,
-    'id':23
-}, */

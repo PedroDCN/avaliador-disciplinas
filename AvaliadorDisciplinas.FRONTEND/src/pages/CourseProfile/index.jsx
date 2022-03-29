@@ -9,6 +9,7 @@ import LeftIcon from '../../assets/icons/left_arrow_icon.svg';
 import UserImage from '../../assets/icons/user_anonimous.svg';
 import Select from 'react-select';
 import { renderItem } from './comentarioListagem';
+import { useAuth } from '../../contexts/AuthContext';
 
 import { getAllPeriodos, getDisciplinaById, getAverageFeedbacksfromCourse, getAverageByCourseSemester, getAllCommentsfromCourse, createComment } from "../../services/disciplinaService";
 import { getProfessorById } from "../../services/professorService";
@@ -38,6 +39,7 @@ const customStyles = {
 
 function CourseProfile() {
     const { id } = useParams();
+    const { user } = useAuth();
 
     const navigate = useNavigate();
     const [semesterValue, setSemesterValue] = useState({ value: "Período", label: "Periodo" });
@@ -45,18 +47,24 @@ function CourseProfile() {
     const [course, setCouser] = useState({});
     const [professor, setProfessor] = useState({});
     const [loading, setLoading] = useState(false);
-    const [averageFeedback, setAverageFeedbacks] = useState({});
-    const [feedbackSemester, setFeedbackSemester] = useState({});
+    const [averageFeedback, setAverageFeedbacks] = useState({
+        "averageWorkload": 0.0,
+        "averageDidactic": 0.0,
+        "averageOrganization": 0.0,
+        "averageEvaluationSystem": 0.0,
+        "averageCourseware": 0.0,
+        "averageTotal": 0.0
+      });
     const [localComment, setLocalComment] = useState("");
     const [comments, setComments] = useState();
-    const [lastAverage, setLastAverage] = useState();
+    const [lastAverage, setLastAverage] = useState(0);
     
     function newComment() {
         return {
             "description": `${localComment}`,
             "idCourse": parseInt(id),
             "idSemester": parseInt(semesterValue),
-            "idStudent": parseInt(13)                   // tem q mudar
+            "idStudent": parseInt(user.id)
         }
     }
 
@@ -113,12 +121,12 @@ function CourseProfile() {
 
     useEffect(() => {
         async function fetchAverageSemester() {
-            if(feedbackSemester.value !== "Período") {
-                setLoading(true);
-                const response = await getAverageByCourseSemester(semesterValue.value, id);
-                setFeedbackSemester(response);
-                setLoading(false);
-            }
+            setLoading(true);
+            const response = await getAverageByCourseSemester(semesterValue.value, id);
+            setAverageFeedbacks(response);
+
+
+            setLoading(false);
         };
 
         fetchAverageSemester();
@@ -126,31 +134,26 @@ function CourseProfile() {
 
     useEffect(() => {
         (async function getLastAverage() {
-            if( semester && typeof semester !== 'undefined') {
-                const response = await getAverageByCourseSemester(semester[0].value, id);
-                setLastAverage(response.averageTotal);
-            } else {
-                setLastAverage(100000);
-            }
+            const response = await getAverageByCourseSemester(semester[0].value, id);
+            setLastAverage(response.averageTotal);
         })();
     },[semester]);
 
     return(
         <div className={styles.container}>
-                <Header headerTitle="Página da Disciplina" />
+                <Header headertitle="Página da Disciplina" />
 
-                {loading ? <span>Carregando...</span> // discutir carregamento
-                :
                 <div className={styles.content}>
 
                     <div className={styles.headersContent}>
                         <ButtonWithIcon
                             buttontitle="" 
                             icon={LeftIcon} 
-                            boxShadow="none"
-                            alignItems="center"
-                            hasTitle={false}
+                            boxshadow="none"
+                            alignitems="center"
+                            hastitle={false}
                             onClick={handleGoBackButton}
+                            transparent="true"
                         />
                         <p className={styles.courseName}>{course.name}</p>
                         <Button 
@@ -186,6 +189,7 @@ function CourseProfile() {
                                     height={38} 
                                     width={38}
                                     alt="Professor"
+                                    referrerPolicy='no-referrer'
                                 />
                                 <p>{professor ? professor.name : ""}</p>
                             </div>
@@ -193,30 +197,20 @@ function CourseProfile() {
                         </div>
 
                         <div className={styles.MYmainScore}>
-                            <p className={styles.MYmainScorePoint}>{averageFeedback.averageTotal}/10</p>
+                            <p className={styles.MYmainScorePoint}>{averageFeedback.averageTotal.toFixed(1)}/10</p>
                             <p>Média geral</p>
                             <br/>
-                            <p className={styles.MYmainScorePoint}>{lastAverage}/10</p>
+                            <p className={styles.MYmainScorePoint}>{lastAverage.toFixed(1)}/10</p>
                             <p>Média no último período</p>
                         </div>
-
-                        {semesterValue.value === "Período" ?
-                            <div className={styles.MYdetailedScore}>
-                                <p>Didática: {averageFeedback ? averageFeedback.averageDidactic : "?"} /10</p>
-                                <p>Material: {averageFeedback ? averageFeedback.averageCourseware : "?"} /10</p>
-                                <p>Carga de trabalho: {averageFeedback ? averageFeedback.averageWorkload : "?"} /10</p>
-                                <p>Organização: {averageFeedback ? averageFeedback.averageOrganization : "?"} /10</p>
-                                <p>Sistema de avaliação: {averageFeedback ? averageFeedback.averageEvaluationSystem : "?"} /10</p>
-                            </div>
-                        :
-                            <div className={styles.MYdetailedScore}>
-                                <p>Didática: {feedbackSemester ? feedbackSemester.averageDidactic : "?"} /10</p>
-                                <p>Material: {feedbackSemester ? feedbackSemester.averageCourseware : "?"} /10</p>
-                                <p>Carga de trabalho: {feedbackSemester ? feedbackSemester.averageWorkload : "?"} /10</p>
-                                <p>Organização: {feedbackSemester ? feedbackSemester.averageOrganization : "?"} /10</p>
-                                <p>Sistema de avaliação: {feedbackSemester ? feedbackSemester.averageEvaluationSystem : "?"} /10</p>
-                            </div>
-                        }
+                        
+                        <div className={styles.MYdetailedScore}>
+                            <p>Didática: {averageFeedback.averageDidactic.toFixed(1)} /10</p>
+                            <p>Material: {averageFeedback.averageCourseware.toFixed(1)} /10</p>
+                            <p>Carga de trabalho: {averageFeedback.averageWorkload.toFixed(1)} /10</p>
+                            <p>Organização: {averageFeedback.averageOrganization.toFixed(1)} /10</p>
+                            <p>Sistema de avaliação: {averageFeedback.averageEvaluationSystem.toFixed(1)} /10</p>
+                        </div>
                     </div>
 
                     <hr className={styles.divisor}/>
@@ -256,7 +250,7 @@ function CourseProfile() {
                         }
                     </div>
 
-                </div>}
+                </div>
             </div>
     );
 }
