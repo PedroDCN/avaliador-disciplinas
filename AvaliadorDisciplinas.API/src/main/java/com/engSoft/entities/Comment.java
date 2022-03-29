@@ -1,35 +1,41 @@
 package com.engSoft.entities;
 
-import com.engSoft.DTO.CommentDTO;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Comment {
     @Id
     @GeneratedValue
     private Long id;
-    private Long idCourse;
-    private String nomeCourse;
-    private Long idStudent;
-    private String nameStudent;
-    private String photoStudent;
-    private Long idSemester;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Course course;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User student;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "semester_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Semester semester;
+
     private String description;
     private Integer up;
     private Integer down;
     private Integer complaints;
 
-    public Comment(CommentDTO commentDTO, String nomeCourse, String nameStudent, String photoStudent) {
-        this.idCourse = commentDTO.getIdCourse();
-        this.idStudent = commentDTO.getIdStudent();
-        this.idSemester = commentDTO.getIdSemester();
-        this.description = commentDTO.getDescription();
-        this.nomeCourse = nomeCourse;
-        this.nameStudent = nameStudent;
-        this.photoStudent = photoStudent;
+    public Comment(Course course, String description, User student, Semester semester) {
+        this.course = course;
+        this.student = student;
+        this.semester = semester;
+        this.description = description;
         this.up = 0;
         this.down = 0;
         this.complaints = 0;
@@ -41,30 +47,6 @@ public class Comment {
 
     public Long getId() {
         return id;
-    }
-
-    public Long getIdCourse() {
-        return idCourse;
-    }
-
-    public Long getIdSemester() {
-        return idSemester;
-    }
-
-    public void setIdSemester(Long idSemester) {
-        this.idSemester = idSemester;
-    }
-
-    public void setIdCourse(Long idCourse) {
-        this.idCourse = idCourse;
-    }
-
-    public Long getIdStudent() {
-        return idStudent;
-    }
-
-    public void setIdStudent(Long idStudent) {
-        this.idStudent = idStudent;
     }
 
     public String getDescription() {
@@ -99,39 +81,32 @@ public class Comment {
         this.complaints = complaints;
     }
 
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", idCourse=" + idCourse +
-                ", idStudent=" + idStudent +
-                ", description='" + description + '\'' +
-                ", up=" + up +
-                ", down=" + down +
-                '}';
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getNameStudent() {
-        return nameStudent;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setNameStudent(String nameStudent) {
-        this.nameStudent = nameStudent;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public String getPhotoStudent() {
-        return photoStudent;
+    public User getStudent() {
+        return student;
     }
 
-    public void setPhotoStudent(String photoStudent) {
-        this.photoStudent = photoStudent;
+    public void setStudent(User student) {
+        this.student = student;
     }
 
-    public String getNomeCourse() {
-        return nomeCourse;
+    public Semester getSemester() {
+        return semester;
     }
 
-    public void setNomeCourse(String nomeCourse) {
-        this.nomeCourse = nomeCourse;
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
+
 }
