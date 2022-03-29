@@ -12,7 +12,6 @@ function UserAvaliacoes() {
     const navigate = useNavigate();
 
     const [disc, setDisc] = useState([]);
-    const [per, setPer] = useState([]);
 
     useEffect(() => {
         async function fetchData() {

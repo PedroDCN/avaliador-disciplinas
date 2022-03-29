@@ -22,16 +22,11 @@ function UserComentarios(props) {
 
     const navigate = useNavigate();
     const notifySucess = (message) => toast.success(message);
-    const notifyFailure = (message) => toast.error(message);
-
-
-    const [disc, setDisc] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
             if (user) {
                 setLoading(true);
-                const data = (await getAllUser(user.id)).data;
                 const response = (await getComentariosByUser(user.id)).data;
                 await Promise.all(
                     response.map(async (item) => {
@@ -42,7 +37,6 @@ function UserComentarios(props) {
 
                 setComents(response);
 
-                setDisc(data);
                 setLoading(false);
             }
         }
@@ -58,7 +52,6 @@ function UserComentarios(props) {
                 return item.id !== id;
             }));
         notifySucess("comentario apagado com sucesso!");
-        console.log(coments);
 
         setLoading(false);
 
