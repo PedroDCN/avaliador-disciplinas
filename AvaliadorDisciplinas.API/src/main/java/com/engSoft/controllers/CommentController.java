@@ -40,13 +40,21 @@ public class CommentController {
 
         Optional<User> optionalStudent = userService.getUserById(commentDTO.getIdStudent());
 
+        Optional<Semester> optionalSemester = semesterService.findSemesterById(commentDTO.getIdSemester());
+
+        if (!optionalSemester.isPresent()){
+            return ErroSemester.erroSemesterNotFound();
+        }
+
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
         if (!optionalStudent.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Comment newComment = new Comment(commentDTO, optionalCourse.get().getName(), optionalStudent.get().getName(), optionalStudent.get().getPhoto_url());
+
+
+        Comment newComment = new Comment(optionalCourse.get(), optionalStudent.get(), optionalSemester.get(), commentDTO.getDescription());
         try {
             commentService.saveComment(newComment);
             return new ResponseEntity<>(newComment, HttpStatus.CREATED);
@@ -150,13 +158,10 @@ public class CommentController {
         if(!optionalComment.isPresent())
             return ErroComment.erroCommentNotFound();
 
-        Optional<User> user = userService.getUserById(optionalComment.get().getIdStudent());
-        if (!user.isPresent())
-            return ErroUser.erroUserNotFound();
-
+        User user = optionalComment.get().getStudent();
         try{
             commentService.removeComment(id);
-            commentService.updateDeletedComments(user.get());
+            commentService.updateDeletedComments(user);
             return new ResponseEntity<>(optionalComment, HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(
