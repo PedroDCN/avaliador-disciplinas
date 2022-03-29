@@ -44,7 +44,7 @@ public class CourseController {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(courseDTO.getNameTeacher());
 
         if (optionalTeacher.isPresent()) {
-            Course newCourse = new Course(courseDTO, optionalTeacher.get().getId());
+            Course newCourse = new Course(courseDTO, optionalTeacher.get());
             courseService.saveCourse(newCourse);
 
             return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
@@ -64,7 +64,7 @@ public class CourseController {
         if(optionalCourse.isPresent()) {
             optionalCourse.get().setName(courseDTO.getName());
             optionalCourse.get().setCode(courseDTO.getCode());
-            optionalCourse.get().setIdTeacher(optionalTeacher.get().getId());
+            optionalCourse.get().setTeacher(optionalTeacher.get());
             courseService.saveCourse(optionalCourse.get());
 
             return new ResponseEntity<>(optionalCourse, HttpStatus.OK);
@@ -88,7 +88,7 @@ public class CourseController {
         List<SimpleCourseDTO> simpleList = new ArrayList<>();
         String nameTeacher;
         for(Course course : list) {
-            nameTeacher = teacherService.getTeacherById(course.getIdTeacher()).get().getName();
+            nameTeacher = course.getTeacher().getName();
             simpleList.add(new SimpleCourseDTO(course.getId(), course.getName(), nameTeacher, course.getGrade()));
         }
         return simpleList;
@@ -99,7 +99,7 @@ public class CourseController {
         Optional<Teacher> optionalTeacher = teacherService.getTeacherByName(nameTeacher);
 
         if (optionalTeacher.isPresent()) {
-            List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get().getId());
+            List<Course> courses = this.courseService.listCoursesTeacher(optionalTeacher.get());
             return new ResponseEntity<>(courses, HttpStatus.ACCEPTED);
         } else
             return ErroTeacher.erroTeacherNotFound();

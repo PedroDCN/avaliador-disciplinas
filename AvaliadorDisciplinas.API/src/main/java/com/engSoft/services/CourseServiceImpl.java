@@ -2,6 +2,7 @@ package com.engSoft.services;
 
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
+import com.engSoft.entities.Teacher;
 import com.engSoft.repositories.CourseRepository;
 import com.engSoft.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> listCoursesTeacher(Long idTeacher) {
-        return courseRepository.findAllByIdTeacher(idTeacher);
+    public List<Course> listCoursesTeacher(Teacher teacher) {
+        return courseRepository.findAllByTeacher(teacher);
     }
 
     @Override
