@@ -54,14 +54,14 @@ public class FeedbackController {
             return ErroSemester.erroSemesterNotFound();
         }
 
-        if (!feedbackService.findFeedbackByStudentCourseAndSemester(feedbackDTO.getIdStudent(), feedbackDTO.getIdCourse(), feedbackDTO.getIdSemester()).isEmpty()){
+        if (!feedbackService.findFeedbackByStudentCourseAndSemester(optionalStudent.get(), optionalCourse.get(), optionalSemester.get()).isEmpty()){
             return ErroFeedback.erroFeedbackAlreadyExists();
         }
 
         Feedback newFeedback = new Feedback(feedbackDTO, optionalCourse.get(), optionalStudent.get(), optionalSemester.get());
         try {
             feedbackService.saveFeedback(newFeedback);
-            courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
+            courseService.updateGrade(newFeedback.getCourse(), feedbackService.listFeedbackByCourse(newFeedback.getCourse()));
             return new ResponseEntity<>(new ReturnFeedbackDTO(newFeedback), HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<>(
@@ -83,7 +83,7 @@ public class FeedbackController {
         if (!optionalUser.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.findFeedbackByStudent(idUser);
+        List<Feedback> feedbacks = feedbackService.findFeedbackByStudent(optionalUser.get());
         return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
 
     }
@@ -95,7 +95,7 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(idCourse);
+        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(optionalCourse.get());
         return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
 
     }
@@ -108,7 +108,7 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
 
-        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourse(idCourse);
+        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourse(optionalCourse.get());
         return new ResponseEntity<>(averageFeedback, HttpStatus.ACCEPTED);
 
     }
@@ -120,7 +120,7 @@ public class FeedbackController {
         if (!optionalSemester.isPresent()){
             return ErroSemester.erroSemesterNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(idSemester);
+        List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(optionalSemester.get());
         return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
 
     }
@@ -136,7 +136,7 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.findFeedbackByCourseAndSemester(idCourse, idSemester);
+        List<Feedback> feedbacks = feedbackService.findFeedbackByCourseAndSemester(optionalCourse.get(), optionalSemester.get());
         return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
 
     }
@@ -153,7 +153,7 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
 
-        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourseAndSemester(idCourse, idSemester);
+        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourseAndSemester(optionalCourse.get(), optionalSemester.get());
         return new ResponseEntity<>(averageFeedback, HttpStatus.ACCEPTED);
 
     }
@@ -178,7 +178,7 @@ public class FeedbackController {
         try{
             feedbackService.removeFeedback(id);
             Course course = optionalFeedback.get().getCourse();
-            courseService.updateGrade(course, feedbackService.listFeedbackByCourse(course.getId()));
+            courseService.updateGrade(course, feedbackService.listFeedbackByCourse(course));
             return new ResponseEntity<>(new ReturnFeedbackDTO(optionalFeedback.get()), HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(
