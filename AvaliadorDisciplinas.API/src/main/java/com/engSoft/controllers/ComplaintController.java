@@ -83,7 +83,7 @@ public class ComplaintController {
         if (!optionalComment.isPresent()){
             return ErroComment.erroCommentNotFound();
         }
-        List<Reaction> reactions = reactionService.findAllByIdCommentAndReactionTypeEnum(idComment, Util.ReactionTypeEnum.COMPLAINT);
+        List<Reaction> reactions = reactionService.findAllByIdCommentAndReactionTypeEnum(optionalComment.get(), Util.ReactionTypeEnum.COMPLAINT);
         return new ResponseEntity<>(toListReturnReactionDTO(reactions), HttpStatus.ACCEPTED);
 
     }

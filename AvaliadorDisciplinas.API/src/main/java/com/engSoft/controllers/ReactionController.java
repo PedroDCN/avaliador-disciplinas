@@ -70,7 +70,7 @@ public class ReactionController {
         if (!optionalComment.isPresent()) {
             return ErroComment.erroCommentNotFound();
         }
-        List<Reaction> reactions = reactionService.findReactionByComment(idComment);
+        List<Reaction> reactions = reactionService.findReactionByComment(optionalComment.get());
         reactions.removeIf(r -> r.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT);
         return new ResponseEntity<>(toListReturnReactionDTO(reactions), HttpStatus.ACCEPTED);
     }
@@ -85,7 +85,8 @@ public class ReactionController {
         Optional<User> optionalUser = userService.getUserById(idStudent);
         if (!optionalUser.isPresent())
             return  ErroUser.erroUserNotFound();
-        List<Reaction> reactions = reactionService.findReactionByStudentAndComment(idStudent, idComment);
+
+        List<Reaction> reactions = reactionService.findReactionByStudentAndComment(optionalComment.get(), optionalUser.get());
         reactions.removeIf(r -> r.getReactionTypeEnum() == Util.ReactionTypeEnum.COMPLAINT);
         return new ResponseEntity<>(toListReturnReactionDTO(reactions), HttpStatus.ACCEPTED);
     }
