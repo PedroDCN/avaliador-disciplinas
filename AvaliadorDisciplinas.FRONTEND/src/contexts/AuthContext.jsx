@@ -15,8 +15,10 @@ export function AuthContextProvider(props) {
         if (token !== 'invalid' && token !== undefined) {
             const { name, picture, email } = parseAuthToken(token);
             getUserByEmail(email).then((res) => {
-                loginSetUser({name, photo:picture, isAdmin: res.isAdmin, id: res.id});
-                setUserToken({name, photo:picture, isAdmin: res.isAdmin, id: res.id});
+                loginSetUser({name, photo:picture, isAdmin: res.isAdmin, id: res.id, 
+                    banned: res.banned});
+                setUserToken({name, photo:picture, isAdmin: res.isAdmin, id: res.id, 
+                    banned: res.banned});
             });
         } else if (token === 'invalid') {
             logout();
