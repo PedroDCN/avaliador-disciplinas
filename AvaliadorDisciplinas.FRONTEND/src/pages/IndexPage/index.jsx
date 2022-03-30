@@ -130,7 +130,6 @@ function IndexPage() {
               </AdminRoute>
             }
           />
-          <Route path="/denuncias" element={<h1>Denúncias</h1>} />
           <Route
             path="/user" 
             element={
