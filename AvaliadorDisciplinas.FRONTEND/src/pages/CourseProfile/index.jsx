@@ -17,6 +17,7 @@ import { reportComentario } from "../../services/comentariosServide";
 
 import colors from '../../styles/colorsConfig.json';
 import { useNavigate, useParams } from 'react-router-dom';
+import AvaliacaoModal from "../../components/AvaliacaoModal";
 
 const customStyles = {
     control: (provided ) => ({
@@ -59,6 +60,7 @@ function CourseProfile() {
     const [localComment, setLocalComment] = useState("");
     const [comments, setComments] = useState();
     const [lastAverage, setLastAverage] = useState(0);
+    const [show, setShow] = useState(false);
 
     const reportComent = async (id) => {
         await reportComentario(id, user.id);
@@ -77,8 +79,7 @@ function CourseProfile() {
         }
     }
 
-    function submitCommentButton() {
-        //enviar comentário
+    async function submitCommentButton() {
         if(localComment !== '') {
             createComment(newComment());
             setLocalComment('');
@@ -95,6 +96,11 @@ function CourseProfile() {
             const response = await getAllCommentsfromCourse(0, id);
             setComments(response);
             setLoading(false);
+    }
+
+    function handleOpenModal() {
+        setSemesterValue(semester[0].value);
+        setShow(true);
     }
 
     useEffect(() => {
@@ -148,6 +154,10 @@ function CourseProfile() {
         })();
     },[semester]);
 
+    const handleCloseModal = () => {
+        setShow(false);
+    };
+
     return(
         <div className={styles.container}>
                 <Header headertitle="Página da Disciplina" />
@@ -171,7 +181,7 @@ function CourseProfile() {
                             width="10rem"
                             color={colors.theme.white}
                             borderRadius="10rem"
-                            /* onClick={handleFeedBackButton} */
+                            onClick={handleOpenModal}
                         />
                     </div>
 
@@ -260,6 +270,13 @@ function CourseProfile() {
                     </div>
 
                 </div>
+                <AvaliacaoModal 
+                    show={show}
+                    handleClose={handleCloseModal}
+                    idStudent={user.id}
+                    idCourse={id}
+                    idSemester={semesterValue}
+                />
             </div>
     );
 }

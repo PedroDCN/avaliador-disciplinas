@@ -10,11 +10,11 @@ import DataList from "../../components/DataList";
 import { renderItem } from "./itemListagem";
 
 import { getCommentWithComplaints } from "../../services/commentService";
-import ReportModal from "../../components/ReportModal";
+import { deleteComentarioById } from "../../services/comentariosServide";
+import ComentarioModal from "../../components/ComentarioModal";
 
 function ReportList() {
     const { user } = useAuth();
-    const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -22,10 +22,8 @@ function ReportList() {
     const [modalContent, setModalContent] = useState({});
 
     const showModal = async (value) => {
-        //console.log(value);
         setModalContent(value);
         setShow(true);
-        /* await reportComentario(id, user.id); */
       };
 
     useEffect(()=> {
@@ -38,20 +36,18 @@ function ReportList() {
 
     }, []);
 
-    useEffect(() => {
-        if (reports) {
-            //console.log(reports);
-        }
-    }, [reports]);
-
     const handleCloseModal = () => {
         setShow(false);
     };
 
     const handleDeleteModal = async () => {
-        /* const response = await changeBanUser(userDetails.id, !userDetails.banned);
-        setUserDetails(response.data);
-        setShow(false); */
+        setLoading(true);
+        await deleteComentarioById(modalContent.id);
+        const data = await getCommentWithComplaints();
+        setReports(data);
+        setModalContent({});
+        setShow(false);
+        setLoading(false);
     };
 
     return(
@@ -72,13 +68,11 @@ function ReportList() {
                         }
                     </div>
             </div>
-            <ReportModal
+            <ComentarioModal 
                 show={show}
                 handleClose={handleCloseModal}
-                handleConfirm={handleDeleteModal}
-                confirmText={"Deletar Comentário"}
-                confirmColor={colors.theme["red-400"]}
-                modalContent={modalContent}
+                handleDelete={handleDeleteModal}
+                idComentario={modalContent.id}
             />
         </div>
     );
