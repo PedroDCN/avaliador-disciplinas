@@ -2,7 +2,6 @@ import { Navigate } from "react-router-dom";
 import { getUserToken } from "../../utils/tokenUtil";
 
 const AdminRoute = ({ children }) => {
-    debugger;
     const user = getUserToken();
 
     return (
