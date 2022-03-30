@@ -9,9 +9,12 @@ Foi desenvolvido uma aplicação responsiva a monitores horizontais.
 - Os alunos podem reagir a um comentário de outro aluno
 - Os alunos podem reportar um comentário de outro aluno
 - Os alunos podem simular um período, para ver sua dificuldade
-- Os alunos podem ver a nota geral de um professor e asa cadeiras associadas a ele
+- Os alunos podem ver a nota geral de um professor e das cadeiras associadas a ele
 - Os alunos podem ver a nota da cadeira baseada nas avaliações gerais e por período
 
 ## 💻 Tecnologias
 - [React](https://reactjs.org)
 - [SpringBoot](https://spring.io)
+
+
+### Para visualizar o código mais atualizado, visite a branche [develop](https://github.com/PedroDCN/avaliador-disciplinas/tree/develop)
