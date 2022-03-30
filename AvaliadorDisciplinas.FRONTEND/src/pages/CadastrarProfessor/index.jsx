@@ -20,12 +20,16 @@ function CadastrarProf() {
     const notifyFailure = (message) => toast.error(message);
 
     function handleCadastrarButton() {
-        createProfessor(professor).then(() => {
-            notifySucess("Professor criado com sucesso!");
-            setProfessor(newProfessorRegister());
-        }).catch(e => {
-            notifyFailure("Erro no cadastro");
-        });
+        if (professor.name === '') {
+            notifyFailure("Preencha os campos obrigatórios!");
+        } else {
+            createProfessor(professor).then(() => {
+                notifySucess("Professor criado com sucesso!");
+                setProfessor(newProfessorRegister());
+            }).catch(e => {
+                notifyFailure("Erro no cadastro");
+            });
+        }
     }
 
     function handleSalvarButton() {

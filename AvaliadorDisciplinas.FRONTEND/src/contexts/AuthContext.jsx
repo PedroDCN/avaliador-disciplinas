@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import { checkAuthToken, parseAuthToken, removeAuthToken, setAuthToken } from "../utils/tokenUtil";
+import { checkAuthToken, parseAuthToken, removeAuthToken, removeUserToken, setAuthToken, setUserToken } from "../utils/tokenUtil";
 import { createUser, getUserByEmail } from '../services/userService';
 import { checkEmailComputacao } from '../utils/loginUtil';
 
@@ -15,8 +15,10 @@ export function AuthContextProvider(props) {
         if (token !== 'invalid' && token !== undefined) {
             const { name, picture, email } = parseAuthToken(token);
             getUserByEmail(email).then((res) => {
-
-                loginSetUser({ name, photo: picture, isAdmin: res.isAdmin, id: res.id });
+                loginSetUser({name, photo:picture, isAdmin: res.isAdmin, id: res.id, 
+                    banned: res.banned});
+                setUserToken({name, photo:picture, isAdmin: res.isAdmin, id: res.id, 
+                    banned: res.banned});
             });
         } else if (token === 'invalid') {
             logout();
@@ -58,6 +60,7 @@ export function AuthContextProvider(props) {
         setUser(undefined);
         setLogged(false);
         removeAuthToken();
+        removeUserToken();
     }
 
     return (

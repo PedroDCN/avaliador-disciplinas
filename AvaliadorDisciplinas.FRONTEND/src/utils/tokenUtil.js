@@ -1,4 +1,5 @@
 const TOKEN_KEY = "@RCAuth:token";
+const TOKEN_KEY_USER = "@RCAuth:user";
 
 function getAuthToken() {
     return window.localStorage.getItem(TOKEN_KEY);
@@ -32,4 +33,29 @@ function parseAuthToken(token) {
     return parsedPayload;
 }
 
-export { getAuthToken, setAuthToken, removeAuthToken, checkAuthToken, parseAuthToken };
+function getUserToken() {
+    const token = window.localStorage.getItem(TOKEN_KEY_USER);
+    if (token) {
+        return JSON.parse(token);
+    }
+    return undefined;
+}
+
+function setUserToken(user) {
+    window.localStorage.setItem(TOKEN_KEY_USER, JSON.stringify(user));
+}
+
+function removeUserToken() {
+    window.localStorage.removeItem(TOKEN_KEY_USER);
+}
+
+export { 
+    getAuthToken, 
+    setAuthToken, 
+    removeAuthToken, 
+    checkAuthToken, 
+    parseAuthToken,
+    getUserToken,
+    setUserToken,
+    removeUserToken
+};

@@ -4,13 +4,14 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import { useEffect, useState } from 'react';
 import { createDisciplina, getDisciplinaById, updateDisciplina } from '../../services/disciplinaService';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Select from 'react-select';
 import { getAllProfessores } from '../../services/professorService';
 import { newDisciplina } from '../../services/DadosEstaticos';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../../contexts/AuthContext';
 
 const customStyles = {
     control: (provided, state) => ({
@@ -46,12 +47,17 @@ function CadastrarDisciplina() {
     }
 
     function handleCadastrarButton() {
-        createDisciplina(disciplina).then(() => {
-            notifySucess("Disciplina criada com sucesso!");
-            setDisciplina(newDisciplina());
-        }).catch(e => {
-            notifyFailure("Erro no cadastro");
-        });
+        if (disciplina.code === '' || disciplina.name === '' 
+            || disciplina.nameTeacher === '') {
+            notifyFailure("Preencha os campos obrigatórios!");
+        } else {
+            createDisciplina(disciplina).then(() => {
+                notifySucess("Disciplina criada com sucesso!");
+                setDisciplina(newDisciplina());
+            }).catch(e => {
+                notifyFailure("Erro no cadastro");
+            });
+        }
     }
 
     function handleSalvarButton() {

@@ -7,6 +7,7 @@ import { renderItem } from "./itemListagem";
 import useStore from "../../store/professorIndexStore";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import ProfessorModal from '../../components/ProfessorModal';
 
 const customStyles = {
   control: (provided, state) => ({
@@ -35,10 +36,17 @@ function ProfessorIndex() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const [show, setShow] = useState(false);
+  const [idProfessor, setIdProfessor] = useState();
   const [text, setText] = useState();
   const [attribute, setAttribute] = useState({ value: "name", label: "Nome" });
 
   const { loading, data } = useStore(text, attribute.value);
+
+  function handleClickModal(id) {
+    setShow(true);
+    setIdProfessor(id);
+  }
 
   return (
     <div className={styles.container}>
@@ -83,11 +91,18 @@ function ProfessorIndex() {
                 item,
                 isAdmin: user === undefined ? false : user.isAdmin,
                 navigate,
+                handleClickModal: handleClickModal
               })
             }
           />
         </div>
       </div>
+      <ProfessorModal 
+        idProfessor={idProfessor}
+        show={show}
+        handleClose={() => setShow(false)}
+        isAdmin={user === undefined ? false : user.isAdmin}
+      />
     </div>
   );
 }
