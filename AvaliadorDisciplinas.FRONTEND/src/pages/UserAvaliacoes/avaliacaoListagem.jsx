@@ -4,7 +4,7 @@ import styles from "./avaliacaoListagem.module.css";
 
 export function renderItem(item, navigate) {
     function handleClick() {
-        navigate(`/disciplina/${item.id}`);
+        navigate(`/disciplina/${item.idCourse}`);
     }
 
     return (
