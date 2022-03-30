@@ -1,7 +1,7 @@
 # Rasgando Cadeiras
 Esse projeto tem como objetivo auxiliar os estudantes de computação da UFCG(Universidade Federal de Campina Grande) a fazer uma matrícula confiante e racional.
 É uma aplicação web, acesso pelo link https://rasgando-cadeiras.vercel.app/, pode ser usada em todos os navegadores.
-Foi criado para o uso em computador, é possível utilizar no navegador do mobile, porém css cagado, isso pode ser contornando utilizando o mobile na horizontal.
+Foi desenvolvido uma aplicação responsiva a monitores horizontais.
 
 ## Funcionalidades
 - Os alunos podem avaliar cadeiras que pagaram
