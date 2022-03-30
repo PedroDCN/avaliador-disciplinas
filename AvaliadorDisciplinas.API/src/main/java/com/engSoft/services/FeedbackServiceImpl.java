@@ -1,7 +1,6 @@
 package com.engSoft.services;
 
-import com.engSoft.entities.AverageFeedback;
-import com.engSoft.entities.Feedback;
+import com.engSoft.entities.*;
 import com.engSoft.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +25,13 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<Feedback> listFeedbackByCourse(Long idCourse) {
-        return this.feedbackRepository.findAllByIdCourse(idCourse);
+    public List<Feedback> listFeedbackByCourse(Course course) {
+        return this.feedbackRepository.findAllByCourse(course);
     }
 
     @Override
-    public AverageFeedback averageFeedbackByCourse(Long idCourse) {
-        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourse(idCourse);
+    public AverageFeedback averageFeedbackByCourse(Course course) {
+        List<Feedback> feedbacks = this.feedbackRepository.findAllByCourse(course);
 
         return getAverageFeedbackFromList(feedbacks);
     }
@@ -49,27 +48,32 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public List<Feedback> findFeedbackBySemester(Long idSemester) {
-        return this.feedbackRepository.findAllByIdSemester(idSemester);
+    public List<Feedback> findFeedbackBySemester(Semester semester) {
+        return this.feedbackRepository.findAllBySemester(semester);
     }
 
     @Override
-    public List<Feedback> findFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
+    public List<Feedback> findFeedbackByCourseAndSemester(Course course, Semester semester) {
 
 
-        return this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+        return this.feedbackRepository.findAllByCourseAndSemester(course, semester);
     }
 
     @Override
-    public AverageFeedback averageFeedbackByCourseAndSemester(Long idCourse, Long idSemester) {
-        List<Feedback> feedbacks = this.feedbackRepository.findAllByIdCourseAndIdSemester(idCourse, idSemester);
+    public AverageFeedback averageFeedbackByCourseAndSemester(Course course, Semester semester) {
+        List<Feedback> feedbacks = this.feedbackRepository.findAllByCourseAndSemester(course, semester);
 
         return getAverageFeedbackFromList(feedbacks);
     }
 
     @Override
-    public List<Feedback> findFeedbackByStudent(Long idStudent) {
-        return this.feedbackRepository.findAllByIdStudent(idStudent);
+    public List<Feedback> findFeedbackByStudent(User student) {
+        return this.feedbackRepository.findAllByStudent(student);
+    }
+
+    @Override
+    public List<Feedback> findFeedbackByStudentCourseAndSemester(User student, Course course, Semester semester) {
+        return feedbackRepository.findAllByStudentAndCourseAndSemester(student, course, semester);
     }
 
     private AverageFeedback getAverageFeedbackFromList(List<Feedback> feedbacks) {
