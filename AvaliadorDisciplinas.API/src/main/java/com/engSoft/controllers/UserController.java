@@ -1,7 +1,6 @@
 package com.engSoft.controllers;
 
 import com.engSoft.DTO.UserDTO;
-import com.engSoft.entities.Comment;
 import com.engSoft.entities.User;
 import com.engSoft.services.CommentService;
 import com.engSoft.services.UserService;
@@ -119,5 +118,4 @@ public class UserController {
         users.removeIf(User::getBanned);
         return new ResponseEntity<>(users, HttpStatus.ACCEPTED);
     }
-
 }

@@ -3,7 +3,6 @@ package com.engSoft.controllers;
 
 import com.engSoft.DTO.CommentDTO;
 import com.engSoft.DTO.ReturnCommentDTO;
-import com.engSoft.DTO.ReturnReactionDTO;
 import com.engSoft.entities.*;
 import com.engSoft.services.CommentService;
 import com.engSoft.services.CourseService;
@@ -78,7 +77,7 @@ public class CommentController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        Page<Comment> comments = commentService.pageCommentByCourse(idCourse, page);
+        Page<Comment> comments = commentService.pageCommentByCourse(optionalCourse.get(), page);
         return new ResponseEntity<>(toListReturnCommentDTO(comments.getContent()), HttpStatus.ACCEPTED);
 
     }
@@ -89,7 +88,7 @@ public class CommentController {
         if (!optinalUser.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        Page<Comment> comments = commentService.pageCommentByStudent(idStudent, page);
+        Page<Comment> comments = commentService.pageCommentByStudent(optinalUser.get(), page);
         return new ResponseEntity<>(toListReturnCommentDTO(comments.getContent()), HttpStatus.ACCEPTED);
 
     }
@@ -100,7 +99,13 @@ public class CommentController {
         if (!optionalSemester.isPresent()){
             return ErroSemester.erroSemesterNotFound();
         }
-        Page<Comment> comments = commentService.pageCommentBySemesterAndCourse(idSemester, idCourse, page);
+
+        Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
+
+        if(!optionalCourse.isPresent()) {
+            return ErroCourse.erroCourseNotFound();
+        }
+        Page<Comment> comments = commentService.pageCommentBySemesterAndCourse(optionalSemester.get(), optionalCourse.get(), page);
         return new ResponseEntity<>(toListReturnCommentDTO(comments.getContent()), HttpStatus.ACCEPTED);
 
     }
@@ -112,7 +117,7 @@ public class CommentController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        List<Comment> comments = commentService.listCommentByCourse(idCourse);
+        List<Comment> comments = commentService.listCommentByCourse(optionalCourse.get());
         return new ResponseEntity<>(toListReturnCommentDTO(comments), HttpStatus.ACCEPTED);
 
     }
@@ -123,7 +128,7 @@ public class CommentController {
         if (!optinalUser.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        List<Comment> comments = commentService.listCommentByStudent(idStudent);
+        List<Comment> comments = commentService.listCommentByStudent(optinalUser.get());
         return new ResponseEntity<>(toListReturnCommentDTO(comments), HttpStatus.ACCEPTED);
 
     }
@@ -134,7 +139,13 @@ public class CommentController {
         if (!optionalSemester.isPresent()){
             return ErroSemester.erroSemesterNotFound();
         }
-        List<Comment> comments = commentService.listCommentBySemesterAndCourse(idSemester, idCourse);
+
+        Optional<Course> optionalCourse = courseService.findCourseById(idCourse);
+
+        if(!optionalCourse.isPresent()) {
+            return ErroCourse.erroCourseNotFound();
+        }
+        List<Comment> comments = commentService.listCommentBySemesterAndCourse(optionalSemester.get(), optionalCourse.get());
         return new ResponseEntity<>(toListReturnCommentDTO(comments), HttpStatus.ACCEPTED);
 
     }
