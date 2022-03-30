@@ -41,7 +41,7 @@ public class SimulationController {
     }
 
     private void addSimulacao(Simulation simulation, Course course) {
-        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(course.getId());
+        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(course);
         double workload = getMediaWorkload(feedbacks);
         simulation.addCreditos(1);
         simulation.addWorkload(Math.max(Math.log(workload) / Math.log(10), 0)); //Importância ao quadrado para aumentar o peso quanto maior o valor
