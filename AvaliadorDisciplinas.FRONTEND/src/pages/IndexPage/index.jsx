@@ -20,6 +20,9 @@ import ErrorPage from '../ErrorPage';
 import AuthenticatedRoute from '../../components/AuthenticatedRoute';
 import BannedModal from '../../components/BannedModal';
 import UserDetails from '../UserDetails';
+import CourseProfile from '../CourseProfile';
+import ReportsList from '../ReportsList';
+
 import { getUserToken } from '../../utils/tokenUtil';
 
 function IndexPage() {
@@ -94,6 +97,7 @@ function IndexPage() {
           <Route path="/simular" element={<SimularPeriodo />} />
           <Route path="/disciplinas" element={<DisciplinaIndex />} />
           <Route path="/professores" element={<ProfessorIndex />} />
+          <Route path="/disciplina/:id" element={<CourseProfile />} />
           <Route
             path="/disciplina/cadastro"
             element={
@@ -156,6 +160,14 @@ function IndexPage() {
             element={
               <AdminRoute>
                 <UserDetails />
+              </AdminRoute>
+            }
+          />
+          <Route 
+            path="/denuncias"
+            element={
+              <AdminRoute>
+                <ReportsList />
               </AdminRoute>
             }
           />

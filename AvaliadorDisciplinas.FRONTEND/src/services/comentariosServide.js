@@ -12,4 +12,9 @@ async function deleteComentarioById(id) {
   return await api.delete(`/admin/comment/${id}`);
 }
 
-export { getComentariosById, getComentariosByUser, deleteComentarioById };
+async function reportComentario(idComment, idStudent) {
+  console.log(`/complaint?idComment=${idComment}&idStudent=${idStudent}`);
+  await api.post(`/complaint?idComment=${idComment}&idStudent=${idStudent}`);
+}
+
+export { getComentariosById, getComentariosByUser, deleteComentarioById, reportComentario };

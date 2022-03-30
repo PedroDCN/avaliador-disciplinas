@@ -6,6 +6,7 @@ function Button(props) {
             backgroundColor: props.backgroundcolor,
             color: props.color,
             width: props.width,
+            borderRadius: props.borderRadius || '1rem',
             height: props.height || 'auto',
             fontSize: props.fontSize || 'larger'
         }}>

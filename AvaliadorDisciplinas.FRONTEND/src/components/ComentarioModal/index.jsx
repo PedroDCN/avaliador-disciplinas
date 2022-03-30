@@ -29,10 +29,11 @@ function ComentarioModal({ show, handleClose, handleDelete, idComentario }) {
   useEffect(() => {
     (async () => {
       setLoading(true);
+      if(typeof idComentario !=="undefined") {
 
-      const { data } = await getComentariosById(idComentario);
-      setComentario(data);
-
+        const { data } = await getComentariosById(idComentario);
+        setComentario(data);
+      }
       setLoading(false);
     })();
   }, [idComentario]);

@@ -1,0 +1,167 @@
+.container {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    padding: 0 7rem;
+    overflow-y: scroll;
+}
+
+.content {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--white);
+    border-radius: 1rem 1rem 0 0;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 10px 20px;
+    padding: 1rem;
+    margin-top: 5rem;
+}
+
+.content .headersContent {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: none;
+}
+
+.headersContent .courseName {
+    font-size: 2rem;
+    font-weight: 300;
+    font-size: 36px;
+    margin-left: 2rem;
+}
+
+.divisor {
+    background-color: var(--gray-500);
+    width: 100%;    
+}
+
+.courseContent{
+    width: 100%;
+    margin: 0.5rem 0rem 1rem 0rem;
+    background: var(--gray-200);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+}
+
+.courseContent .MYdetailedScore {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.courseContent .MYdetailedScore, .MYmainScore {
+    border-color: var(--gray-700);
+    border-style: solid;
+    border-radius: 1rem;
+    border-style: solid;
+    border-width: 2px;
+    padding: 0.5rem;
+}
+
+.courseContent .MYmainScore {
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    flex-direction: column;
+    text-align: center;
+}
+
+.MYmainScore p {
+    font-size: 14px;
+}
+
+.MYmainScore .MYmainScorePoint {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.MYCourseContentDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.MYCourseContentDetails .MYColumnLabel {
+    font-size: larger;
+    font-weight: 500;
+    margin-left: 1rem;
+}
+
+.MYCourseContentDetails .MYProfessorContent {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+
+    font-weight: 300;
+    font-size: 20px;
+    margin-left: 1rem;
+}
+
+.MYCourseContentDetails .MYProfessorContent img{
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.MYSelectBar{
+    width: 18rem;
+    font-size: larger;
+    border-radius: .5rem;
+    border: none;
+    outline: none;
+}
+
+.MYSelectBar:focus {
+    outline: transparent;
+}
+
+.MYCommentContent {
+    margin: 1rem;
+}
+
+.MYCommentContent textarea {
+    width: 100%;
+    border-radius: 8px;
+    height: 5rem;
+    border: 1px solid var(--gray-200);
+    background-color: var(--background);
+    padding: 0.5rem;
+    resize: none;
+    outline: none;
+    overflow: hidden;
+}
+
+.MYCommentContent .MYSubmmit {
+    height: 1.2rem;
+    display: flex;
+    flex-direction: row-reverse;
+    text-align: center;
+    font-weight: 400;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.content::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+  
+.content::-webkit-scrollbar-track {
+    background: transparent;
+}
+  
+.content::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}

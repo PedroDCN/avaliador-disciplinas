@@ -55,6 +55,7 @@ function LandingPage() {
                             icon={LoginIcon} 
                             backgroundcolor={colors.theme.terciary} 
                             onClick={handleLoginButton}
+                            hastitle={"true"}
                         />
                     </div>
                 </div>
@@ -85,6 +86,7 @@ function LandingPage() {
                         color={colors.theme.primary}
                         backgroundcolor={colors.theme.background} 
                         onClick={handleAnonimousButton}
+                        hastitle={true}
                     />
                 </footer>
             </div>

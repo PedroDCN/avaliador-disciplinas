@@ -1,6 +1,9 @@
 package com.engSoft.repositories;
 
 import com.engSoft.entities.Comment;
+import com.engSoft.entities.Course;
+import com.engSoft.entities.Semester;
+import com.engSoft.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -8,11 +11,11 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 public interface CommentRepository extends PagingAndSortingRepository<Comment, Long> {
-    Page<Comment> findAllByIdCourse(Long id, Pageable pageable);
-    Page<Comment> findAllByIdStudent(Long idStudent, Pageable pageable);
-    Page<Comment> findAllByIdSemesterAndIdCourse(Long idSemester, Long idCourse, Pageable pageable);
-    List<Comment> findAllByIdCourse(Long id);
-    List<Comment> findAllByIdStudent(Long idStudent);
-    List<Comment> findAllByIdSemesterAndIdCourse(Long idSemester, Long idCourse);
+    Page<Comment> findAllByCourse(Course course, Pageable pageable);
+    Page<Comment> findAllByStudent(User student, Pageable pageable);
+    Page<Comment> findAllBySemesterAndCourse(Semester semester, Course course, Pageable pageable);
+    List<Comment> findAllByCourse(Course course);
+    List<Comment> findAllByStudent(User student);
+    List<Comment> findAllBySemesterAndCourse(Semester semester, Course course);
     List<Comment> findAllByComplaintsGreaterThan(int i);
 }

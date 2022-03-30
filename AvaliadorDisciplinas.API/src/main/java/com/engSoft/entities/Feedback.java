@@ -2,21 +2,32 @@ package com.engSoft.entities;
 
 import com.engSoft.DTO.FeedbackDTO;
 import com.engSoft.util.Util;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Feedback {
     @Id
     @GeneratedValue
     private Long id;
-    private Long idCourse;
-    private String nomeCourse;
-    private Long idStudent;
-    private Long idSemester;
-    private String nomeSemester;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Course course;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private User student;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "semester_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Semester semester;
+
     private double workload;
     private double didactic;
     private double organization;
@@ -24,18 +35,16 @@ public class Feedback {
     private double courseware;
     private Util.ModalityEnum modality;
 
-    public Feedback(FeedbackDTO feedbackDTO, String nomeCourse, String nomeSemester) {
-        this.idCourse = feedbackDTO.getIdCourse();
-        this.idStudent = feedbackDTO.getIdStudent();
-        this.idSemester = feedbackDTO.getIdSemester();
+    public Feedback(FeedbackDTO feedbackDTO, Course course, User student, Semester semester) {
+        this.course = course;
+        this.student = student;
         this.workload = feedbackDTO.getWorkload();
         this.didactic = feedbackDTO.getDidactic();
         this.organization = feedbackDTO.getOrganization();
         this.evaluationSystem = feedbackDTO.getEvaluationSystem();
         this.courseware = feedbackDTO.getCourseware();
         this.modality = feedbackDTO.getModality();
-        this.nomeCourse = nomeCourse;
-        this.nomeSemester = nomeSemester;
+        this.semester = semester;
     }
 
     public Feedback() {
@@ -44,30 +53,6 @@ public class Feedback {
 
     public Long getId() {
         return id;
-    }
-
-    public Long getIdCourse() {
-        return idCourse;
-    }
-
-    public void setIdCourse(Long idCourse) {
-        this.idCourse = idCourse;
-    }
-
-    public Long getIdSemester() {
-        return idSemester;
-    }
-
-    public void setIdSemester(Long idSemester) {
-        this.idSemester = idSemester;
-    }
-
-    public Long getIdStudent() {
-        return idStudent;
-    }
-
-    public void setIdStudent(Long idStudent) {
-        this.idStudent = idStudent;
     }
 
     public double getWorkload() {
@@ -118,34 +103,31 @@ public class Feedback {
         this.modality = modality;
     }
 
-    @Override
-    public String toString() {
-        return "Feedback{" +
-                "id=" + id +
-                ", idCourse=" + idCourse +
-                ", idStudent=" + idStudent +
-                ", workload=" + workload +
-                ", didactic=" + didactic +
-                ", organization=" + organization +
-                ", evaluationSystem=" + evaluationSystem +
-                ", courseware=" + courseware +
-                ", modality=" + modality +
-                '}';
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getNomeCourse() {
-        return nomeCourse;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setNomeCourse(String nomeCourse) {
-        this.nomeCourse = nomeCourse;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public String getNomeSemester() {
-        return nomeSemester;
+    public User getStudent() {
+        return student;
     }
 
-    public void setNomeSemester(String nomeSemester) {
-        this.nomeSemester = nomeSemester;
+    public void setStudent(User student) {
+        this.student = student;
+    }
+
+    public Semester getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Semester semester) {
+        this.semester = semester;
     }
 }

@@ -17,6 +17,21 @@ async function getDisciplinaById(id) {
   }
 }
 
+async function getAllPeriodos() {
+  const response = await api.get("/semesters");
+  return response.data;
+}
+
+async function getAverageFeedbacksfromCourse(id) {
+  const response = await api.get(`/feedback/averageByCourse/${id}`);
+  return response.data;
+}
+
+async function getAverageByCourseSemester(idSemester, idCourse) {
+  const response = await api.get(`/feedback/averageByCourseSemester?idSemester=${idSemester}&idCourse=${idCourse}`);
+  return response.data;
+}
+
 async function updateDisciplina(id, disciplina) {
   await api.patch(`/admin/courseUpdate/${id}`, disciplina);
 }
@@ -25,5 +40,17 @@ async function getCourseByNameTeacher(nameTeacher) {
   return (await api.get(`/coursesTeacher/${nameTeacher}`)).data;
 }
 
-export { getAll, createDisciplina, getDisciplinaById, 
-  updateDisciplina, getCourseByNameTeacher };
+async function getAllCommentsfromCourse(page, idCourse) {
+  const response = await api.get(`/comment/listByCourse/${idCourse}?page=${page}`);
+  return response.data;
+}
+
+async function createComment(comment){
+  await api.post("/comment", comment);
+}
+
+export { 
+  getAll, createDisciplina, getDisciplinaById, updateDisciplina, 
+  getAllPeriodos, getAverageFeedbacksfromCourse, getAverageByCourseSemester, 
+  getAllCommentsfromCourse, createComment, getCourseByNameTeacher
+};

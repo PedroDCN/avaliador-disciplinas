@@ -1,6 +1,8 @@
 package com.engSoft.services;
 
 import com.engSoft.entities.Comment;
+import com.engSoft.entities.Course;
+import com.engSoft.entities.Semester;
 import com.engSoft.entities.User;
 import com.engSoft.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService{
+
     @Autowired
     private CommentRepository commentRepository;
 
@@ -29,37 +32,35 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Page<Comment> pageCommentByCourse(Long idCourse, Integer page){
+    public Page<Comment> pageCommentByCourse(Course course, Integer page){
         Pageable paging = PageRequest.of(page, 5, Sort.by("up").descending());
-        return this.commentRepository.findAllByIdCourse(idCourse, paging);
+        return this.commentRepository.findAllByCourse(course, paging);
     }
     @Override
-    public Page<Comment> pageCommentByStudent(Long idStudent, Integer page){
+    public Page<Comment> pageCommentByStudent(User student, Integer page){
         Pageable paging = PageRequest.of(page, 5, Sort.by("up").descending());
-        return this.commentRepository.findAllByIdStudent(idStudent, paging);
+        return this.commentRepository.findAllByStudent(student, paging);
     }
 
     @Override
-    public Page<Comment> pageCommentBySemesterAndCourse(Long idSemester, Long idCourse, Integer page) {
+    public Page<Comment> pageCommentBySemesterAndCourse(Semester semester, Course course, Integer page) {
         Pageable paging = PageRequest.of(page, 5, Sort.by("up").descending());
-        return this.commentRepository.findAllByIdSemesterAndIdCourse(idSemester, idCourse, paging);
+        return this.commentRepository.findAllBySemesterAndCourse(semester, course, paging);
     }
 
     @Override
-    public List<Comment> listCommentBySemesterAndCourse(Long idSemester, Long idCourse) {
-        return this.commentRepository.findAllByIdSemesterAndIdCourse(idSemester, idCourse);
+    public List<Comment> listCommentBySemesterAndCourse(Semester semester, Course course) {
+        return this.commentRepository.findAllBySemesterAndCourse(semester, course);
     }
 
     @Override
-    public List<Comment> listCommentByCourse(Long idCourse){
-        return this.commentRepository.findAllByIdCourse(idCourse);
+    public List<Comment> listCommentByCourse(Course course){
+        return this.commentRepository.findAllByCourse(course);
     }
     @Override
-    public List<Comment> listCommentByStudent(Long idStudent){
-        return this.commentRepository.findAllByIdStudent(idStudent);
+    public List<Comment> listCommentByStudent(User student){
+        return this.commentRepository.findAllByStudent(student);
     }
-
-
 
     @Override
     public void removeComment(Long id) {
@@ -74,7 +75,6 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public void updateDeletedComments(User user) {
         user.setDeletedComments(user.getDeletedComments()+1);
-
     }
 
     @Override
