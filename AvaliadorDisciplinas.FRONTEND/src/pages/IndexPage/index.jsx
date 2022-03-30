@@ -24,18 +24,19 @@ import { getUserToken } from '../../utils/tokenUtil';
 
 function IndexPage() {
   const [selectedItem, setSelectedItem] = useState("");
-  const { user, loadUser, logout } = useAuth();
+  const { user, loadUser, logout, logged } = useAuth();
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [showBanned, setShowBanned] = useState(false);
 
   useEffect(() => {
     function checkTokenInvalid() {
-      const tokenInvalid = loadUser();
-      if (tokenInvalid) {
-        navigate("/");
+      if (user === undefined && !logged) {
+        const tokenInvalid = loadUser();
+        if (tokenInvalid) {
+          navigate("/");
+        }
       }
-      
     }
 
     function checkBanned() {
@@ -47,7 +48,7 @@ function IndexPage() {
 
     checkTokenInvalid();
     checkBanned();
-  }, []);
+  }, [navigate, user, loadUser, logged]);
 
   function handleLogoClick() {
     setSelectedItem("");
