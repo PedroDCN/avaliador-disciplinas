@@ -1,6 +1,9 @@
 package com.engSoft.entities;
 
 import com.engSoft.DTO.CourseDTO;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,15 +18,19 @@ public class Course {
     private Long id;
     private String name;
     private String code;
-    private Long idTeacher;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "teacher_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Teacher teacher;
     private double grade;
 
     public Course() {}
 
-    public Course(CourseDTO courseDTO, Long idTeacher) {
+    public Course(CourseDTO courseDTO, Teacher teacher) {
         this.name = courseDTO.getName();
         this.code = courseDTO.getCode();
-        this.idTeacher = idTeacher;
+        this.teacher = teacher;
         grade = 0;
     }
 
@@ -49,10 +56,6 @@ public class Course {
         return code;
     }
 
-    public Long getIdTeacher() {
-        return idTeacher;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -61,8 +64,12 @@ public class Course {
         this.code = code;
     }
 
-    public void setIdTeacher(Long idTeacher) {
-        this.idTeacher = idTeacher;
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public double getGrade() { return grade; }
@@ -73,7 +80,7 @@ public class Course {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
-                ", teacher=" + idTeacher +
+                ", teacher=" + teacher +
                 ", grade=" + grade +
                 '}';
     }

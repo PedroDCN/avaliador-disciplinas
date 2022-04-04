@@ -2,13 +2,13 @@ package com.engSoft.services;
 
 import com.engSoft.entities.Course;
 import com.engSoft.entities.Feedback;
+import com.engSoft.entities.Teacher;
 import com.engSoft.repositories.CourseRepository;
 import com.engSoft.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -43,8 +43,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> listCoursesTeacher(Long idTeacher) {
-        return courseRepository.findAllByIdTeacher(idTeacher);
+    public List<Course> listCoursesTeacher(Teacher teacher) {
+        return courseRepository.findAllByTeacher(teacher);
     }
 
     @Override
@@ -62,5 +62,4 @@ public class CourseServiceImpl implements CourseService {
     public Optional<Course> findCourseById(Long id) {
         return courseRepository.findById(id);
     }
-
 }

@@ -4,6 +4,7 @@ import GoogleLogin from 'react-google-login';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { getGoogleClientId } from '../../services/DadosEstaticos';
+import { ToastContainer, toast } from 'react-toastify';
 
 function LoginModal({handleClose, show}) {
     const { onSuccessGoogleLogin, onFailureGoogleLogin } = useAuth();
@@ -11,13 +12,18 @@ function LoginModal({handleClose, show}) {
 
     const displayClassname = show ? styles.show : styles.hide;
 
+    const notifyFailure = (message) => toast.error(message);
+
     function handleLoginButton(res) {
         onSuccessGoogleLogin(res).then((success) => {
             if (success) {
                 navigate('/home');
+                handleClose();
+            } else {
+                notifyFailure("Erro ao fazer login!");
             }
         });
-        handleClose();
+        
     }
 
     return (
@@ -64,6 +70,18 @@ function LoginModal({handleClose, show}) {
                     </span>
                 </div>
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                closeButton={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss                    
+                draggable
+                pauseOnHover={false}
+            />
         </div>
     );
 }

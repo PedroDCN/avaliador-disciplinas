@@ -1,4 +1,4 @@
-import AvaliarIcon from "../assets/icons/star_icon.svg";
+// import AvaliarIcon from "../assets/icons/star_icon.svg";
 import SimularIcon from "../assets/icons/analysis_icon.svg";
 import DisciplinasIcon from "../assets/icons/books_icon.svg";
 import ProfessorIcon from "../assets/icons/professor_icon.svg";
@@ -15,6 +15,15 @@ export function atributosDisciplina() {
 
 export function atributosProfessor() {
   return [{ value: "name", label: "Nome" }];
+}
+
+export function atributosPeriodos() {
+  return [
+    { value: "2020.1", label: "2020.1" },
+    { value: "2020.2", label: "2020.2" },
+    { value: "2021.1", label: "2021.1" },
+    { value: "2021.2", label: "2021.2" },
+  ];
 }
 
 export function newDisciplina() {
@@ -34,22 +43,9 @@ export function newProfessorRegister() {
 
 export function newProfessor() {
   return {
-    name: "Professor X",
-    profGrade: 3.0,
-    courses: [
-      {
-        id: 1,
-        nome: "Disciplina 1",
-        nota: 2.0,
-        periodo: "2020",
-      },
-      {
-        id: 2,
-        nome: "Disciplina 2",
-        nota: 4.0,
-        periodo: "2021",
-      },
-    ],
+    name: "",
+    photo: "",
+    courses: [],
   };
 }
 
@@ -62,12 +58,12 @@ export function newProgress() {
 }
 
 export function getGoogleClientId() {
-  return "89493011611-gevim53h29otjcjuhrljf99hkamlk7rs.apps.googleusercontent.com";
+  return process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
 }
 
 export function menuItems() {
   return {
-    avaliar: { title: "Avaliar cadeiras", icon: AvaliarIcon },
+    // avaliar: { title: "Avaliar cadeiras", icon: AvaliarIcon },
     simular: { title: "Simular período", icon: SimularIcon },
     disciplinas: { title: "Disciplinas", icon: DisciplinasIcon },
     professores: { title: "Professores", icon: ProfessorIcon },
@@ -91,7 +87,7 @@ export function getMenuItemsByUserMode(mode) {
   if (mode === "anonimous") {
     menuItems = ["disciplinas", "simular", "professores", "login"];
   } else if (mode === "user") {
-    menuItems = ["avaliar", "simular", "disciplinas", "professores", "logout"];
+    menuItems = ["disciplinas", "simular", "professores", "logout"];
   } else if (mode === "admin") {
     menuItems = [
       "disciplinas",
@@ -103,4 +99,24 @@ export function getMenuItemsByUserMode(mode) {
     ];
   }
   return menuItems;
+}
+
+export const marks = {
+  0: 0,
+  2: 2,
+  4: 4,
+  6: 6,
+  8: 8,
+  10: 10
+}
+
+export function newFeedback() {
+  return {
+      "workload": 5,
+      "didactic": 5,
+      "organization": 5,
+      "evaluationSystem": 5,
+      "courseware": 5,
+      "modality": "PRESENTIAL",
+  }
 }

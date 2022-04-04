@@ -1,6 +1,7 @@
 package com.engSoft.controllers;
 
 import com.engSoft.DTO.FeedbackDTO;
+import com.engSoft.DTO.ReturnFeedbackDTO;
 import com.engSoft.entities.*;
 import com.engSoft.services.CourseService;
 import com.engSoft.services.FeedbackService;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @RestController
@@ -52,14 +54,15 @@ public class FeedbackController {
             return ErroSemester.erroSemesterNotFound();
         }
 
-        if (!feedbackService.findFeedbackByStudentCourseAndSemester(feedbackDTO.getIdStudent(), feedbackDTO.getIdCourse(), feedbackDTO.getIdSemester()).isEmpty()){
+        if (!feedbackService.findFeedbackByStudentCourseAndSemester(optionalStudent.get(), optionalCourse.get(), optionalSemester.get()).isEmpty()){
             return ErroFeedback.erroFeedbackAlreadyExists();
         }
-        Feedback newFeedback = new Feedback(feedbackDTO, optionalCourse.get().getName(), optionalSemester.get().getName());
+
+        Feedback newFeedback = new Feedback(feedbackDTO, optionalCourse.get(), optionalStudent.get(), optionalSemester.get());
         try {
             feedbackService.saveFeedback(newFeedback);
-            courseService.updateGrade(optionalCourse.get(), feedbackService.listFeedbackByCourse(optionalCourse.get().getId()));
-            return new ResponseEntity<>(newFeedback, HttpStatus.CREATED);
+            courseService.updateGrade(newFeedback.getCourse(), feedbackService.listFeedbackByCourse(newFeedback.getCourse()));
+            return new ResponseEntity<>(new ReturnFeedbackDTO(newFeedback), HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<>(
                      new CustomErrorType("Error, feedback can´t be created"), HttpStatus.BAD_REQUEST);
@@ -69,7 +72,7 @@ public class FeedbackController {
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public ResponseEntity<?> getAllFeedback(){
         List<Feedback> feedbacks = this.feedbackService.listFeedbacks();
-        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/feedback/listByUser/{idUser}", method = RequestMethod.GET)
@@ -80,8 +83,8 @@ public class FeedbackController {
         if (!optionalUser.isPresent()){
             return ErroUser.erroUserNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.findFeedbackByStudent(idUser);
-        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
+        List<Feedback> feedbacks = feedbackService.findFeedbackByStudent(optionalUser.get());
+        return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
 
     }
 
@@ -92,8 +95,8 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(idCourse);
-        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
+        List<Feedback> feedbacks = feedbackService.listFeedbackByCourse(optionalCourse.get());
+        return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
 
     }
 
@@ -105,7 +108,7 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
 
-        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourse(idCourse);
+        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourse(optionalCourse.get());
         return new ResponseEntity<>(averageFeedback, HttpStatus.ACCEPTED);
 
     }
@@ -117,8 +120,8 @@ public class FeedbackController {
         if (!optionalSemester.isPresent()){
             return ErroSemester.erroSemesterNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(idSemester);
-        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
+        List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(optionalSemester.get());
+        return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
 
     }
 
@@ -133,8 +136,8 @@ public class FeedbackController {
         if (!optionalCourse.isPresent()){
             return ErroCourse.erroCourseNotFound();
         }
-        List<Feedback> feedbacks = feedbackService.findFeedbackByCourseAndSemester(idCourse, idSemester);
-        return new ResponseEntity<>(feedbacks, HttpStatus.ACCEPTED);
+        List<Feedback> feedbacks = feedbackService.findFeedbackByCourseAndSemester(optionalCourse.get(), optionalSemester.get());
+        return new ResponseEntity<>(toListReturnFeedbackDTO(feedbacks), HttpStatus.ACCEPTED);
 
     }
 
@@ -150,7 +153,7 @@ public class FeedbackController {
             return ErroCourse.erroCourseNotFound();
         }
 
-        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourseAndSemester(idCourse, idSemester);
+        AverageFeedback averageFeedback = feedbackService.averageFeedbackByCourseAndSemester(optionalCourse.get(), optionalSemester.get());
         return new ResponseEntity<>(averageFeedback, HttpStatus.ACCEPTED);
 
     }
@@ -162,7 +165,7 @@ public class FeedbackController {
         if(!optionalFeedback.isPresent())
             return ErroFeedback.erroFeedbackNotFound();
 
-        return new ResponseEntity<>(optionalFeedback, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(new ReturnFeedbackDTO(optionalFeedback.get()), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/feedback/{id}", method = RequestMethod.DELETE)
@@ -174,13 +177,20 @@ public class FeedbackController {
 
         try{
             feedbackService.removeFeedback(id);
-            Optional<Course> optionalCourse = courseService.findCourseById(optionalFeedback.get().getIdCourse());
-            optionalCourse.ifPresent(course -> courseService.updateGrade(course, feedbackService.listFeedbackByCourse(course.getId())));
-            return new ResponseEntity<>(optionalFeedback, HttpStatus.OK);
+            Course course = optionalFeedback.get().getCourse();
+            courseService.updateGrade(course, feedbackService.listFeedbackByCourse(course));
+            return new ResponseEntity<>(new ReturnFeedbackDTO(optionalFeedback.get()), HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(
                     new CustomErrorType("Error, feedback can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
+    }
 
+    private List<ReturnFeedbackDTO> toListReturnFeedbackDTO(List<Feedback> list) {
+        List<ReturnFeedbackDTO> returnList = new ArrayList<>();
+        for(Feedback feedback : list) {
+            returnList.add(new ReturnFeedbackDTO(feedback));
+        }
+        return returnList;
     }
 }

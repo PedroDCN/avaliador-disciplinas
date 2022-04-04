@@ -53,8 +53,15 @@
         transform: scale(1.075);
     }
     
+    .container .content .userPhot img{
+        cursor: pointer;
+        border-radius: 50%;
+        border: 0.25rem solid var(--secondary);
+      
+    }
     .container .content  .inputs{
         display: flex;
+        width: 100%;
         flex-direction: column;
     }
     
@@ -65,7 +72,7 @@
         border-radius: .5rem;
         margin-top: 1.5rem;
         padding: 1.5rem 1.5rem;
-        width: 40rem;
+        width: 87%;
         height: 3.5rem;
         background-color:var(--gray-300);
         border: solid var(--gray-300);

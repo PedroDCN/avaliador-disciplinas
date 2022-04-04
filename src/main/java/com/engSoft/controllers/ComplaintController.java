@@ -1,6 +1,7 @@
 package com.engSoft.controllers;
 
 import com.engSoft.DTO.ReactionDTO;
+import com.engSoft.DTO.ReturnReactionDTO;
 import com.engSoft.entities.Comment;
 import com.engSoft.entities.Reaction;
 import com.engSoft.entities.User;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,18 +50,19 @@ public class ComplaintController {
         }
 
         Optional<User> user = userService.getUserById(reactionDTO.getIdStudent());
+
         if (!user.isPresent()){
             return ErroUser.erroUserNotFound();
         }
 
-        Reaction newReaction = new Reaction(reactionDTO);
+        Reaction newReaction = new Reaction(optionalComment.get(), user.get(), reactionDTO.getReactionTypeEnum());
 
         try {
             reactionService.saveReaction(newReaction);
             reactionService.updateVotes(optionalComment.get(), newReaction,user.get());
             userService.saveUser(user.get());
             commentService.saveComment(optionalComment.get());
-            return new ResponseEntity<>(newReaction, HttpStatus.CREATED);
+            return new ResponseEntity<>(new ReturnReactionDTO(newReaction), HttpStatus.CREATED);
         }catch (Error e){
             return new ResponseEntity<>(
                     new CustomErrorType("Error, reaction can´t be created"), HttpStatus.BAD_REQUEST);
@@ -70,7 +73,7 @@ public class ComplaintController {
     @RequestMapping(value = "/complaints", method = RequestMethod.GET)
     public ResponseEntity<?> getAllComplaints(){
         List<Reaction> reactions = this.reactionService.findAllByReactionTypeEnum(Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(toListReturnReactionDTO(reactions), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/complaints/listByComment/{idComment}", method = RequestMethod.GET)
@@ -80,8 +83,8 @@ public class ComplaintController {
         if (!optionalComment.isPresent()){
             return ErroComment.erroCommentNotFound();
         }
-        List<Reaction> reactions = reactionService.findAllByIdCommentAndReactionTypeEnum(idComment, Util.ReactionTypeEnum.COMPLAINT);
-        return new ResponseEntity<>(reactions, HttpStatus.ACCEPTED);
+        List<Reaction> reactions = reactionService.findAllByIdCommentAndReactionTypeEnum(optionalComment.get(), Util.ReactionTypeEnum.COMPLAINT);
+        return new ResponseEntity<>(toListReturnReactionDTO(reactions), HttpStatus.ACCEPTED);
 
     }
 
@@ -92,7 +95,7 @@ public class ComplaintController {
         if(!optionalReaction.isPresent())
             return ErroReaction.erroReactionNotFound();
 
-        return new ResponseEntity<>(optionalReaction, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(new ReturnReactionDTO(optionalReaction.get()), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/complaint/{idComplaint}", method = RequestMethod.DELETE)
@@ -104,25 +107,25 @@ public class ComplaintController {
         if(optionalReaction.get().getReactionTypeEnum() != Util.ReactionTypeEnum.COMPLAINT)
             return ErroReaction.erroInvalidTypeForOperation(optionalReaction.get().getReactionTypeEnum().toString(), "Complaint");
 
-        Optional<User> user = userService.getUserById(idUser);
-        if(!user.isPresent())
-            return ErroUser.erroUserNotFound();
+        Comment comment = optionalReaction.get().getComment();
+        User user = optionalReaction.get().getStudent();
 
-        Optional<Comment> comment =commentService.findCommentById(optionalReaction.get().getIdComment());
-        if (!comment.isPresent())
-            return ErroComment.erroCommentNotFound();
         try{
-            reactionService.removeVotes(comment.get(), optionalReaction.get(),user.get());
+            reactionService.removeVotes(comment, optionalReaction.get(), user);
             reactionService.removeReaction(id);
-            userService.saveUser(user.get());
-            commentService.saveComment(comment.get());
-            return new ResponseEntity<>(optionalReaction.get(), HttpStatus.OK);
+            userService.saveUser(user);
+            commentService.saveComment(comment);
+            return new ResponseEntity<>(new ReturnReactionDTO(optionalReaction.get()), HttpStatus.OK);
         }catch (Error e ){
             return new ResponseEntity<>(
                     new CustomErrorType("Error, Complaint can´t be deleted"), HttpStatus.BAD_REQUEST);
         }
-
     }
 
+    private List<ReturnReactionDTO> toListReturnReactionDTO(List<Reaction> list) {
+        List<ReturnReactionDTO> returnList = new ArrayList<>();
+        for(Reaction reaction : list) {
+            returnList.add(new ReturnReactionDTO(reaction));
+        } return returnList;
+    }
 }
-

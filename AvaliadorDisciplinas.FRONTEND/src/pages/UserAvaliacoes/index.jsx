@@ -3,24 +3,29 @@ import { useAuth } from '../../contexts/AuthContext';
 import styles from './UserAvaliacoes.module.css';
 import { useNavigate } from 'react-router-dom';
 import { renderItem } from "./avaliacaoListagem";
-import { getAll } from "../../services/disciplinaService";
+import { getComentariosUser } from "../../services/avaliacoesService";
 import DataList from '../../components/DataList';
 
 function UserAvaliacoes() {
     const { user } = useAuth();
-    const [disc, setDisc] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const [disc, setDisc] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
-            setLoading(true);
-            const data = await getAll();
-            setDisc(data);
-            setLoading(false);
+            if (user) {
+                setLoading(true);
+                const data = (await getComentariosUser(user.id)).data;
+                setDisc(data);
+                setLoading(false);
+            }
+
         }
 
         fetchData();
-    }, []);
+    }, [user]);
 
     return (
         <div className={styles.container}>
@@ -37,7 +42,12 @@ function UserAvaliacoes() {
                 </div>
 
                 <div className={styles.itens}>
-                    <DataList data={disc} loading={loading} render={renderItem} />
+                    <DataList
+                        data={disc}
+                        loading={loading}
+                        render={(item) => renderItem(item, navigate)
+                        }
+                    />
                 </div>
             </div>
         </div>

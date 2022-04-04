@@ -19,4 +19,5 @@ public class ErroFeedback {
         return new ResponseEntity<>(
                 new CustomErrorType(ErroFeedback.FEEDBACK_ALREADY_EXISTS), HttpStatus.CONFLICT);
     }
+
 }

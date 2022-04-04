@@ -26,8 +26,8 @@ public class ReactionServiceImpl implements  ReactionService{
     }
 
     @Override
-    public List<Reaction> findReactionByStudentAndComment(Long idComment,Long idStudent) {
-        return this.reactionRepository.findAllByIdCommentAndIdStudent(idComment,idStudent);
+    public List<Reaction> findReactionByStudentAndComment(Comment comment, User student) {
+        return this.reactionRepository.findAllByCommentAndStudent(comment, student);
     }
 
     @Override
@@ -67,13 +67,13 @@ public class ReactionServiceImpl implements  ReactionService{
     }
 
     @Override
-    public List<Reaction> findReactionByComment(Long idComment) {
-        return reactionRepository.findReactionByIdComment(idComment);
+    public List<Reaction> findReactionByComment(Comment comment) {
+        return reactionRepository.findReactionByComment(comment);
     }
 
     @Override
-    public List<Reaction> findAllByIdCommentAndReactionTypeEnum(Long idComment, Util.ReactionTypeEnum reactionTypeEnum) {
-        return reactionRepository.findAllByIdCommentAndReactionTypeEnum(idComment, reactionTypeEnum);
+    public List<Reaction> findAllByIdCommentAndReactionTypeEnum(Comment comment, Util.ReactionTypeEnum reactionTypeEnum) {
+        return reactionRepository.findAllByCommentAndReactionTypeEnum(comment, reactionTypeEnum);
     }
 
     @Override

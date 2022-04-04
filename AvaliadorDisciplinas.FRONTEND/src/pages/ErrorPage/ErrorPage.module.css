@@ -1,0 +1,38 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .errorBox {
+    width: 80%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #F3F3F3;
+    border-radius: 2rem;
+    padding: 2rem;
+    gap: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 4px;
+}
+
+.container .errorBox img {
+    height: 60%;
+    width: 60%;
+}
+
+.container .errorBox h1 {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.container .errorBox p a { 
+    color: var(--primary);
+    font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+}

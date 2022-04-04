@@ -4,15 +4,15 @@ import ButtonWithIcon from "../../components/ButtonWithIcon";
 import styles from "./Item.module.css";
 import UserImageProf from '../../assets/icons/user_image_prof.svg';
 
-export function renderItem({ item, isAdmin, navigate }) {
+export function renderItem({ item, isAdmin, navigate, handleClickModal }) {
   const icon = isAdmin ? EditIcon : External;
 
   function handleClick() {
     if (isAdmin) {
       navigate(`/professor/edicao/${item.id}`);
     } else {
-      debugger;
-      navigate(`/professor/${item.id}`);
+      handleClickModal(item.id);
+      // navigate(`/professor/${item.id}`);
     }
   }
 
