@@ -29,6 +29,7 @@
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
+  max-width: 50rem;
 }
 
 .itemContainer .itemButton {

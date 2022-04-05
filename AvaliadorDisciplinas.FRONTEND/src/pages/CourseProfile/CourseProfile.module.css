@@ -36,6 +36,12 @@
     font-weight: 300;
     font-size: 36px;
     margin-left: 2rem;
+    max-height: 5rem;
+    overflow: hidden;
+}
+
+.headersContent .courseName span {
+    text-overflow: ellipsis;
 }
 
 .divisor {

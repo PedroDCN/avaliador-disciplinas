@@ -174,7 +174,7 @@ function CourseProfile() {
                             onClick={handleGoBackButton}
                             transparent="true"
                         />
-                        <p className={styles.courseName}>{course.name}</p>
+                        <span className={styles.courseName}>{course.name}</span>
                         <Button 
                             buttontitle="AVALIAR"
                             backgroundcolor={colors.theme.secondary} 
