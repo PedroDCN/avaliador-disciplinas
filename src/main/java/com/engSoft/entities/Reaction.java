@@ -12,12 +12,12 @@ public class Reaction {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "comment_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Comment comment;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "student_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User student;

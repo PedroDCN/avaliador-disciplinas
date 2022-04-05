@@ -19,7 +19,7 @@ public class Course {
     private String name;
     private String code;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "teacher_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Teacher teacher;

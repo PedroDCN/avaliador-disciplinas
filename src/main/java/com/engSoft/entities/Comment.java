@@ -12,17 +12,17 @@ public class Comment {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "course_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Course course;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "student_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User student;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "semester_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Semester semester;
