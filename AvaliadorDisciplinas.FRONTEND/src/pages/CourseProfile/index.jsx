@@ -144,14 +144,16 @@ function CourseProfile() {
             setLoading(false);
         };
 
-        fetchAverageSemester();
+        if(semesterValue.value!=="Período"){fetchAverageSemester();}
     },[semesterValue]);
 
     useEffect(() => {
-        (async function getLastAverage() {
-            const response = await getAverageByCourseSemester(semester[0].value, id);
-            setLastAverage(response.averageTotal);
-        })();
+        if(typeof semester[0] !== "undefined") {
+            (async function getLastAverage() {
+                const response = await getAverageByCourseSemester(semester[0].value, id);
+                setLastAverage(response.averageTotal);
+            })();
+        }
     },[semester]);
 
     const handleCloseModal = () => {
@@ -170,7 +172,6 @@ function CourseProfile() {
                             icon={LeftIcon} 
                             boxshadow="none"
                             alignitems="center"
-                            hastitle={false}
                             onClick={handleGoBackButton}
                             transparent="true"
                         />
