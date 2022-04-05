@@ -86,7 +86,7 @@ function LandingPage() {
                         color={colors.theme.primary}
                         backgroundcolor={colors.theme.background} 
                         onClick={handleAnonimousButton}
-                        hastitle={true}
+                        hastitle={"true"}
                     />
                 </footer>
             </div>
