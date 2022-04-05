@@ -81,9 +81,4 @@ public class ReactionServiceImpl implements  ReactionService{
         return reactionRepository.findAllByReactionTypeEnum(reactionTypeEnum);
     }
 
-    @Override
-    public List<Reaction> findAllByStudent(Long id){
-        return reactionRepository.findAllByIdStudent(id);
-    }
-
 }

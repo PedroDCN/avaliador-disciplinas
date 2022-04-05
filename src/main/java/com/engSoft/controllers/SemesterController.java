@@ -77,18 +77,9 @@ public class SemesterController {
 
         Semester semester = optionalSemester.get();
         semester.setName(name);
-        atualizaDependentes(semester);
         semesterService.saveSemester(semester);
 
         return new ResponseEntity<>(semester, HttpStatus.OK);
     }
 
-    public void atualizaDependentes(Semester semester){
-        List<Feedback> feedbacks = feedbackService.findFeedbackBySemester(semester.getId());
-        for (Feedback f: feedbacks) {
-            f.setNomeSemester(semester.getName());
-            feedbackService.saveFeedback(f);
-        }
-
-    }
 }

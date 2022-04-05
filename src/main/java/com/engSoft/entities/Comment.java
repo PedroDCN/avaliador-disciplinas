@@ -1,5 +1,6 @@
 package com.engSoft.entities;
 
+import com.engSoft.DTO.CommentDTO;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -40,20 +41,6 @@ public class Comment {
         this.down = 0;
         this.complaints = 0;
     }
-
-    public Comment(CommentDTO commentDTO, String nameStudent, String photoStudent) {
-        this.idCourse = commentDTO.getIdCourse();
-        this.idStudent = commentDTO.getIdStudent();
-        this.idSemester = commentDTO.getIdSemester();
-        this.description = commentDTO.getDescription();
-        this.nomeCourse = String.format("Atualizar curso %s", commentDTO.getIdCourse().toString());
-        this.nameStudent = nameStudent;
-        this.photoStudent = photoStudent;
-        this.up = 0;
-        this.down = 0;
-        this.complaints = 0;
-    }
-
 
     public Comment() {
 

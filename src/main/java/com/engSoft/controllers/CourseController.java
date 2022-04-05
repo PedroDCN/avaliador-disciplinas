@@ -64,7 +64,6 @@ public class CourseController {
             optionalCourse.get().setCode(courseDTO.getCode());
             optionalCourse.get().setTeacher(optionalTeacher.get());
             courseService.saveCourse(optionalCourse.get());
-            atualizaDependentes(optionalCourse.get());
 
             return new ResponseEntity<>(new ReturnCourseDTO(optionalCourse.get()), HttpStatus.OK);
         } else
