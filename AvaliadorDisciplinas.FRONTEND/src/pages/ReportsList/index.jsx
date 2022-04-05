@@ -18,7 +18,7 @@ function ReportList() {
 
     const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [reports, setReports] = useState();
+    const [reports, setReports] = useState([]);
     const [modalContent, setModalContent] = useState({});
 
     const showModal = async (value) => {
@@ -55,17 +55,22 @@ function ReportList() {
             <div className={styles.listContainer}>
                 <Header headertitle="Lista de denúncias" />
                     <div className={styles.listContent}>
-                        { reports ?
-                                <DataList
-                                    data={reports}
-                                    loading={loading}
-                                    render={(item) =>
-                                        renderItem({ item, showModal})
-                                    }
-                                />
+                        { !loading && reports && reports.length === 0 ?
+                            <div className={styles.noReports}>
+                                <span>
+                                    Ainda não há denuncias cadastradas.
+                                </span>
+                            </div>
                         :
-                        <span>Não há denuncias</span>
+                            <></>
+                    }
+                    <DataList
+                        data={reports}
+                        loading={loading}
+                        render={(item) =>
+                            renderItem({ item, showModal})
                         }
+                    />
                     </div>
             </div>
             <ComentarioModal 
