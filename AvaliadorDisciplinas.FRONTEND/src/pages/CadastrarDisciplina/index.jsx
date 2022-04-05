@@ -83,8 +83,8 @@ function CadastrarDisciplina() {
     useEffect(() => {
         (async function loadDisciplina() {
             if (params.id) {
-                const {name, code, teacher} = await getDisciplinaById(params.id);
-                setDisciplina({name,code,nameTeacher: teacher.name});
+                const {name, code, nameTeacher} = await getDisciplinaById(params.id);
+                setDisciplina({name,code,nameTeacher: nameTeacher});
             } else {
                 setDisciplina(newDisciplina());
             }
